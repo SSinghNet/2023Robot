@@ -7,8 +7,6 @@ package org.mort11;
 import org.mort11.commands.DriveControl;
 import org.mort11.subsystems.Drivetrain;
 
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class RobotContainer {
@@ -25,7 +23,6 @@ public class RobotContainer {
 		// default commands
 		drivetrain.setDefaultCommand(new DriveControl(() -> Control.getJoystickX(), () -> Control.getJoystickY(),
 				() -> Control.getJoystickTwist(), false));
-
 
 		Control.configureBindings();
 	}
