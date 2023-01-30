@@ -1,4 +1,4 @@
-package org.mort11.commands;
+package org.mort11.commands.control;
 
 import java.util.function.DoubleSupplier;
 

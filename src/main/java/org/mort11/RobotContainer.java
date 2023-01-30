@@ -4,8 +4,9 @@
 
 package org.mort11;
 
-import org.mort11.commands.DriveControl;
+import org.mort11.commands.control.DriveControl;
 import org.mort11.subsystems.Drivetrain;
+import org.mort11.util.Control;
 
 import edu.wpi.first.wpilibj2.command.Command;
 

@@ -1,7 +1,7 @@
-package org.mort11;
+package org.mort11.util;
 
-import static org.mort11.Constants.ControlPorts.*;
-import static org.mort11.Constants.RobotSpecs.*;
+import static org.mort11.util.Constants.ControlPorts.*;
+import static org.mort11.util.Constants.RobotSpecs.*;
 
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;

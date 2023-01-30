@@ -1,4 +1,4 @@
-package org.mort11;
+package org.mort11.util;
 
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 

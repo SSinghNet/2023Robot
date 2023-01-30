@@ -21,8 +21,8 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import static org.mort11.Constants.Drivetrain.*;
-import static org.mort11.Constants.RobotSpecs.*;
+import static org.mort11.util.Constants.Drivetrain.*;
+import static org.mort11.util.Constants.RobotSpecs.*;
 
 public class Drivetrain extends SubsystemBase {
 	private static Drivetrain drivetrain;
