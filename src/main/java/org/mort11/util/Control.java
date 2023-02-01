@@ -17,10 +17,19 @@ public class Control {
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
 	}
 
+	/**
+	 * Configure secondary button bindings
+	 */
 	public static void configureBindings() {
 
 	}
 
+	/**
+	 * Calculate value based on deadband
+	 *
+	 * @param value
+	 * @param deadband
+	 */
 	private static double deadband(double value, double deadband) {
 		if (Math.abs(value) > deadband) {
 			if (value > 0.0) {
@@ -33,6 +42,13 @@ public class Control {
 		}
 	}
 
+	/**
+	 * Change joystick axis
+	 *
+	 * @param value
+	 * @param throttleValue
+	 *            from [-1, 1]
+	 */
 	private static double modifyJoystickAxis(double value, double throttleValue) {
 		// Deadband
 		value = deadband(value, 0.1);

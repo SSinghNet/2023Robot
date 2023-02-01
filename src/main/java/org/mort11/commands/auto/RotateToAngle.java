@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class RotateToAngle extends CommandBase {
 	private Drivetrain drivetrain;
 	private double angle;
-    private boolean relative;
+	private boolean relative;
 
-    /**
-    * @param angle angle in getDegrees
-    * @param relative whether angle is relative to current position
-    */
+	/**
+	 * @param angle
+	 *            angle in getDegrees
+	 * @param relative
+	 *            whether angle is relative to current position
+	 */
 	public RotateToAngle(double angle, boolean relative) {
 		drivetrain = Drivetrain.getInstance();
 		this.angle = angle;

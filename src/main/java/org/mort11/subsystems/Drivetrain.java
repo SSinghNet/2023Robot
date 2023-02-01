@@ -60,8 +60,8 @@ public class Drivetrain extends SubsystemBase {
 				new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
 		odometry = new SwerveDriveOdometry(driveKinematics, Rotation2d.fromDegrees(navX.getFusedHeading()),
-				new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
-						backLeftModule.getPosition(), backRightModule.getPosition() });
+				new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
+						backLeftModule.getPosition(), backRightModule.getPosition()});
 
 		resetPose(new Pose2d(0, 0, new Rotation2d(0, 0)));
 
@@ -169,15 +169,15 @@ public class Drivetrain extends SubsystemBase {
 	@Override
 	public void periodic() {
 		odometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()),
-				new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
-						backLeftModule.getPosition(), backRightModule.getPosition() });
+				new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
+						backLeftModule.getPosition(), backRightModule.getPosition()});
 
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
 	}
-	
-	/** 
-	 * Get the drivetrain object 
+
+	/**
+	 * Get the drivetrain object
 	 */
 	public static Drivetrain getInstance() {
 		if (drivetrain == null) {

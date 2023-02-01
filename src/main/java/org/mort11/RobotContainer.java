@@ -6,6 +6,7 @@ package org.mort11;
 
 import org.mort11.commands.control.DriveControl;
 import org.mort11.subsystems.Drivetrain;
+import org.mort11.util.Auto;
 import org.mort11.util.Control;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,12 +23,14 @@ public class RobotContainer {
 		drivetrain = Drivetrain.getInstance();
 
 		// set default commands
-		drivetrain.setDefaultCommand(
-			new DriveControl(() -> Control.getJoystickX(), () -> Control.getJoystickY(),
+		drivetrain.setDefaultCommand(new DriveControl(() -> Control.getJoystickX(), () -> Control.getJoystickY(),
 				() -> Control.getJoystickTwist()));
 
-		//configure secondary button bindings
+		// configure secondary button bindings
 		Control.configureBindings();
+
+		// create autonomous commands and chooser
+		Auto.init();
 	}
 
 	/**
@@ -36,6 +39,6 @@ public class RobotContainer {
 	 * @return the command to run in autonomous
 	 */
 	public Command getAutonomousCommand() {
-		return null;
+		return Auto.getSelected();
 	}
 }
