@@ -11,6 +11,7 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -39,6 +40,8 @@ public class Drivetrain extends SubsystemBase {
 
 	private ChassisSpeeds chassisSpeeds;
 
+	private PIDController rotateToAngleController;
+
 	private Drivetrain() {
 		navX = new AHRS(SerialPort.Port.kMXP);
 
@@ -57,12 +60,17 @@ public class Drivetrain extends SubsystemBase {
 				new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
 		odometry = new SwerveDriveOdometry(driveKinematics, Rotation2d.fromDegrees(navX.getFusedHeading()),
-				new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
+				new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
 						backLeftModule.getPosition(), backRightModule.getPosition() });
-		
+
 		resetPose(new Pose2d(0, 0, new Rotation2d(0, 0)));
+
+		rotateToAngleController = new PIDController(ROTATE_TO_ANGLE_KP, ROTATE_TO_ANGLE_KI, ROTATE_TO_ANGLE_KD);
+		rotateToAngleController.enableContinuousInput(-180.0f, 180.0f);
+		rotateToAngleController.setTolerance(ROTATE_TO_ANGLE_TOLERANCE);
 	}
 
+	/** Configures all the swerve drive modules */
 	private void configModules() {
 		ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
@@ -154,16 +162,23 @@ public class Drivetrain extends SubsystemBase {
 		this.chassisSpeeds = chassisSpeeds;
 	}
 
+	public PIDController getRotateToAngleController() {
+		return rotateToAngleController;
+	}
+
 	@Override
 	public void periodic() {
 		odometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()),
-				new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
-						backLeftModule.getPosition(), backRightModule.getPosition()});
+				new SwerveModulePosition[] { frontLeftModule.getPosition(), frontRightModule.getPosition(),
+						backLeftModule.getPosition(), backRightModule.getPosition() });
 
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
 	}
-
+	
+	/** 
+	 * Get the drivetrain object 
+	 */
 	public static Drivetrain getInstance() {
 		if (drivetrain == null) {
 			drivetrain = new Drivetrain();

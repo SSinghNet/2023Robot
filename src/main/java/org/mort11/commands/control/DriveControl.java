@@ -16,6 +16,12 @@ public class DriveControl extends CommandBase {
 
 	private boolean fieldOriented;
 
+	/**
+	 * @param translationXSupplier Supplier for x-axis movement
+	 * @param translationYSupplier Supplier for y-axis movement
+	 * @param rotationSupplier Supplier for rotational movement
+	 * @param fieldOriented Whether field-oriented drive is used
+	 */
 	public DriveControl(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
 			DoubleSupplier rotationSupplier, boolean fieldOriented) {
 		drivetrain = Drivetrain.getInstance();
@@ -29,6 +35,12 @@ public class DriveControl extends CommandBase {
 		addRequirements(drivetrain);
 	}
 
+	/** 
+	 * Assumes robot-oriented drive
+	 * @param translationXSupplier Supplier for x-axis movement
+	 * @param translationYSupplier Supplier for y-axis movement
+	 * @param rotationSupplier Supplier for rotational movement
+	 */
 	public DriveControl(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
 			DoubleSupplier rotationSupplier) {
 		this(translationXSupplier, translationYSupplier, rotationSupplier, false);

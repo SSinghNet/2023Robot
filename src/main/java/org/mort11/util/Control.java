@@ -41,8 +41,7 @@ public class Control {
 		value = Math.copySign(value * value, value);
 
 		// takes the throttle value and takes it from [-1, 1] to [0.2, 1], and
-		// multiplies it by the
-		// value
+		// multiplies it by the value
 		return value * (throttleValue * -0.4 + 0.6);
 	}
 

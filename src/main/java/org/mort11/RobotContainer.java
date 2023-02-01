@@ -18,13 +18,15 @@ public class RobotContainer {
 		// initalize controllers
 		Control.init();
 
-		// Subsystems
+		// Subsystem objects
 		drivetrain = Drivetrain.getInstance();
 
-		// default commands
-		drivetrain.setDefaultCommand(new DriveControl(() -> Control.getJoystickX(), () -> Control.getJoystickY(),
-				() -> Control.getJoystickTwist(), false));
+		// set default commands
+		drivetrain.setDefaultCommand(
+			new DriveControl(() -> Control.getJoystickX(), () -> Control.getJoystickY(),
+				() -> Control.getJoystickTwist()));
 
+		//configure secondary button bindings
 		Control.configureBindings();
 	}
 
