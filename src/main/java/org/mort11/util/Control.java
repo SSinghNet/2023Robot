@@ -3,6 +3,8 @@ package org.mort11.util;
 import static org.mort11.util.Constants.ControlPorts.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
 
+import org.mort11.commands.auto.RotateToAngle;
+
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -21,6 +23,13 @@ public class Control {
 	 * Configure secondary button bindings
 	 */
 	public static void configureBindings() {
+		// left joystick
+
+
+		// right joystick
+
+
+		// controller
 
 	}
 
@@ -60,6 +69,7 @@ public class Control {
 		// multiplies it by the value
 		return value * (throttleValue * -0.4 + 0.6);
 	}
+
 
 	public static double getJoystickX() {
 		return -modifyJoystickAxis(rightJoystick.getX(), rightJoystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND;
