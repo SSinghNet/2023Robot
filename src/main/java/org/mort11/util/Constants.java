@@ -17,22 +17,22 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 1;
 		public final static int FRONT_LEFT_STEER = 2;
 		public final static int FRONT_LEFT_STEER_ENCODER = 10;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(295); // 253 //295
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(187); // 253 //295
 
 		public final static int FRONT_RIGHT_DRIVE = 7;
 		public final static int FRONT_RIGHT_STEER = 8;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 11;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(342); // 256 //342
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(252);
 
 		public final static int BACK_LEFT_DRIVE = 3;
 		public final static int BACK_LEFT_STEER = 4;
 		public final static int BACK_LEFT_STEER_ENCODER = 9;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(192); // 239 //192
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(136);
 
 		public final static int BACK_RIGHT_DRIVE = 5;
 		public final static int BACK_RIGHT_STEER = 6;
 		public final static int BACK_RIGHT_STEER_ENCODER = 12;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(64); // 280 //64
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
 
 		public final static double ROTATE_TO_ANGLE_KP = 0;
 		public final static double ROTATE_TO_ANGLE_KI = 0;
