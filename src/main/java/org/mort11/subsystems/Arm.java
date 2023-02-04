@@ -10,16 +10,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Arm.*;
 
+import org.mort11.util.Constants;
+
 public class Arm extends SubsystemBase {
 	private static Arm arm;
-	public PIDController armController;
+	private PIDController armController;
 
-	public CANSparkMax driveNeo;
-
+	private static CANSparkMax driveNeo;
 
 	private Arm() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
-		armController = new PIDController(DRIVE, DRIVE, DRIVE);
+		armController = new PIDController(Constants.Arm.KP, Constants.Arm.KI, Constants.Arm.KD);
+		armController.setTolerance(Constants.Arm.TOLERANCE);
+	}
+
+	public PIDController getArmController() {
+		return armController;
 	}
 
 	@Override
@@ -37,10 +43,12 @@ public class Arm extends SubsystemBase {
 		return arm;
 	}
 
-public void setArmPosition(double targetPosition) {
-	driveNeo.setVoltage(
-		armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition)
-		);
-}
+	public static CANSparkMax getNeoMotor() {
+		return driveNeo;
+	}
+
+	public void setArmPosition(double targetPosition) {
+		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition));
+	}
 
 }
