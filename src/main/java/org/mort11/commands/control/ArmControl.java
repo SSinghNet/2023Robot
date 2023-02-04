@@ -22,15 +22,16 @@ public class ArmControl extends CommandBase {
 
 	@Override
 	public void execute() {
-		if (a) {
+		//TODO: Set buttons
+		if (false) {
 			arm.setArmPosition(Constants.Arm.HYBRID_LEVEL);
 			targetPosition = Constants.Arm.HYBRID_LEVEL;
 
-		} else if (b) {
+		} else if (false) {
 			arm.setArmPosition(Constants.Arm.CENTER_LEVEL);
 			targetPosition = Constants.Arm.CENTER_LEVEL;
 
-		} else if (c) {
+		} else if (false) {
 			arm.setArmPosition(Constants.Arm.TOP_LEVEL);
 			targetPosition = Constants.Arm.TOP_LEVEL;
 		}
