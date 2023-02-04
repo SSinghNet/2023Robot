@@ -35,7 +35,7 @@ public class Drivetrain extends SubsystemBase {
 	private SwerveModule backLeftModule;
 	private SwerveModule backRightModule;
 
-	private SwerveDriveKinematics driveKinematics;
+	public SwerveDriveKinematics driveKinematics;
 	private SwerveDriveOdometry odometry;
 
 	private ChassisSpeeds chassisSpeeds;
@@ -59,9 +59,7 @@ public class Drivetrain extends SubsystemBase {
 				// Back right
 				new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
-		odometry = new SwerveDriveOdometry(driveKinematics, Rotation2d.fromDegrees(navX.getFusedHeading()),
-				new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
-						backLeftModule.getPosition(), backRightModule.getPosition()});
+		odometry = new SwerveDriveOdometry(driveKinematics, getGyroscopeRotation(), getModulePositions());
 
 		resetPose(new Pose2d(0, 0, new Rotation2d(0, 0)));
 
@@ -133,10 +131,7 @@ public class Drivetrain extends SubsystemBase {
 	 * @param pose
 	 */
 	public void resetPose(Pose2d pose) {
-		odometry.resetPosition(Rotation2d.fromDegrees(navX.getFusedHeading()),
-				new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
-						backLeftModule.getPosition(), backRightModule.getPosition()},
-				pose);
+		odometry.resetPosition(getGyroscopeRotation(), getModulePositions(), pose);
 	}
 
 	/**
@@ -155,6 +150,11 @@ public class Drivetrain extends SubsystemBase {
 				states[3].angle.getRadians());
 	}
 
+	public SwerveModulePosition[] getModulePositions() {
+		return new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
+				backLeftModule.getPosition(), backRightModule.getPosition()};
+	}
+
 	/**
 	 * @param chassisSpeeds
 	 */
@@ -168,9 +168,7 @@ public class Drivetrain extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		odometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()),
-				new SwerveModulePosition[]{frontLeftModule.getPosition(), frontRightModule.getPosition(),
-						backLeftModule.getPosition(), backRightModule.getPosition()});
+		odometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
 
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);

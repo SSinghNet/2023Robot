@@ -34,7 +34,7 @@ public final class Constants {
 		public final static int BACK_RIGHT_STEER_ENCODER = 12;
 		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
 
-		public final static double ROTATE_TO_ANGLE_KP = 0;
+		public final static double ROTATE_TO_ANGLE_KP = 0.02;
 		public final static double ROTATE_TO_ANGLE_KI = 0;
 		public final static double ROTATE_TO_ANGLE_KD = 0;
 		public final static double ROTATE_TO_ANGLE_TOLERANCE = 0;

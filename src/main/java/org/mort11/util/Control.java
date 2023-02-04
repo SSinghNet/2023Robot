@@ -4,7 +4,9 @@ import static org.mort11.util.Constants.ControlPorts.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
 
 import org.mort11.commands.auto.RotateToAngle;
+import org.mort11.subsystems.Drivetrain;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -13,10 +15,14 @@ public class Control {
 	private static CommandJoystick rightJoystick;
 	private static CommandXboxController xboxController;
 
+	private static Drivetrain drivetrain;
+
 	public static void init() {
 		leftJoystick = new CommandJoystick(LEFT_JOYSTICK);
 		rightJoystick = new CommandJoystick(RIGHT_JOYSTICK);
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
+
+		drivetrain = Drivetrain.getInstance();
 	}
 
 	/**
@@ -25,9 +31,13 @@ public class Control {
 	public static void configureBindings() {
 		// left joystick
 
-
 		// right joystick
+		rightJoystick.trigger().onTrue(new InstantCommand(drivetrain::zeroGyroscope));
 
+		rightJoystick.povRight().whileTrue(new RotateToAngle(-90, false));
+		rightJoystick.povUp().whileTrue(new RotateToAngle(0, false));
+		rightJoystick.povLeft().whileTrue(new RotateToAngle(90, false));
+		rightJoystick.povDown().whileTrue(new RotateToAngle(180, false));
 
 		// controller
 
@@ -69,7 +79,6 @@ public class Control {
 		// multiplies it by the value
 		return value * (throttleValue * -0.4 + 0.6);
 	}
-
 
 	public static double getJoystickX() {
 		return -modifyJoystickAxis(rightJoystick.getX(), rightJoystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND;
