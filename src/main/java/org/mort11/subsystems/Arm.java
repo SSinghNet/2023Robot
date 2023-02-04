@@ -1,8 +1,10 @@
 package org.mort11.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -10,16 +12,14 @@ import static org.mort11.util.Constants.Arm.*;
 
 public class Arm extends SubsystemBase {
 	private static Arm arm;
+	public PIDController armController;
 
-	private CANSparkMax driveNeo;
+	public CANSparkMax driveNeo;
 
-	/** {@link https://www.revrobotics.com/rev-11-1271/} */
-	private Encoder boreEncoder;
 
 	private Arm() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
-
-		boreEncoder = new Encoder(ENCODER_CHANNEL_A, ENCODER_CHANNEL_B);
+		armController = new PIDController(DRIVE, DRIVE, DRIVE);
 	}
 
 	@Override
@@ -36,4 +36,11 @@ public class Arm extends SubsystemBase {
 		}
 		return arm;
 	}
+
+public void setArmPosition(double targetPosition) {
+	driveNeo.setVoltage(
+		armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition)
+		);
+}
+
 }
