@@ -65,6 +65,12 @@ public final class Constants {
 		public final static int WRIST = 0;
 
 		public final static int WRIST_ENCODER = 0;
+
+		public final static double SPEED = 0;
+
+		public final static double Kp = 0;
+		public final static double Ki = 0;
+		public static final double Kd = 0;
 	}
 
 	public final static class RobotSpecs {
