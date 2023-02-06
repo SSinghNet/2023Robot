@@ -23,7 +23,11 @@ public class ArmControl extends CommandBase {
 
 	@Override
 	public void execute() {
-		// TODO: Set buttons
+		// TODO: Set button
+
+		/**
+		 * Sets the position of the motor based on the button pressed, varying between Hybrid, Center, and Top.
+		 */
 		if (false) {
 			arm.setArmPosition(Constants.Arm.HYBRID_LEVEL);
 
@@ -36,6 +40,9 @@ public class ArmControl extends CommandBase {
 		}
 	}
 
+	/**
+	 * When the motor of the arm is withih the tolerance of the setpoint, the code is finished.
+	 */
 	@Override
 	public boolean isFinished() {
 		return arm.getArmController().atSetpoint();

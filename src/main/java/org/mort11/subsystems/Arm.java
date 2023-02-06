@@ -1,11 +1,9 @@
 package org.mort11.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Arm.*;
@@ -47,6 +45,11 @@ public class Arm extends SubsystemBase {
 		return driveNeo;
 	}
 
+	/**
+	 * Uses close loop controller to set the voltage of of the motor that controls the position of the arm, based on a given target position
+	 * @param targetPosition
+	 * 				Value of the position we are targeting.
+	 */
 	public void setArmPosition(double targetPosition) {
 		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition));
 	}
