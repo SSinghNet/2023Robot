@@ -41,6 +41,7 @@ public class Drivetrain extends SubsystemBase {
 	private ChassisSpeeds chassisSpeeds;
 
 	private PIDController rotateToAngleController;
+	private PIDController balanceController;
 
 	private Drivetrain() {
 		navX = new AHRS(SerialPort.Port.kMXP);
@@ -66,6 +67,9 @@ public class Drivetrain extends SubsystemBase {
 		rotateToAngleController = new PIDController(ROTATE_TO_ANGLE_KP, ROTATE_TO_ANGLE_KI, ROTATE_TO_ANGLE_KD);
 		rotateToAngleController.enableContinuousInput(-180.0f, 180.0f);
 		rotateToAngleController.setTolerance(ROTATE_TO_ANGLE_TOLERANCE);
+
+		balanceController = new PIDController(BALANCE_KP, BALANCE_KI, BALANCE_KD);
+		balanceController.setTolerance(BALANCE_TOLERANCE);
 	}
 
 	/** Configures all the swerve drive modules */
@@ -92,6 +96,14 @@ public class Drivetrain extends SubsystemBase {
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, BACK_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.NEO, BACK_RIGHT_STEER).withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER)
 				.withSteerOffset(BACK_RIGHT_STEER_OFFSET).build();
+	}
+
+	public AHRS getNavX() {
+		return navX;
+	}
+
+	public PIDController getBalanceController() {
+		return balanceController;
 	}
 
 	/** Sets the gyroscope angle to zero. */

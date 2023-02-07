@@ -39,6 +39,11 @@ public final class Constants {
 		public final static double ROTATE_TO_ANGLE_KI = 0;
 		public final static double ROTATE_TO_ANGLE_KD = 0;
 		public final static double ROTATE_TO_ANGLE_TOLERANCE = 0;
+
+		public final static double BALANCE_KP = 0;
+		public final static double BALANCE_KI = 0;
+		public final static double BALANCE_KD = 0;
+		public final static double BALANCE_TOLERANCE = 0;
 	}
 
 	public final static class Elevator {
