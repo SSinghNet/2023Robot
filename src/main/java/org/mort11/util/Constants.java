@@ -43,8 +43,14 @@ public final class Constants {
 
 	public final static class Elevator {
 		// TODO ports
-		public final static int DRIVE_MASTER = 0;
-		public final static int DRIVE_FOLLOWER = 0;
+		public final static int ELEVATOR_MASTER = 0;
+		public final static int ELEVATOR_FOLLOWER = 0;
+		public final static double ELEVATOR_SPEED = .5;
+
+		public final static int KP = 0;
+		public final static int KI = 0;
+		public final static int KD = 0;
+
 
 		public final static int LIMIT_SWITCH = 0;
 	}
