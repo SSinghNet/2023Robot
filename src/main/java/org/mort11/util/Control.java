@@ -6,6 +6,7 @@ import static org.mort11.util.Constants.RobotSpecs.*;
 import org.mort11.commands.auto.RotateToAngle;
 import org.mort11.subsystems.Drivetrain;
 
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -91,6 +92,10 @@ public class Control {
 	public static double getJoystickTwist() {
 		return -modifyJoystickAxis(rightJoystick.getTwist(), rightJoystick.getThrottle())
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
+	}
+
+	public static CommandXboxController getXboxController(){
+		return xboxController;
 	}
 
 }

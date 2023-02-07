@@ -50,14 +50,14 @@ public class Claw extends SubsystemBase {
 	/**
 	 * Set intake motor speed
 	 */
-	public void setIntakePercentOutput(){
-		intakeNeoMaster.set(SPEED);
+	public void setIntakePercentOutput(double speed){
+		intakeNeoMaster.set(speed);
 	}
 	/**
 	 * Sets wrist motor speed
 	 */
-	public void setWristPercentOutput(){
-		wristNeo.set(SPEED);
+	public void setWristPercentOutput(double speed){
+		wristNeo.set(speed);
 	}
 	/**
 	 * Set pistons
