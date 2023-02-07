@@ -3,10 +3,13 @@ package org.mort11.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Elevator.*;
+
+import org.mort11.util.Constants;
 
 public class Elevator extends SubsystemBase {
 	private static Elevator elevator;
@@ -16,18 +19,38 @@ public class Elevator extends SubsystemBase {
 
 	/** {@link https://www.revrobotics.com/rev-31-1462/} */
 	private DigitalInput limitSwitch;
+	private PIDController positionController;
 
 	private Elevator() {
-		driveNeoMaster = new CANSparkMax(DRIVE_MASTER, MotorType.kBrushless);
-		driveNeoFollower = new CANSparkMax(DRIVE_FOLLOWER, MotorType.kBrushless);
+		driveNeoMaster = new CANSparkMax(ELEVATOR_MASTER, MotorType.kBrushless);
+		driveNeoFollower = new CANSparkMax(ELEVATOR_FOLLOWER, MotorType.kBrushless);
+		
 
 		driveNeoFollower.follow(driveNeoMaster, false); // todo: check invert
-
+		positionController = new PIDController(KP, KI, KD);
 		limitSwitch = new DigitalInput(LIMIT_SWITCH);
 	}
 
 	@Override
 	public void periodic() {
+
+	}
+	/**
+	 * Moves the elevator a preset speed
+	 * @param speed The speed to set the elevator
+	 */
+	public void move(double speed){
+		//todo: program limit switch check.
+		driveNeoMaster.set(speed);
+	}
+	/**
+	 * Moves the elevator to a specific point based on value passed.
+	 * @param setpoint The encoder position to move to.
+	 */
+	public void moveTo(double setpoint){
+		driveNeoMaster.setVoltage(positionController.calculate(driveNeoMaster.getEncoder().getPosition(), setpoint));
+
+		//move the elevator to target value
 
 	}
 

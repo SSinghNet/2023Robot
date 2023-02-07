@@ -2,9 +2,11 @@ package org.mort11.util;
 
 import static org.mort11.util.Constants.ControlPorts.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
+import static org.mort11.util.Constants.Elevator.*;
 
 import org.mort11.commands.arm.MoveArm;
 import org.mort11.commands.drivetrain.RotateToAngle;
+import org.mort11.commands.elevator.MoveElevatorSpeed;
 import org.mort11.commands.wrist.RotateWrist;
 import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
@@ -59,9 +61,12 @@ public class Control {
 		xboxController.povUp().onTrue(new RotateWrist(0));
 		xboxController.povLeft().onTrue(new RotateWrist(0));
 		xboxController.povDown().onTrue(new RotateWrist(0));
+		xboxController.a().onTrue(new MoveElevatorSpeed(ELEVATOR_SPEED));
+		xboxController.b().onTrue(new MoveElevatorSpeed(-ELEVATOR_SPEED));
 
 		// TODO: check arm positions
 		// xboxController.().onTrue(new MoveArm());
+
 	}
 
 	/**
