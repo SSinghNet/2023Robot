@@ -24,6 +24,21 @@ public class Arm extends SubsystemBase {
 		return armController;
 	}
 
+	public static CANSparkMax getNeoMotor() {
+		return driveNeo;
+	}
+
+	/**
+	 * Uses close loop controller to set the voltage of of the motor that controls
+	 * the position of the arm, based on a given target position
+	 *
+	 * @param targetPosition
+	 *            Value of the position we are targeting.
+	 */
+	public void setArmPosition(double targetPosition) {
+		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition));
+	}
+
 	@Override
 	public void periodic() {
 
@@ -37,19 +52,6 @@ public class Arm extends SubsystemBase {
 			arm = new Arm();
 		}
 		return arm;
-	}
-
-	public static CANSparkMax getNeoMotor() {
-		return driveNeo;
-	}
-
-	/**
-	 * Uses close loop controller to set the voltage of of the motor that controls the position of the arm, based on a given target position
-	 * @param targetPosition
-	 * 				Value of the position we are targeting.
-	 */
-	public void setArmPosition(double targetPosition) {
-		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition));
 	}
 
 }

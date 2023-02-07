@@ -22,14 +22,9 @@ public class Claw extends SubsystemBase {
 
 	private DoubleSolenoid piston;
 
-	private CANSparkMax wristNeo;
-
-	/** {@link https://store.ctr-electronics.com/srx-mag-encoder/} */
-	private DigitalInput wristSRXEncoder;
-
 	private Claw() {
-		intakeNeoMaster = new CANSparkMax(INTAKE_MASTER, MotorType.kBrushless);
-		intakeNeoFollower = new CANSparkMax(INTAKE_FOLLOWER, MotorType.kBrushless);
+		intakeNeoMaster = new CANSparkMax(DRIVE_MASTER, MotorType.kBrushless);
+		intakeNeoFollower = new CANSparkMax(DRIVE_FOLLOWER, MotorType.kBrushless);
 
 		intakeNeoFollower.follow(intakeNeoMaster);
 
@@ -37,9 +32,6 @@ public class Claw extends SubsystemBase {
 
 		piston = new DoubleSolenoid(Constants.PCM, PneumaticsModuleType.REVPH, PISTON_FORWARD, PISTON_BACKWARD);
 
-		wristNeo = new CANSparkMax(WRIST, MotorType.kBrushless);
-
-		wristSRXEncoder = new DigitalInput(WRIST_ENCODER);
 	}
 
 	@Override
