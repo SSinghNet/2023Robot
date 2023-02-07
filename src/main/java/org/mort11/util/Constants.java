@@ -49,8 +49,15 @@ public final class Constants {
 
 	public final static class Arm {
 		public final static int DRIVE = 0;
-		public final static int ENCODER_CHANNEL_A = 0;
-		public final static int ENCODER_CHANNEL_B = 0;
+
+		// TODO: change constant values
+		public final static double HYBRID_LEVEL = 0;
+		public final static double CENTER_LEVEL = 0;
+		public final static double TOP_LEVEL = 0;
+		public final static double TOLERANCE = 0;
+		public final static double KP = 0;
+		public final static double KI = 0;
+		public final static double KD = 0;
 	}
 
 	public final static class Claw {
@@ -83,4 +90,5 @@ public final class Constants {
 		public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
 				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 	}
+
 }

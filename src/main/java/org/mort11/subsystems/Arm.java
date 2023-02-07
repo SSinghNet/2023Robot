@@ -3,23 +3,25 @@ package org.mort11.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Arm.*;
 
 public class Arm extends SubsystemBase {
 	private static Arm arm;
+	private PIDController armController;
 
-	private CANSparkMax driveNeo;
-
-	/** {@link https://www.revrobotics.com/rev-11-1271/} */
-	private Encoder boreEncoder;
+	private static CANSparkMax driveNeo;
 
 	private Arm() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
+		armController = new PIDController(KP, KI, KD);
+		armController.setTolerance(TOLERANCE);
+	}
 
-		boreEncoder = new Encoder(ENCODER_CHANNEL_A, ENCODER_CHANNEL_B);
+	public PIDController getArmController() {
+		return armController;
 	}
 
 	@Override
@@ -36,4 +38,18 @@ public class Arm extends SubsystemBase {
 		}
 		return arm;
 	}
+
+	public static CANSparkMax getNeoMotor() {
+		return driveNeo;
+	}
+
+	/**
+	 * Uses close loop controller to set the voltage of of the motor that controls the position of the arm, based on a given target position
+	 * @param targetPosition
+	 * 				Value of the position we are targeting.
+	 */
+	public void setArmPosition(double targetPosition) {
+		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition));
+	}
+
 }
