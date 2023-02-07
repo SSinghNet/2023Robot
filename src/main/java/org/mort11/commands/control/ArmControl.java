@@ -1,9 +1,7 @@
 package org.mort11.commands.control;
 
 import org.mort11.subsystems.Arm;
-import org.mort11.util.Constants;
-
-import com.revrobotics.CANSparkMax;
+import static org.mort11.util.Constants.Arm.*;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -29,13 +27,13 @@ public class ArmControl extends CommandBase {
 		 * Sets the position of the motor based on the button pressed, varying between Hybrid, Center, and Top.
 		 */
 		if (false) {
-			arm.setArmPosition(Constants.Arm.HYBRID_LEVEL);
+			arm.setArmPosition(HYBRID_LEVEL);
 
 		} else if (false) {
-			arm.setArmPosition(Constants.Arm.CENTER_LEVEL);
+			arm.setArmPosition(CENTER_LEVEL);
 
 		} else if (false) {
-			arm.setArmPosition(Constants.Arm.TOP_LEVEL);
+			arm.setArmPosition(TOP_LEVEL);
 
 		}
 	}

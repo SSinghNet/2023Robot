@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Arm.*;
 
-import org.mort11.util.Constants;
-
 public class Arm extends SubsystemBase {
 	private static Arm arm;
 	private PIDController armController;
@@ -18,8 +16,8 @@ public class Arm extends SubsystemBase {
 
 	private Arm() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
-		armController = new PIDController(Constants.Arm.KP, Constants.Arm.KI, Constants.Arm.KD);
-		armController.setTolerance(Constants.Arm.TOLERANCE);
+		armController = new PIDController(KP, KI, KD);
+		armController.setTolerance(TOLERANCE);
 	}
 
 	public PIDController getArmController() {
