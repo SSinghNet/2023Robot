@@ -34,6 +34,7 @@ public final class Constants {
 		public final static int BACK_RIGHT_STEER_ENCODER = 12;
 		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
 
+		// TODO: tune pid
 		public final static double ROTATE_TO_ANGLE_KP = 0.02;
 		public final static double ROTATE_TO_ANGLE_KI = 0;
 		public final static double ROTATE_TO_ANGLE_KD = 0;
@@ -41,6 +42,7 @@ public final class Constants {
 	}
 
 	public final static class Elevator {
+		// TODO ports
 		public final static int DRIVE_MASTER = 0;
 		public final static int DRIVE_FOLLOWER = 0;
 
@@ -48,30 +50,42 @@ public final class Constants {
 	}
 
 	public final static class Arm {
+		// TODO: port
 		public final static int DRIVE = 0;
 
 		// TODO: change constant values
 		public final static double HYBRID_LEVEL = 0;
 		public final static double CENTER_LEVEL = 0;
 		public final static double TOP_LEVEL = 0;
-		public final static double TOLERANCE = 0;
+
+		// TODO: tune PID
 		public final static double KP = 0;
 		public final static double KI = 0;
 		public final static double KD = 0;
+		public final static double TOLERANCE = 0;
+
 	}
 
 	public final static class Claw {
-		public final static int INTAKE_MASTER = 0;
-		public final static int INTAKE_FOLLOWER = 0;
+		// TODO: Ports
+		public final static int DRIVE_MASTER = 0;
+		public final static int DRIVE_FOLLOWER = 0;
 
 		public final static int IR_SENSOR = 0;
 
 		public final static int PISTON_FORWARD = 0;
 		public final static int PISTON_BACKWARD = 0;
 
-		public final static int WRIST = 0;
+	}
 
-		public final static int WRIST_ENCODER = 0;
+	public final static class Wrist {
+		// TODO: Ports
+		public final static int DRIVE = 0;
+		public final static int ENCODER = 0;
+
+		public final static int KP = 0;
+		public final static int KI = 0;
+		public final static int KD = 0;
 	}
 
 	public final static class RobotSpecs {

@@ -3,8 +3,13 @@ package org.mort11.util;
 import static org.mort11.util.Constants.ControlPorts.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
 
-import org.mort11.commands.auto.RotateToAngle;
+import org.mort11.commands.drivetrain.RotateToAngle;
+import org.mort11.commands.wrist.RotateWrist;
+import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
+import org.mort11.subsystems.Elevator;
+import org.mort11.subsystems.Wrist;
+import org.mort11.subsystems.Arm;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -16,6 +21,10 @@ public class Control {
 	private static CommandXboxController xboxController;
 
 	private static Drivetrain drivetrain;
+	private static Arm arm;
+	private static Claw claw;
+	private static Elevator elevator;
+	private static Wrist wrist;
 
 	public static void init() {
 		leftJoystick = new CommandJoystick(LEFT_JOYSTICK);
@@ -23,6 +32,10 @@ public class Control {
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
 
 		drivetrain = Drivetrain.getInstance();
+		arm = Arm.getInstance();
+		claw = Claw.getInstance();
+		elevator = Elevator.getInstance();
+		wrist = Wrist.getInstance();
 	}
 
 	/**
@@ -40,6 +53,11 @@ public class Control {
 		rightJoystick.povDown().whileTrue(new RotateToAngle(180, false));
 
 		// controller
+		// TODO: check wrist positions
+		xboxController.povRight().onTrue(new RotateWrist(0));
+		xboxController.povUp().onTrue(new RotateWrist(0));
+		xboxController.povLeft().onTrue(new RotateWrist(0));
+		xboxController.povDown().onTrue(new RotateWrist(0));
 
 	}
 
