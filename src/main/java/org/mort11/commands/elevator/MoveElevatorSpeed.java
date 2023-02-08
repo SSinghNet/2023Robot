@@ -9,35 +9,32 @@ import org.mort11.subsystems.Elevator;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class MoveElevatorSpeed extends CommandBase {
-  /** Creates a new MoveElevator. */
-  double speed = 0;
-  Elevator elevator;
-  public MoveElevatorSpeed(double speed) {
-    elevator = Elevator.getInstance();
-    this.speed = speed;
-    addRequirements(elevator);
-    // Use addRequirements() here to declare subsystem dependencies.
-  }
+	Elevator elevator;
+	double speed;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
+	public MoveElevatorSpeed(double speed) {
+		elevator = Elevator.getInstance();
+		this.speed = speed;
+		addRequirements(elevator);
+	}
 
-  }
+	@Override
+	public void initialize() {
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-    elevator.move(speed);
-  }
+	}
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+	@Override
+	public void execute() {
+		elevator.move(speed);
+	}
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+	@Override
+	public void end(boolean interrupted) {
+		elevator.move(0);
+	}
+
+	@Override
+	public boolean isFinished() {
+		return false;
+	}
 }

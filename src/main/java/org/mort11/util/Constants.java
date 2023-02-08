@@ -56,7 +56,6 @@ public final class Constants {
 		public final static int KI = 0;
 		public final static int KD = 0;
 
-
 		public final static int LIMIT_SWITCH = 0;
 	}
 

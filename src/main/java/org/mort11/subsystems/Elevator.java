@@ -24,33 +24,39 @@ public class Elevator extends SubsystemBase {
 	private Elevator() {
 		driveNeoMaster = new CANSparkMax(ELEVATOR_MASTER, MotorType.kBrushless);
 		driveNeoFollower = new CANSparkMax(ELEVATOR_FOLLOWER, MotorType.kBrushless);
-		
 
 		driveNeoFollower.follow(driveNeoMaster, false); // todo: check invert
 		positionController = new PIDController(KP, KI, KD);
 		limitSwitch = new DigitalInput(LIMIT_SWITCH);
 	}
 
-	@Override
-	public void periodic() {
-
-	}
 	/**
 	 * Moves the elevator a preset speed
-	 * @param speed The speed to set the elevator
+	 *
+	 * @param speed
+	 *            The speed to set the elevator
 	 */
-	public void move(double speed){
-		//todo: program limit switch check.
+	public void move(double speed) {
+		// todo: program limit switch check.
 		driveNeoMaster.set(speed);
 	}
+
 	/**
 	 * Moves the elevator to a specific point based on value passed.
-	 * @param setpoint The encoder position to move to.
+	 *
+	 * @param setpoint
+	 *            The encoder position to move to.
 	 */
-	public void moveTo(double setpoint){
+	public void moveTo(double setpoint) {
 		driveNeoMaster.setVoltage(positionController.calculate(driveNeoMaster.getEncoder().getPosition(), setpoint));
+	}
 
-		//move the elevator to target value
+	public boolean atSetpoint() {
+		return positionController.atSetpoint();
+	}
+
+	@Override
+	public void periodic() {
 
 	}
 

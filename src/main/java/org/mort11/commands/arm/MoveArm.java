@@ -24,7 +24,8 @@ public class MoveArm extends CommandBase {
 		// TODO: Set button
 
 		/**
-		 * Sets the position of the motor based on the button pressed, varying between Hybrid, Center, and Top.
+		 * Sets the position of the motor based on the button pressed, varying between
+		 * Hybrid, Center, and Top.
 		 */
 		if (false) {
 			arm.setArmPosition(HYBRID_LEVEL);
@@ -39,7 +40,8 @@ public class MoveArm extends CommandBase {
 	}
 
 	/**
-	 * When the motor of the arm is withih the tolerance of the setpoint, the code is finished.
+	 * When the motor of the arm is withih the tolerance of the setpoint, the code
+	 * is finished.
 	 */
 	@Override
 	public boolean isFinished() {
