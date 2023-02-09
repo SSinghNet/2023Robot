@@ -34,6 +34,18 @@ public class Claw extends SubsystemBase {
 
 	}
 
+	public void setIntakePercentOutput(double speed){
+		intakeNeoMaster.set(speed);
+	}
+
+	public void setPiston(DoubleSolenoid.Value value){
+		piston.set(value);
+	}
+
+	public boolean getIrSensor(){
+		return !irSensor.get();
+	}
+
 	@Override
 	public void periodic() {
 

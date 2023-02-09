@@ -26,12 +26,12 @@ public class RotateWrist extends CommandBase {
 
 	@Override
 	public void execute() {
-
+		wrist.setWristPosition(position);
 	}
 
 	@Override
 	public boolean isFinished() {
-		return false;
+		return wrist.atSetpoint();
 	}
 
 	@Override
