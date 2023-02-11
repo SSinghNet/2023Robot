@@ -50,11 +50,13 @@ public final class Constants {
 		// TODO ports
 		public final static int ELEVATOR_MASTER = 0;
 		public final static int ELEVATOR_FOLLOWER = 0;
-		public final static double ELEVATOR_SPEED = .5;
+		public final static double ELEVATOR_SPEED = .25;
 
 		public final static int KP = 0;
 		public final static int KI = 0;
 		public final static int KD = 0;
+		public final static double HIGH_PID_VALUE = 0; //PID positional value representing the highest point the elevator can go
+		public final static double LOW_PID_VALUE = 0; //PID positional value representing the lowest point the elevator can go
 
 		public final static int LIMIT_SWITCH = 0;
 	}
