@@ -8,12 +8,12 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class MoveToAprilTag extends CommandBase {
-    private Drivetrain drivetrain;
+	private Drivetrain drivetrain;
 	private Vision vision;
 
 	private int id;
 
-	public MoveToAprilTag(int id){
+	public MoveToAprilTag(int id) {
 		drivetrain = Drivetrain.getInstance();
 		vision = Vision.getInstance();
 
@@ -29,26 +29,16 @@ public class MoveToAprilTag extends CommandBase {
 
 	@Override
 	public void execute() {
-		drivetrain.drive(
-			new ChassisSpeeds(
-				-drivetrain.getAprilTagXController().calculate(vision.getCamTranZ(), 0),
+		drivetrain.drive(new ChassisSpeeds(-drivetrain.getAprilTagXController().calculate(vision.getCamTranZ(), 0),
 				drivetrain.getAprilTagYController().calculate(vision.getCamTranX(), 0),
-				-drivetrain.getAprilTagOmegaController().calculate(vision.getCamTranYaw(), 0)
-			)
-		);
+				-drivetrain.getAprilTagOmegaController().calculate(vision.getCamTranYaw(), 0)));
 	}
 
 	@Override
 	public boolean isFinished() {
-		return
-			!vision.hasTarget() ||
-			vision.getATId() != id ||
-			(
-				drivetrain.getAprilTagXController().atSetpoint() &&
-				drivetrain.getAprilTagYController().atSetpoint() &&
-				drivetrain.getAprilTagOmegaController().atSetpoint() 
-			)
-		;
+		return !vision.hasTarget() || vision.getATId() != id
+				|| (drivetrain.getAprilTagXController().atSetpoint() && drivetrain.getAprilTagYController().atSetpoint()
+						&& drivetrain.getAprilTagOmegaController().atSetpoint());
 	}
 
 	@Override
@@ -56,4 +46,3 @@ public class MoveToAprilTag extends CommandBase {
 		drivetrain.drive(new ChassisSpeeds(0, 0, 0));
 	}
 }
-

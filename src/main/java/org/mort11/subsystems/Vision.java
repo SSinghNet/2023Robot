@@ -8,36 +8,36 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
 	private static Vision vision;
-	
-    private NetworkTable llTable;
 
-    private Vision() {
-        llTable = NetworkTableInstance.getDefault().getTable("limelight");
-    }
+	private NetworkTable llTable;
 
-    public boolean hasTarget() {
+	private Vision() {
+		llTable = NetworkTableInstance.getDefault().getTable("limelight");
+	}
+
+	public boolean hasTarget() {
 		return llTable.getEntry("tv").getInteger(0) == 1;
 	}
 
-    public double getTargetArea() {
-        return llTable.getEntry("ta").getDouble(0);
-    }
+	public double getTargetArea() {
+		return llTable.getEntry("ta").getDouble(0);
+	}
 
-    public void setPipeline(int id) {
-        llTable.getEntry("pipeline").setNumber(id);
-    }
+	public void setPipeline(int id) {
+		llTable.getEntry("pipeline").setNumber(id);
+	}
 
 	public void setPipeline(Pipeline pipe) {
 		setPipeline(pipe.getId());
 	}
-	
-	public void setPipeline(Pipeline pipe, int ATID) {
-        setPipeline(pipe.getId(ATID));
-    }
 
-    public Pipeline getPipeline() {
-        return Pipeline.getPipeline((int) llTable.getEntry("pipeline").getInteger(0));
-    }
+	public void setPipeline(Pipeline pipe, int ATID) {
+		setPipeline(pipe.getId(ATID));
+	}
+
+	public Pipeline getPipeline() {
+		return Pipeline.getPipeline((int) llTable.getEntry("pipeline").getInteger(0));
+	}
 
 	// Translation (x, y, z) Rotation(pitch, yaw, roll)
 	public Number[] getCamTran() {
@@ -75,11 +75,11 @@ public class Vision extends SubsystemBase {
 	public int getATId() {
 		return (int) llTable.getEntry("tid").getInteger(0);
 	}
-    
-    public static Vision getInstance() {
-        if (vision == null) {
-            vision = new Vision();
-        }
-        return vision;
-    }
+
+	public static Vision getInstance() {
+		if (vision == null) {
+			vision = new Vision();
+		}
+		return vision;
+	}
 }

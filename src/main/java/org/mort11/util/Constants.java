@@ -119,11 +119,8 @@ public final class Constants {
 
 	public final static class Vision {
 		public static enum Pipeline {
-			DEFAULT(0),
-			CONE(1),
-			CUBE(2),
-			APRIL_TAG(3);
-			
+			DEFAULT(0), CONE(1), CUBE(2), APRIL_TAG(3);
+
 			int id;
 
 			Pipeline(int id) {
@@ -135,8 +132,8 @@ public final class Constants {
 			}
 
 			/**
-			* Gets id of pipeline for a specific April Tag ID, id 1 at pipeline 3, etc.
-			*/
+			 * Gets id of pipeline for a specific April Tag ID, id 1 at pipeline 3, etc.
+			 */
 			public int getId(int ATID) {
 				if (this.id == 3) {
 					return 2 + ATID;
@@ -174,6 +171,5 @@ public final class Constants {
 		public static final double MAX_VELOCITY_AUTO = 4;
 		public static final double MAX_ACCELERATION_AUTO = 3;
 	}
-
 
 }

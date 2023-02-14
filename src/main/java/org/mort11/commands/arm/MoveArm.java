@@ -8,8 +8,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class MoveArm extends CommandBase {
 	private Arm arm;
 
-	public MoveArm() {
+	private double position;
+
+	public MoveArm(double position) {
 		arm = Arm.getInstance();
+
+		this.position = position;
 
 		addRequirements(arm);
 	}
@@ -21,22 +25,7 @@ public class MoveArm extends CommandBase {
 
 	@Override
 	public void execute() {
-		// TODO: Set button
-
-		/**
-		 * Sets the position of the motor based on the button pressed, varying between
-		 * Hybrid, Center, and Top.
-		 */
-		if (false) {
-			arm.setArmPosition(HYBRID_LEVEL);
-
-		} else if (false) {
-			arm.setArmPosition(CENTER_LEVEL);
-
-		} else if (false) {
-			arm.setArmPosition(TOP_LEVEL);
-
-		}
+		arm.setArmPosition(position);
 	}
 
 	/**

@@ -65,7 +65,8 @@ public class Auto {
 	}
 
 	public static CommandBase autoFromPathGroup(String name) {
-		return autoBuilder.fullAuto(PathPlanner.loadPathGroup(name, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
+		return autoBuilder.fullAuto(
+				PathPlanner.loadPathGroup(name, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
 	}
 
 	public static CommandBase autoFromPathGroup(ArrayList<PathPlannerTrajectory> paths) {
@@ -75,14 +76,14 @@ public class Auto {
 	public static CommandBase autoFromPaths(ArrayList<String> names) {
 		return autoFromPathGroup(createPathGroup(names));
 	}
-	
-	public static ArrayList<PathPlannerTrajectory> createPathGroup(ArrayList<String> names){
+
+	public static ArrayList<PathPlannerTrajectory> createPathGroup(ArrayList<String> names) {
 		ArrayList<PathPlannerTrajectory> paths = new ArrayList<PathPlannerTrajectory>();
 
 		for (String n : names) {
 			paths.add(PathPlanner.loadPath(n, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
 		}
-		
+
 		return paths;
 	}
 
