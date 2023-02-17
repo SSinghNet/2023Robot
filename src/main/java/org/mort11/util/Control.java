@@ -62,15 +62,16 @@ public class Control {
 		xboxController.povUp().onTrue(new WristPos(0));
 		xboxController.povLeft().onTrue(new WristPos(0));
 		xboxController.povDown().onTrue(new WristPos(0));
-		xboxController.a().toggleOnTrue(new ElevatorSpeed(0.1));
+		xboxController.a().toggleOnTrue(new ElevatorSpeed(-0.1));
 		// xboxController.b().toggleOnTrue(new MoveElevatorSpeed(-ELEVATOR_SPEED));
 		xboxController.x().whileTrue(new MoveArmSpeed(-0.1));
 		xboxController.rightBumper().whileTrue(new MoveArmSpeed(0.1));
 		xboxController.y().whileTrue(new WristSpeed(0.1));
 		xboxController.b().whileTrue(new ClawIntake(1));
-		xboxController.leftBumper().whileTrue(new ClawPiston());
+		xboxController.leftBumper().whileTrue(new ClawPiston(Value.kForward));
 		// TODO: check arm positions
 		// xboxController.().onTrue(new MoveArm());
+
 
 	}
 
@@ -112,15 +113,15 @@ public class Control {
 	}
 
 	public static double getJoystickX() {
-		return -modifyJoystickAxis(joystick.getX(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND;
+		return -modifyJoystickAxis(joystick.getX(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND;
 	}
 
 	public static double getJoystickY() {
-		return -modifyJoystickAxis(joystick.getY(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND;
+		return -modifyJoystickAxis(joystick.getY(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND;
 	}
 
 	public static double getJoystickTwist() {
-		return -modifyJoystickAxis(joystick.getTwist(), joystick.getThrottle())
+		return -modifyJoystickAxis(joystick.getRawAxis(3), joystick.getRawAxis(2))
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
 	}
 

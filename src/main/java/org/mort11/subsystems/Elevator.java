@@ -24,7 +24,7 @@ public class Elevator extends SubsystemBase {
 		driveNeoMaster = new CANSparkMax(ELEVATOR_MASTER, MotorType.kBrushless);
 		driveNeoFollower = new CANSparkMax(ELEVATOR_FOLLOWER, MotorType.kBrushless);
 
-		driveNeoFollower.follow(driveNeoMaster, false); // todo: check invert
+		driveNeoFollower.follow(driveNeoMaster, true); // todo: check invert
 		positionController = new PIDController(KP, KI, KD);
 		limitSwitch = new DigitalInput(LIMIT_SWITCH);
 	}
