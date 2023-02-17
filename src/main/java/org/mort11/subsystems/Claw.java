@@ -27,7 +27,7 @@ public class Claw extends SubsystemBase {
 		intakeNeoMaster = new CANSparkMax(DRIVE_MASTER, MotorType.kBrushless);
 		intakeNeoFollower = new CANSparkMax(DRIVE_FOLLOWER, MotorType.kBrushless);
 
-		intakeNeoFollower.follow(intakeNeoMaster);
+		intakeNeoFollower.follow(intakeNeoMaster, true);
 
 		irSensor = new DigitalInput(IR_SENSOR);
 
@@ -48,7 +48,7 @@ public class Claw extends SubsystemBase {
 	}
 
 	public boolean getIrSensor() {
-		return !irSensor.get();
+		return !irSensor.get(); // is inverted to be true when there is an object present
 	}
 
 	@Override

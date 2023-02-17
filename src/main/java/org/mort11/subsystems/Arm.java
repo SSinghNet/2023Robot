@@ -33,11 +33,11 @@ public class Arm extends SubsystemBase {
 	 * Uses close loop controller to set the voltage of of the motor that controls
 	 * the position of the arm, based on a given target position
 	 *
-	 * @param targetPosition
+	 * @param setpoint
 	 *            Value of the position we are targeting.
 	 */
-	public void setPosition(double targetPosition) {
-		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition));
+	public void setPosition(double setpoint) {
+		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
 	}
 
 	public void setSpeed(double speed) {
