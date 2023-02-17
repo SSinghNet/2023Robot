@@ -4,12 +4,12 @@ import org.mort11.subsystems.Claw;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class MoveClaw extends CommandBase {
+public class ClawIntake extends CommandBase {
 
 	private Claw claw;
 	private double speed;
 
-	public MoveClaw(double speed) {
+	public ClawIntake(double speed) {
 		claw = Claw.getInstance();
 
 		this.speed = speed;
@@ -23,7 +23,7 @@ public class MoveClaw extends CommandBase {
 
 	@Override
 	public void execute() {
-		claw.setIntakePercentOutput(speed);
+		claw.setSpeed(speed);
 	}
 
 	@Override
@@ -33,6 +33,6 @@ public class MoveClaw extends CommandBase {
 
 	@Override
     public void end(boolean interrupted) {
-        claw.setIntakePercentOutput(0);
+        claw.setSpeed(0);
 	}
 }

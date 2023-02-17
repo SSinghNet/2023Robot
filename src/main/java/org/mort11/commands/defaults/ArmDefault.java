@@ -16,7 +16,7 @@ public class ArmDefault extends CommandBase {
 
 	@Override
 	public void initialize() {
-		arm.setArmPosition(0);
+		arm.setPosition(0);
 	}
 
 	@Override

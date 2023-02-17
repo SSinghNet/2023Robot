@@ -6,12 +6,12 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class MoveClawPiston extends CommandBase {
+public class ClawPiston extends CommandBase {
 
 	private Claw claw;
 	private DoubleSolenoid.Value value;
 
-	public MoveClawPiston(DoubleSolenoid.Value value) {
+	public ClawPiston(DoubleSolenoid.Value value) {
 		claw = Claw.getInstance();
 
 		this.value = value;
@@ -19,7 +19,7 @@ public class MoveClawPiston extends CommandBase {
 		addRequirements(claw);
 	}
 
-	public MoveClawPiston() {
+	public ClawPiston() {
 		claw = Claw.getInstance();
 
 		value = claw.getPiston();

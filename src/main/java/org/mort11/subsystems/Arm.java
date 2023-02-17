@@ -36,11 +36,11 @@ public class Arm extends SubsystemBase {
 	 * @param targetPosition
 	 *            Value of the position we are targeting.
 	 */
-	public void setArmPosition(double targetPosition) {
+	public void setPosition(double targetPosition) {
 		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition));
 	}
 
-	public void setArmSpeed(double speed) {
+	public void setSpeed(double speed) {
 		driveNeo.set(speed);
 	}
 

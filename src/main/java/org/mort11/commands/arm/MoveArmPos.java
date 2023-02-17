@@ -25,13 +25,9 @@ public class MoveArmPos extends CommandBase {
 
 	@Override
 	public void execute() {
-		arm.setArmPosition(position);
+		arm.setPosition(position);
 	}
 
-	/**
-	 * When the motor of the arm is withih the tolerance of the setpoint, the code
-	 * is finished.
-	 */
 	@Override
 	public boolean isFinished() {
 		return arm.getArmController().atSetpoint();
@@ -39,7 +35,7 @@ public class MoveArmPos extends CommandBase {
 
 	@Override
 	public void end(boolean interrupted) {
-		arm.setArmSpeed(0);
+		arm.setSpeed(0);
 	}
 
 }

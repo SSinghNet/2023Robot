@@ -4,14 +4,14 @@ import org.mort11.subsystems.Wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class RotateWristPos extends CommandBase {
+public class WristPos extends CommandBase {
 	// TODO: implement
 
 	private Wrist wrist;
 
 	private double position;
 
-	public RotateWristPos(double position) {
+	public WristPos(double position) {
 		wrist = Wrist.getInstance();
 
 		this.position = position;
@@ -26,7 +26,7 @@ public class RotateWristPos extends CommandBase {
 
 	@Override
 	public void execute() {
-		wrist.setWristPosition(position);
+		wrist.setPosition(position);
 	}
 
 	@Override
@@ -36,6 +36,6 @@ public class RotateWristPos extends CommandBase {
 
 	@Override
 	public void end(boolean interrupted) {
-		wrist.setWristPercentOutput(0);
+		wrist.setSpeed(0);
 	}
 }

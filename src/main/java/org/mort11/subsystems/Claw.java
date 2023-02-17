@@ -35,7 +35,7 @@ public class Claw extends SubsystemBase {
 
 	}
 
-	public void setIntakePercentOutput(double speed) {
+	public void setSpeed(double speed) {
 		intakeNeoMaster.set(speed);
 	}
 

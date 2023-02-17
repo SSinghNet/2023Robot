@@ -8,11 +8,11 @@ import org.mort11.subsystems.Elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class MoveElevatorSpeed extends CommandBase {
+public class ElevatorSpeed extends CommandBase {
 	Elevator elevator;
 	double speed;
 
-	public MoveElevatorSpeed(double speed) {
+	public ElevatorSpeed(double speed) {
 		elevator = Elevator.getInstance();
 		this.speed = speed;
 		addRequirements(elevator);
@@ -25,12 +25,12 @@ public class MoveElevatorSpeed extends CommandBase {
 
 	@Override
 	public void execute() {
-		elevator.move(speed);
+		elevator.setSpeed(speed);
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		elevator.move(0);
+		elevator.setSpeed(0);
 	}
 
 	@Override

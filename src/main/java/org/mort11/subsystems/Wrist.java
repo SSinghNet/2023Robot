@@ -27,12 +27,12 @@ public class Wrist extends SubsystemBase {
 		wristController = new PIDController(KP, KI, KD);
 	}
 
-	public void setWristPercentOutput(double speed) {
+	public void setSpeed(double speed) {
 		//TODO: limits
 		driveNeo.set(speed);
 	}
 
-	public void setWristPosition(double setpoint) {
+	public void setPosition(double setpoint) {
 		//TODO: limits
 		driveNeo.setVoltage(wristController.calculate(SRXEncoder.getRaw(), setpoint));
 	}

@@ -6,12 +6,12 @@ import static org.mort11.util.Constants.Elevator.*;
 
 import org.mort11.commands.arm.MoveArmPos;
 import org.mort11.commands.arm.MoveArmSpeed;
-import org.mort11.commands.claw.MoveClaw;
-import org.mort11.commands.claw.MoveClawPiston;
+import org.mort11.commands.claw.ClawIntake;
+import org.mort11.commands.claw.ClawPiston;
 import org.mort11.commands.drivetrain.RotateToAngle;
-import org.mort11.commands.elevator.MoveElevatorSpeed;
-import org.mort11.commands.wrist.RotateWristPos;
-import org.mort11.commands.wrist.RotateWristSpeed;
+import org.mort11.commands.elevator.ElevatorSpeed;
+import org.mort11.commands.wrist.WristPos;
+import org.mort11.commands.wrist.WristSpeed;
 import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Elevator;
@@ -58,17 +58,17 @@ public class Control {
 
 		// controller
 		// TODO: check wrist positions
-		xboxController.povRight().onTrue(new RotateWristPos(0));
-		xboxController.povUp().onTrue(new RotateWristPos(0));
-		xboxController.povLeft().onTrue(new RotateWristPos(0));
-		xboxController.povDown().onTrue(new RotateWristPos(0));
-		xboxController.a().toggleOnTrue(new MoveElevatorSpeed(0.1));
+		xboxController.povRight().onTrue(new WristPos(0));
+		xboxController.povUp().onTrue(new WristPos(0));
+		xboxController.povLeft().onTrue(new WristPos(0));
+		xboxController.povDown().onTrue(new WristPos(0));
+		xboxController.a().toggleOnTrue(new ElevatorSpeed(0.1));
 		// xboxController.b().toggleOnTrue(new MoveElevatorSpeed(-ELEVATOR_SPEED));
 		xboxController.x().whileTrue(new MoveArmSpeed(-0.1));
 		xboxController.rightBumper().whileTrue(new MoveArmSpeed(0.1));
-		xboxController.y().whileTrue(new RotateWristSpeed(0.1));
-		xboxController.b().whileTrue(new MoveClaw(1));
-		xboxController.leftBumper().whileTrue(new MoveClawPiston());
+		xboxController.y().whileTrue(new WristSpeed(0.1));
+		xboxController.b().whileTrue(new ClawIntake(1));
+		xboxController.leftBumper().whileTrue(new ClawPiston());
 		// TODO: check arm positions
 		// xboxController.().onTrue(new MoveArm());
 

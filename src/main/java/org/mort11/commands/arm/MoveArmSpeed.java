@@ -25,7 +25,7 @@ public class MoveArmSpeed extends CommandBase {
 
 	@Override
 	public void execute() {
-		arm.setArmSpeed(speed);
+		arm.setSpeed(speed);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class MoveArmSpeed extends CommandBase {
 
 	@Override
 	public void end(boolean interrupted) {
-		arm.setArmSpeed(0);
+		arm.setSpeed(0);
 	}
 
 }

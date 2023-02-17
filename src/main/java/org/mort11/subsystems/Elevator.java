@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Elevator.*;
 
-import org.mort11.util.Constants;
-
 public class Elevator extends SubsystemBase {
 	private static Elevator elevator;
 
@@ -37,7 +35,7 @@ public class Elevator extends SubsystemBase {
 	 * @param speed
 	 *            The speed to set the elevator
 	 */
-	public void move(double speed) {
+	public void setSpeed(double speed) {
 		// todo: program limit switch check.
 		driveNeoMaster.set(speed);
 	}
@@ -48,7 +46,7 @@ public class Elevator extends SubsystemBase {
 	 * @param setpoint
 	 *            The encoder position to move to.
 	 */
-	public void moveTo(double setpoint) {
+	public void setPosition(double setpoint) {
 		driveNeoMaster.setVoltage(positionController.calculate(driveNeoMaster.getEncoder().getPosition(), setpoint));
 	}
 

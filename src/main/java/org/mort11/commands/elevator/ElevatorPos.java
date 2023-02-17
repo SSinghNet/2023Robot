@@ -8,11 +8,11 @@ import org.mort11.subsystems.Elevator;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class MoveElevatorPos extends CommandBase {
+public class ElevatorPos extends CommandBase {
 	Elevator elevator;
 	double target;
 
-	public MoveElevatorPos(double target) {
+	public ElevatorPos(double target) {
 		elevator = Elevator.getInstance();
 		this.target = target;
 		addRequirements(elevator);
@@ -25,12 +25,12 @@ public class MoveElevatorPos extends CommandBase {
 
 	@Override
 	public void execute() {
-		elevator.moveTo(target);
+		elevator.setPosition(target);
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-		elevator.move(0);
+		elevator.setSpeed(0);
 	}
 
 	@Override
