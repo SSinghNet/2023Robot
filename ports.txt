@@ -1,0 +1,21 @@
+BackLeftSteer - 1
+BackLeftDrive - 2
+FrontRightDrive - 3
+FrontRightSteer - 4
+FrontLeftDrive - 5
+FrontLeftSteer - 6
+ElevatorMaster - 7
+ElevatorFollower - 8
+PDH - 12
+BackRightDrive - 18
+BackRightSteer - 19
+PCM - 26
+Arm - 27
+BackLeftEncoder - 30
+BackRightEncoder - 31
+FrontLeftEncoder - 32
+FrontRightEncoder - 33
+ClawMaster - 34
+ClawFollower - 35
+Wrist - 36
+

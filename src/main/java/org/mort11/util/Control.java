@@ -4,23 +4,27 @@ import static org.mort11.util.Constants.ControlPorts.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
 import static org.mort11.util.Constants.Elevator.*;
 
-import org.mort11.commands.arm.MoveArm;
+import org.mort11.commands.arm.MoveArmPos;
+import org.mort11.commands.arm.MoveArmSpeed;
+import org.mort11.commands.claw.MoveClaw;
+import org.mort11.commands.claw.MoveClawPiston;
 import org.mort11.commands.drivetrain.RotateToAngle;
 import org.mort11.commands.elevator.MoveElevatorSpeed;
-import org.mort11.commands.wrist.RotateWrist;
+import org.mort11.commands.wrist.RotateWristPos;
+import org.mort11.commands.wrist.RotateWristSpeed;
 import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Elevator;
 import org.mort11.subsystems.Wrist;
 import org.mort11.subsystems.Arm;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class Control {
-	private static CommandJoystick leftJoystick;
-	private static CommandJoystick rightJoystick;
+	private static CommandJoystick joystick;
 	private static CommandXboxController xboxController;
 
 	private static Drivetrain drivetrain;
@@ -30,8 +34,7 @@ public class Control {
 	private static Wrist wrist;
 
 	public static void init() {
-		leftJoystick = new CommandJoystick(LEFT_JOYSTICK);
-		rightJoystick = new CommandJoystick(RIGHT_JOYSTICK);
+		joystick = new CommandJoystick(JOYSTICK);
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
 
 		drivetrain = Drivetrain.getInstance();
@@ -45,25 +48,27 @@ public class Control {
 	 * Configure secondary button bindings
 	 */
 	public static void configureBindings() {
-		// left joystick
+		// joystick
+		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
 
-		// right joystick
-		rightJoystick.trigger().onTrue(new InstantCommand(drivetrain::zeroGyroscope));
-
-		rightJoystick.povRight().whileTrue(new RotateToAngle(-90, false));
-		rightJoystick.povUp().whileTrue(new RotateToAngle(0, false));
-		rightJoystick.povLeft().whileTrue(new RotateToAngle(90, false));
-		rightJoystick.povDown().whileTrue(new RotateToAngle(180, false));
+		joystick.povRight().whileTrue(new RotateToAngle(-90, false));
+		joystick.povUp().whileTrue(new RotateToAngle(0, false));
+		joystick.povLeft().whileTrue(new RotateToAngle(90, false));
+		joystick.povDown().whileTrue(new RotateToAngle(180, false));
 
 		// controller
 		// TODO: check wrist positions
-		xboxController.povRight().onTrue(new RotateWrist(0));
-		xboxController.povUp().onTrue(new RotateWrist(0));
-		xboxController.povLeft().onTrue(new RotateWrist(0));
-		xboxController.povDown().onTrue(new RotateWrist(0));
-		xboxController.a().onTrue(new MoveElevatorSpeed(ELEVATOR_SPEED));
-		xboxController.b().onTrue(new MoveElevatorSpeed(-ELEVATOR_SPEED));
-
+		xboxController.povRight().onTrue(new RotateWristPos(0));
+		xboxController.povUp().onTrue(new RotateWristPos(0));
+		xboxController.povLeft().onTrue(new RotateWristPos(0));
+		xboxController.povDown().onTrue(new RotateWristPos(0));
+		xboxController.a().toggleOnTrue(new MoveElevatorSpeed(0.1));
+		// xboxController.b().toggleOnTrue(new MoveElevatorSpeed(-ELEVATOR_SPEED));
+		xboxController.x().whileTrue(new MoveArmSpeed(-0.1));
+		xboxController.rightBumper().whileTrue(new MoveArmSpeed(0.1));
+		xboxController.y().whileTrue(new RotateWristSpeed(0.1));
+		xboxController.b().whileTrue(new MoveClaw(1));
+		xboxController.leftBumper().whileTrue(new MoveClawPiston());
 		// TODO: check arm positions
 		// xboxController.().onTrue(new MoveArm());
 
@@ -103,19 +108,19 @@ public class Control {
 
 		// takes the throttle value and takes it from [-1, 1] to [0.2, 1], and
 		// multiplies it by the value
-		return value * (throttleValue * -0.4 + 0.6);
+		return value * (-throttleValue * -0.4 + 0.6);
 	}
 
 	public static double getJoystickX() {
-		return -modifyJoystickAxis(rightJoystick.getX(), rightJoystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND;
+		return -modifyJoystickAxis(joystick.getX(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND;
 	}
 
 	public static double getJoystickY() {
-		return -modifyJoystickAxis(rightJoystick.getY(), rightJoystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND;
+		return -modifyJoystickAxis(joystick.getY(), joystick.getThrottle()) * MAX_VELOCITY_METERS_PER_SECOND;
 	}
 
 	public static double getJoystickTwist() {
-		return -modifyJoystickAxis(rightJoystick.getTwist(), rightJoystick.getThrottle())
+		return -modifyJoystickAxis(joystick.getTwist(), joystick.getThrottle())
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
 	}
 

@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Claw.*;
@@ -34,21 +35,26 @@ public class Claw extends SubsystemBase {
 
 	}
 
-	public void setIntakePercentOutput(double speed){
+	public void setIntakePercentOutput(double speed) {
 		intakeNeoMaster.set(speed);
 	}
 
-	public void setPiston(DoubleSolenoid.Value value){
+	public void setPiston(DoubleSolenoid.Value value) {
 		piston.set(value);
 	}
 
-	public boolean getIrSensor(){
+	public DoubleSolenoid.Value getPiston() {
+		return piston.get();
+	}
+
+	public boolean getIrSensor() {
 		return !irSensor.get();
 	}
 
 	@Override
 	public void periodic() {
-
+		SmartDashboard.putBoolean("Claw IR Sensor", getIrSensor());
+		SmartDashboard.putString("Claw Piston", getPiston().toString());
 	}
 
 	/**

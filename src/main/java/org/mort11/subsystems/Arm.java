@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Arm.*;
@@ -39,9 +40,13 @@ public class Arm extends SubsystemBase {
 		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition));
 	}
 
+	public void setArmSpeed(double speed) {
+		driveNeo.set(speed);
+	}
+
 	@Override
 	public void periodic() {
-
+		SmartDashboard.putNumber("Arm Built-In Encoder", driveNeo.getEncoder().getPosition());
 	}
 
 	/**

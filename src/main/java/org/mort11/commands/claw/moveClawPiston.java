@@ -6,41 +6,49 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class moveClawPiston extends CommandBase { 
+public class MoveClawPiston extends CommandBase {
 
-    private Claw claw;
-    private DoubleSolenoid.Value value;
+	private Claw claw;
+	private DoubleSolenoid.Value value;
 
-    public moveClawPiston(DoubleSolenoid.Value value){
-        claw = Claw.getInstance();
+	public MoveClawPiston(DoubleSolenoid.Value value) {
+		claw = Claw.getInstance();
 
-        this.value = value;
+		this.value = value;
 
-        addRequirements(this.claw);
-    }
+		addRequirements(claw);
+	}
 
-    @Override
-    public void initialize() {
-    }
+	public MoveClawPiston() {
+		claw = Claw.getInstance();
 
-    @Override
-    public void execute() {
-        if(value == Value.kForward){
-            claw.setPiston(Value.kReverse);
-        }else if(value == Value.kReverse){
-            claw.setPiston(Value.kForward);
-        }else{
-            claw.setPiston(Value.kOff);
-        }
-        
-    }
+		value = claw.getPiston();
+;
+		addRequirements(this.claw);
+	}
 
-    @Override
-    public boolean isFinished() {
-        return false;
-    }
+	@Override
+	public void initialize() {
+	}
 
-    @Override
-    public void end(boolean interrupted) {
-    }
+	@Override
+	public void execute() {
+		if (value == Value.kForward) {
+			claw.setPiston(Value.kReverse);
+		} else if (value == Value.kReverse) {
+			claw.setPiston(Value.kForward);
+		} else {
+			claw.setPiston(Value.kOff);
+		}
+
+	}
+
+	@Override
+	public boolean isFinished() {
+		return false;
+	}
+
+	@Override
+	public void end(boolean interrupted) {
+	}
 }

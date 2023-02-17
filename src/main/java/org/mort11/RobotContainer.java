@@ -13,6 +13,7 @@ import org.mort11.subsystems.Arm;
 import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Elevator;
+import org.mort11.subsystems.Pneumatic;
 import org.mort11.subsystems.Wrist;
 import org.mort11.util.Auto;
 import org.mort11.util.Control;
@@ -26,6 +27,7 @@ public class RobotContainer {
 	private Claw claw;
 	private Elevator elevator;
 	private Wrist wrist;
+	private Pneumatic pneumatic;
 
 	public RobotContainer() {
 		// initalize controllers
@@ -37,6 +39,7 @@ public class RobotContainer {
 		claw = Claw.getInstance();
 		elevator = Elevator.getInstance();
 		wrist = Wrist.getInstance();
+		pneumatic = Pneumatic.getInstance();
 
 		// set default commands
 		drivetrain.setDefaultCommand(
@@ -61,4 +64,5 @@ public class RobotContainer {
 	public Command getAutonomousCommand() {
 		return Auto.getSelected();
 	}
+
 }

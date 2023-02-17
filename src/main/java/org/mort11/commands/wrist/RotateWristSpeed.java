@@ -4,17 +4,17 @@ import org.mort11.subsystems.Wrist;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class RotateWrist extends CommandBase {
+public class RotateWristSpeed extends CommandBase {
 	// TODO: implement
 
 	private Wrist wrist;
 
-	private double position;
+	private double speed;
 
-	public RotateWrist(double position) {
+	public RotateWristSpeed(double speed) {
 		wrist = Wrist.getInstance();
 
-		this.position = position;
+		this.speed = speed;
 
 		addRequirements(wrist);
 	}
@@ -26,16 +26,16 @@ public class RotateWrist extends CommandBase {
 
 	@Override
 	public void execute() {
-		wrist.setWristPosition(position);
+		wrist.setWristPercentOutput(0.1);
 	}
 
 	@Override
 	public boolean isFinished() {
-		return wrist.atSetpoint();
+		return false;
 	}
 
 	@Override
 	public void end(boolean interrupted) {
-
+		wrist.setWristPercentOutput(0);
 	}
 }

@@ -5,34 +5,33 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import edu.wpi.first.math.util.Units;
 
 public final class Constants {
-	public final static int PCM = 0;
+	public final static int PCM = 26;
 
 	public final static class ControlPorts {
-		public final static int LEFT_JOYSTICK = 0;
-		public final static int RIGHT_JOYSTICK = 1;
+		public final static int JOYSTICK = 0;
 		public final static int XBOX_CONTROLLER = 2;
 	}
 
 	public final static class Drivetrain {
-		public final static int FRONT_LEFT_DRIVE = 1;
-		public final static int FRONT_LEFT_STEER = 2;
-		public final static int FRONT_LEFT_STEER_ENCODER = 10;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(187); // 253 //295
+		public final static int FRONT_LEFT_DRIVE = 5;
+		public final static int FRONT_LEFT_STEER = 6;
+		public final static int FRONT_LEFT_STEER_ENCODER = 32;
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(0);
 
-		public final static int FRONT_RIGHT_DRIVE = 7;
-		public final static int FRONT_RIGHT_STEER = 8;
-		public final static int FRONT_RIGHT_STEER_ENCODER = 11;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(252);
+		public final static int FRONT_RIGHT_DRIVE = 3;
+		public final static int FRONT_RIGHT_STEER = 4;
+		public final static int FRONT_RIGHT_STEER_ENCODER = 33;
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(0);
 
-		public final static int BACK_LEFT_DRIVE = 3;
-		public final static int BACK_LEFT_STEER = 4;
-		public final static int BACK_LEFT_STEER_ENCODER = 9;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(136);
+		public final static int BACK_LEFT_DRIVE = 2;
+		public final static int BACK_LEFT_STEER = 1;
+		public final static int BACK_LEFT_STEER_ENCODER = 30;
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(0);
 
-		public final static int BACK_RIGHT_DRIVE = 5;
-		public final static int BACK_RIGHT_STEER = 6;
-		public final static int BACK_RIGHT_STEER_ENCODER = 12;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
+		public final static int BACK_RIGHT_DRIVE = 18;
+		public final static int BACK_RIGHT_STEER = 19;
+		public final static int BACK_RIGHT_STEER_ENCODER = 31;
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(0);
 
 		// TODO: tune pid
 		public final static double ROTATE_TO_ANGLE_KP = 0.02;
@@ -48,20 +47,20 @@ public final class Constants {
 
 	public final static class Elevator {
 		// TODO ports
-		public final static int ELEVATOR_MASTER = 0;
-		public final static int ELEVATOR_FOLLOWER = 0;
+		public final static int ELEVATOR_MASTER = 7;
+		public final static int ELEVATOR_FOLLOWER = 8;
 		public final static double ELEVATOR_SPEED = .5;
 
 		public final static int KP = 0;
 		public final static int KI = 0;
 		public final static int KD = 0;
 
-		public final static int LIMIT_SWITCH = 0;
+		public final static int LIMIT_SWITCH = 4;
 	}
 
 	public final static class Arm {
 		// TODO: port
-		public final static int DRIVE = 0;
+		public final static int DRIVE = 27;
 
 		// TODO: change constant values
 		public final static double HYBRID_LEVEL = 0;
@@ -78,20 +77,20 @@ public final class Constants {
 
 	public final static class Claw {
 		// TODO: Ports
-		public final static int DRIVE_MASTER = 0;
-		public final static int DRIVE_FOLLOWER = 0;
+		public final static int DRIVE_MASTER = 34;
+		public final static int DRIVE_FOLLOWER = 35;
 
 		public final static int IR_SENSOR = 0;
 
-		public final static int PISTON_FORWARD = 0;
-		public final static int PISTON_BACKWARD = 0;
+		public final static int PISTON_FORWARD = 14;
+		public final static int PISTON_BACKWARD = 15;
 
 	}
 
 	public final static class Wrist {
 		// TODO: Ports
-		public final static int DRIVE = 0;
-		public final static int ENCODER = 0;
+		public final static int DRIVE = 36;
+		public final static int ENCODER = 9;
 
 		public final static int KP = 0;
 		public final static int KI = 0;
