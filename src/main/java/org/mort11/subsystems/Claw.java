@@ -27,7 +27,7 @@ public class Claw extends SubsystemBase {
 		intakeNeoMaster = new CANSparkMax(DRIVE_MASTER, MotorType.kBrushless);
 		intakeNeoFollower = new CANSparkMax(DRIVE_FOLLOWER, MotorType.kBrushless);
 
-		intakeNeoFollower.follow(intakeNeoMaster, true);
+		intakeNeoFollower.follow(intakeNeoMaster, false);
 
 		irSensor = new DigitalInput(IR_SENSOR);
 

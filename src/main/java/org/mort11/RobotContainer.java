@@ -43,7 +43,7 @@ public class RobotContainer {
 
 		// set default commands
 		drivetrain.setDefaultCommand(
-				new DriveDefault(Control::getJoystickX, Control::getJoystickY, Control::getJoystickTwist));
+				new DriveDefault(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist));
 		arm.setDefaultCommand(new ArmDefault());
 		claw.setDefaultCommand(new ClawDefault());
 		elevator.setDefaultCommand(new ElevatorDefault());

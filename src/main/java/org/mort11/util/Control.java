@@ -6,6 +6,7 @@ import static org.mort11.util.Constants.Elevator.*;
 
 import org.mort11.commands.arm.MoveArmPos;
 import org.mort11.commands.arm.MoveArmSpeed;
+import org.mort11.commands.auto.Balance;
 import org.mort11.commands.claw.ClawIntake;
 import org.mort11.commands.claw.ClawPiston;
 import org.mort11.commands.drivetrain.RotateToAngle;
@@ -51,24 +52,27 @@ public class Control {
 		// joystick
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
 
-		joystick.povRight().whileTrue(new RotateToAngle(-90, false));
-		joystick.povUp().whileTrue(new RotateToAngle(0, false));
-		joystick.povLeft().whileTrue(new RotateToAngle(90, false));
-		joystick.povDown().whileTrue(new RotateToAngle(180, false));
+		joystick.button(2).whileTrue(new Balance());
+		// joystick.povRight().whileTrue(new RotateToAngle(-90, false));
+		// joystick.povUp().whileTrue(new RotateToAngle(0, false));
+		// joystick.povLeft().whileTrue(new RotateToAngle(90, false));
+		// joystick.povDown().whileTrue(new RotateToAngle(180, false));
 
 		// controller
 		// TODO: check wrist positions
-		xboxController.povRight().onTrue(new WristPos(0));
-		xboxController.povUp().onTrue(new WristPos(0));
-		xboxController.povLeft().onTrue(new WristPos(0));
-		xboxController.povDown().onTrue(new WristPos(0));
+		// xboxController.povRight().onTrue(new WristPos(0));
+		// xboxController.povUp().onTrue(new WristPos(0));
+		// xboxController.povLeft().onTrue(new WristPos(0));
+		// xboxController.povDown().onTrue(new WristPos(0));
 		xboxController.a().toggleOnTrue(new ElevatorSpeed(-0.1));
-		// xboxController.b().toggleOnTrue(new MoveElevatorSpeed(-ELEVATOR_SPEED));
+		xboxController.b().toggleOnTrue(new ElevatorSpeed(0.1));
 		xboxController.x().whileTrue(new MoveArmSpeed(-0.1));
 		xboxController.rightBumper().whileTrue(new MoveArmSpeed(0.1));
 		xboxController.y().whileTrue(new WristSpeed(0.1));
-		xboxController.b().whileTrue(new ClawIntake(1));
-		xboxController.leftBumper().whileTrue(new ClawPiston(Value.kForward));
+		xboxController.povUp().whileTrue(new WristSpeed(-0.1));
+		xboxController.povDown().whileTrue(new ClawIntake(1));
+		xboxController.leftTrigger().whileTrue(new ClawIntake(-1));
+		xboxController.start().toggleOnTrue(new ClawPiston(Value.kForward));
 		// TODO: check arm positions
 		// xboxController.().onTrue(new MoveArm());
 
@@ -109,7 +113,7 @@ public class Control {
 
 		// takes the throttle value and takes it from [-1, 1] to [0.2, 1], and
 		// multiplies it by the value
-		return value * (-throttleValue * -0.4 + 0.6);
+		return value * (throttleValue * -0.4 + 0.6);
 	}
 
 	public static double getJoystickX() {

@@ -16,22 +16,22 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 5;
 		public final static int FRONT_LEFT_STEER = 6;
 		public final static int FRONT_LEFT_STEER_ENCODER = 32;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(187);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(8);
 
 		public final static int FRONT_RIGHT_DRIVE = 3;
 		public final static int FRONT_RIGHT_STEER = 4;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 33;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(187);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(336);
 
 		public final static int BACK_LEFT_DRIVE = 2;
 		public final static int BACK_LEFT_STEER = 1;
 		public final static int BACK_LEFT_STEER_ENCODER = 30;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(137);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(316);
 
 		public final static int BACK_RIGHT_DRIVE = 18;
 		public final static int BACK_RIGHT_STEER = 19;
 		public final static int BACK_RIGHT_STEER_ENCODER = 31;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(164);
 
 		// TODO: tune pid
 		public final static double ROTATE_TO_ANGLE_KP = 0.02;
@@ -39,10 +39,10 @@ public final class Constants {
 		public final static double ROTATE_TO_ANGLE_KD = 0;
 		public final static double ROTATE_TO_ANGLE_TOLERANCE = 0;
 
-		public final static double BALANCE_KP = 0;
+		public final static double BALANCE_KP = 0.035;
 		public final static double BALANCE_KI = 0;
-		public final static double BALANCE_KD = 0;
-		public final static double BALANCE_TOLERANCE = 0;
+		public final static double BALANCE_KD = 0.0035;
+		public final static double BALANCE_TOLERANCE = 0.2;
 	}
 
 	public final static class Elevator {

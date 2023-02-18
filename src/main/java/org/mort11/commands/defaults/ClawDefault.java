@@ -2,6 +2,7 @@ package org.mort11.commands.defaults;
 
 import org.mort11.subsystems.Claw;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ClawDefault extends CommandBase {
@@ -16,7 +17,7 @@ public class ClawDefault extends CommandBase {
 
 	@Override
 	public void initialize() {
-
+		claw.setPiston(Value.kForward);
 	}
 
 	@Override
