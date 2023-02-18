@@ -1,4 +1,4 @@
-package org.mort11.commands.auto;
+package org.mort11.commands.drivetrain;
 
 import org.mort11.subsystems.Drivetrain;
 

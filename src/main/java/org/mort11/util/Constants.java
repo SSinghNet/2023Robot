@@ -46,7 +46,6 @@ public final class Constants {
 	}
 
 	public final static class Elevator {
-		// TODO ports
 		public final static int ELEVATOR_MASTER = 7;
 		public final static int ELEVATOR_FOLLOWER = 8;
 		public final static double ELEVATOR_SPEED = .5;
@@ -56,16 +55,19 @@ public final class Constants {
 		public final static int KD = 0;
 
 		public final static int LIMIT_SWITCH = 4;
+
+		//TODO find positions
+		public final static double FLOOR_POSITION = 0;
+		public final static double SHELF_POSITION = 0;
+		public final static double MIDDLE_NODE_POSITION = 0;
+		public final static double UPPER_NODE_POSITION = 0;
+
+		public final static double TOP_LIMIT = -26;
+		public final static double BOTTOM_LIMIT = 0;
 	}
 
 	public final static class Arm {
-		// TODO: port
 		public final static int DRIVE = 27;
-
-		// TODO: change constant values
-		public final static double HYBRID_LEVEL = 0;
-		public final static double CENTER_LEVEL = 0;
-		public final static double TOP_LEVEL = 0;
 
 		// TODO: tune PID
 		public final static double KP = 0;
@@ -73,10 +75,16 @@ public final class Constants {
 		public final static double KD = 0;
 		public final static double TOLERANCE = 0;
 
+		//TODO find positions
+		public final static double FLOOR_POSITION = 0;
+		public final static double SHELF_POSITION = 0;
+		public final static double SCORING_POSITION = 0;
+
+		public final static double BOTTOM_LIMIT = 1.6;
+		public final static double TOP_LIMIT = 0;
 	}
 
 	public final static class Claw {
-		// TODO: Ports
 		public final static int DRIVE_MASTER = 34;
 		public final static int DRIVE_FOLLOWER = 35;
 
@@ -84,17 +92,21 @@ public final class Constants {
 
 		public final static int PISTON_FORWARD = 14;
 		public final static int PISTON_BACKWARD = 15;
-
 	}
 
 	public final static class Wrist {
-		// TODO: Ports
 		public final static int DRIVE = 36;
 		public final static int ENCODER = 9;
 
 		public final static int KP = 0;
 		public final static int KI = 0;
 		public final static int KD = 0;
+
+		//TODO test positions
+		public final static double DOWN_POSITION = 93;
+		public final static double RIGHT_POSITION = 45;
+		public final static double UP_POSITION = 0;
+		public final static double LEFT_POSITION = 134;
 	}
 
 	public final static class RobotSpecs {

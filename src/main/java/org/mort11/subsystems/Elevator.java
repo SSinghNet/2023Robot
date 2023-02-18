@@ -17,27 +17,21 @@ public class Elevator extends SubsystemBase {
 	private CANSparkMax driveNeoFollower;
 
 	/** {@link https://www.revrobotics.com/rev-31-1462/} */
-	private DigitalInput limitSwitch;
+	// private DigitalInput limitSwitch;
+
 	private PIDController positionController;
+
+	/**target elevator position in encoder units */
+	private double setpoint;
 
 	private Elevator() {
 		driveNeoMaster = new CANSparkMax(ELEVATOR_MASTER, MotorType.kBrushless);
 		driveNeoFollower = new CANSparkMax(ELEVATOR_FOLLOWER, MotorType.kBrushless);
+		driveNeoFollower.follow(driveNeoMaster, true); // TODO: check invert
 
-		driveNeoFollower.follow(driveNeoMaster, true); // todo: check invert
 		positionController = new PIDController(KP, KI, KD);
-		limitSwitch = new DigitalInput(LIMIT_SWITCH);
-	}
 
-	/**
-	 * Moves the elevator a preset speed
-	 *
-	 * @param speed
-	 *            The speed to set the elevator
-	 */
-	public void setSpeed(double speed) {
-		// todo: program limit switch check.
-		driveNeoMaster.set(speed);
+		// limitSwitch = new DigitalInput(LIMIT_SWITCH);
 	}
 
 	/**
@@ -46,8 +40,16 @@ public class Elevator extends SubsystemBase {
 	 * @param setpoint
 	 *            The encoder position to move to.
 	 */
-	public void setPosition(double setpoint) {
+	public void setSetpoint(double setpoint) {
+		this.setpoint = setpoint;
+	}
+
+	private void setPosition(double setpoint) {
 		driveNeoMaster.setVoltage(positionController.calculate(driveNeoMaster.getEncoder().getPosition(), setpoint));
+	}
+
+	private void setSpeed(double speed) {
+		driveNeoMaster.set(speed);
 	}
 
 	public boolean atSetpoint() {
@@ -57,6 +59,9 @@ public class Elevator extends SubsystemBase {
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Elevator Encoder", driveNeoMaster.getEncoder().getPosition());
+		SmartDashboard.putNumber("elevator setpoint", setpoint);
+
+		setPosition(setpoint);
 	}
 
 	/**

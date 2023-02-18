@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -32,7 +33,7 @@ public class Claw extends SubsystemBase {
 		irSensor = new DigitalInput(IR_SENSOR);
 
 		piston = new DoubleSolenoid(Constants.PCM, PneumaticsModuleType.REVPH, PISTON_FORWARD, PISTON_BACKWARD);
-
+		piston.set(Value.kForward);
 	}
 
 	public void setSpeed(double speed) {
@@ -41,6 +42,10 @@ public class Claw extends SubsystemBase {
 
 	public void setPiston(DoubleSolenoid.Value value) {
 		piston.set(value);
+	}
+
+	public void togglePiston() {
+		piston.toggle();
 	}
 
 	public DoubleSolenoid.Value getPiston() {

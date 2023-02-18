@@ -11,9 +11,13 @@ import static org.mort11.util.Constants.Arm.*;
 
 public class Arm extends SubsystemBase {
 	private static Arm arm;
+
+	private CANSparkMax driveNeo;
+
 	private PIDController armController;
 
-	private static CANSparkMax driveNeo;
+	/**target arm position in encoder units */
+	private double setpoint;
 
 	private Arm() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
@@ -25,7 +29,7 @@ public class Arm extends SubsystemBase {
 		return armController;
 	}
 
-	public static CANSparkMax getNeoMotor() {
+	public CANSparkMax getNeoMotor() {
 		return driveNeo;
 	}
 
@@ -36,17 +40,28 @@ public class Arm extends SubsystemBase {
 	 * @param setpoint
 	 *            Value of the position we are targeting.
 	 */
-	public void setPosition(double setpoint) {
+	public void setSetpoint(double setpoint) {
+		this.setpoint = setpoint;
+	}
+
+	private void setPosition(double setpoint) {
 		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
 	}
 
-	public void setSpeed(double speed) {
+	private void setSpeed(double speed) {
 		driveNeo.set(speed);
+	}
+
+	public boolean atSetpoint() {
+		return armController.atSetpoint();
 	}
 
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Arm Built-In Encoder", driveNeo.getEncoder().getPosition());
+		SmartDashboard.putNumber("arm setpoint", setpoint);
+
+		setPosition(setpoint);
 	}
 
 	/**

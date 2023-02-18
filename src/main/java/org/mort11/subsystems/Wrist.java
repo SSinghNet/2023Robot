@@ -13,13 +13,16 @@ import static org.mort11.util.Constants.Wrist.*;
 public class Wrist extends SubsystemBase {
 	private static Wrist wrist;
 
-	private PIDController wristController;
-
 	private CANSparkMax driveNeo;
 
 	/** {@link https://store.ctr-electronics.com/srx-mag-encoder/} */
-	//TODO: check type
+	// TODO: check type
 	private PWM SRXEncoder;
+
+	private PIDController wristController;
+
+	/**target wrist position in encoder units */
+	private double setpoint;
 
 	private Wrist() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
@@ -27,14 +30,21 @@ public class Wrist extends SubsystemBase {
 		wristController = new PIDController(KP, KI, KD);
 	}
 
-	public void setSpeed(double speed) {
-		//TODO: limits
-		driveNeo.set(speed);
+	// public void setSetpointDegrees(double degrees) {
+	// 	this.setpoint = degrees;
+	// }
+
+	// TODO: limits
+	public void setSetpoint(double setpoint) {
+		this.setpoint = setpoint;
 	}
 
-	public void setPosition(double setpoint) {
-		//TODO: limits
+	private void setPosition(double setpoint) {
 		driveNeo.setVoltage(wristController.calculate(SRXEncoder.getRaw(), setpoint));
+	}
+
+	private void setSpeed(double speed) {
+		driveNeo.set(speed);
 	}
 
 	public boolean atSetpoint() {
@@ -45,6 +55,9 @@ public class Wrist extends SubsystemBase {
 	public void periodic() {
 		SmartDashboard.putNumber("Built-In Wrist Encoder", driveNeo.getEncoder().getPosition());
 		SmartDashboard.putNumber("Wrist SRX Encoder", SRXEncoder.getRaw());
+		SmartDashboard.putNumber("wrist setpoint", setpoint);
+
+		setPosition(setpoint);
 	}
 
 	/**
