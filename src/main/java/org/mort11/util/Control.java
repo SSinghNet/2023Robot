@@ -44,7 +44,7 @@ public class Control {
 	 */
 	public static void configureBindings() {
 		drivetrain
-				.setDefaultCommand(new Drive(Control::getJoystickX, Control::getJoystickY, Control::getJoystickTwist));
+				.setDefaultCommand(new Drive(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist));
 
 		// driver
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
