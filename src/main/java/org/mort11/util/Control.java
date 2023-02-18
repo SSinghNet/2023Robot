@@ -43,7 +43,8 @@ public class Control {
 	 * Configure secondary button bindings
 	 */
 	public static void configureBindings() {
-		drivetrain.setDefaultCommand(new Drive(Control::getJoystickX, Control::getJoystickY, Control::getJoystickTwist));
+		drivetrain
+				.setDefaultCommand(new Drive(Control::getJoystickX, Control::getJoystickY, Control::getJoystickTwist));
 
 		// driver
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));

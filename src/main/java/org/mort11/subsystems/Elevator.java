@@ -21,7 +21,7 @@ public class Elevator extends SubsystemBase {
 
 	private PIDController positionController;
 
-	/**target elevator position in encoder units */
+	/** target elevator position in encoder units */
 	private double setpoint;
 
 	private Elevator() {

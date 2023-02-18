@@ -7,28 +7,28 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static org.mort11.util.Constants.*;
 
 public class Pneumatic extends SubsystemBase {
-    private static Pneumatic pneumatic;
-    
-    private Compressor compressor;
+	private static Pneumatic pneumatic;
 
-    private Pneumatic() {
-        compressor = new Compressor(PCM, PneumaticsModuleType.REVPH);
-        compressor.enableDigital();
-    }
+	private Compressor compressor;
 
-    public double getPressure() {
-        return compressor.getPressure();
-    }
+	private Pneumatic() {
+		compressor = new Compressor(PCM, PneumaticsModuleType.REVPH);
+		compressor.enableDigital();
+	}
 
-    @Override
-    public void periodic() {
+	public double getPressure() {
+		return compressor.getPressure();
+	}
 
-    }
-    
-    public static Pneumatic getInstance() {
-        if (pneumatic == null) {
-            pneumatic = new Pneumatic();
-        }
-        return pneumatic;
-    }
+	@Override
+	public void periodic() {
+
+	}
+
+	public static Pneumatic getInstance() {
+		if (pneumatic == null) {
+			pneumatic = new Pneumatic();
+		}
+		return pneumatic;
+	}
 }

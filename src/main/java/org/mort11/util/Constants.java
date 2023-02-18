@@ -16,22 +16,22 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 5;
 		public final static int FRONT_LEFT_STEER = 6;
 		public final static int FRONT_LEFT_STEER_ENCODER = 32;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(187);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(0);
 
 		public final static int FRONT_RIGHT_DRIVE = 3;
 		public final static int FRONT_RIGHT_STEER = 4;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 33;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(187);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(0);
 
 		public final static int BACK_LEFT_DRIVE = 2;
 		public final static int BACK_LEFT_STEER = 1;
 		public final static int BACK_LEFT_STEER_ENCODER = 30;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(137);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(0);
 
 		public final static int BACK_RIGHT_DRIVE = 18;
 		public final static int BACK_RIGHT_STEER = 19;
 		public final static int BACK_RIGHT_STEER_ENCODER = 31;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(0);
 
 		// TODO: tune pid
 		public final static double ROTATE_TO_ANGLE_KP = 0.02;
@@ -56,7 +56,7 @@ public final class Constants {
 
 		public final static int LIMIT_SWITCH = 4;
 
-		//TODO find positions
+		// TODO find positions
 		public final static double FLOOR_POSITION = 0;
 		public final static double SHELF_POSITION = 0;
 		public final static double MIDDLE_NODE_POSITION = 0;
@@ -75,7 +75,7 @@ public final class Constants {
 		public final static double KD = 0;
 		public final static double TOLERANCE = 0;
 
-		//TODO find positions
+		// TODO find positions
 		public final static double FLOOR_POSITION = 0;
 		public final static double SHELF_POSITION = 0;
 		public final static double SCORING_POSITION = 0;
@@ -102,7 +102,7 @@ public final class Constants {
 		public final static int KI = 0;
 		public final static int KD = 0;
 
-		//TODO test positions
+		// TODO test positions
 		public final static double DOWN_POSITION = 93;
 		public final static double RIGHT_POSITION = 45;
 		public final static double UP_POSITION = 0;

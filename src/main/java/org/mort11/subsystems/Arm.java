@@ -16,7 +16,7 @@ public class Arm extends SubsystemBase {
 
 	private PIDController armController;
 
-	/**target arm position in encoder units */
+	/** target arm position in encoder units */
 	private double setpoint;
 
 	private Arm() {

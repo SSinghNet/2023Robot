@@ -21,7 +21,7 @@ public class Wrist extends SubsystemBase {
 
 	private PIDController wristController;
 
-	/**target wrist position in encoder units */
+	/** target wrist position in encoder units */
 	private double setpoint;
 
 	private Wrist() {
@@ -31,7 +31,7 @@ public class Wrist extends SubsystemBase {
 	}
 
 	// public void setSetpointDegrees(double degrees) {
-	// 	this.setpoint = degrees;
+	// this.setpoint = degrees;
 	// }
 
 	// TODO: limits
