@@ -28,7 +28,7 @@ public class Claw extends SubsystemBase {
 		intakeNeoMaster = new CANSparkMax(DRIVE_MASTER, MotorType.kBrushless);
 		intakeNeoFollower = new CANSparkMax(DRIVE_FOLLOWER, MotorType.kBrushless);
 
-		intakeNeoFollower.follow(intakeNeoMaster, true);
+		intakeNeoFollower.follow(intakeNeoMaster, false);
 
 		irSensor = new DigitalInput(IR_SENSOR);
 
@@ -37,7 +37,11 @@ public class Claw extends SubsystemBase {
 	}
 
 	public void setSpeed(double speed) {
-		intakeNeoMaster.set(speed);
+		if (SmartDashboard.getBoolean("FastSpeed", false)) {
+			intakeNeoMaster.set(speed);
+		} else {
+			intakeNeoMaster.set(speed * 0.1);
+		}
 	}
 
 	public void setPiston(DoubleSolenoid.Value value) {

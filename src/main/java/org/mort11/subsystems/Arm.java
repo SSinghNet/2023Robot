@@ -1,6 +1,7 @@
 package org.mort11.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -21,6 +22,10 @@ public class Arm extends SubsystemBase {
 
 	private Arm() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
+
+		driveNeo.setSoftLimit(SoftLimitDirection.kForward, TOP_LIMIT);
+		driveNeo.setSoftLimit(SoftLimitDirection.kReverse, BOTTOM_LIMIT);
+
 		armController = new PIDController(KP, KI, KD);
 		armController.setTolerance(TOLERANCE);
 	}

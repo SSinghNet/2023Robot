@@ -36,11 +36,11 @@ public class Wrist extends SubsystemBase {
 
 	// TODO: limits
 	public void setSetpoint(double setpoint) {
-		this.setpoint = setpoint;
+		this.setpoint = setpoint + SmartDashboard.getNumber("wristOffset", 0);
 	}
 
 	private void setPosition(double setpoint) {
-		driveNeo.setVoltage(wristController.calculate(SRXEncoder.getRaw(), setpoint));
+		driveNeo.setVoltage(wristController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
 	}
 
 	private void setSpeed(double speed) {

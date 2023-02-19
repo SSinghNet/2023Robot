@@ -12,6 +12,8 @@ import org.mort11.subsystems.Elevator;
 import org.mort11.subsystems.Wrist;
 import org.mort11.subsystems.Arm;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -36,6 +38,8 @@ public class Control {
 		elevator = Elevator.getInstance();
 		wrist = Wrist.getInstance();
 
+		SmartDashboard.putBoolean("FastSpeed", false);
+
 		configureBindings();
 	}
 
@@ -44,7 +48,7 @@ public class Control {
 	 */
 	public static void configureBindings() {
 		drivetrain
-				.setDefaultCommand(new Drive(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist));
+				.setDefaultCommand(new Drive(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true));
 
 		// driver
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
@@ -62,13 +66,33 @@ public class Control {
 
 		xboxController.a().onTrue(new Floor());
 		xboxController.b().onTrue(new Shelf());
-		xboxController.x().onTrue(new MiddleNode());
-		xboxController.y().onTrue(new UpperNode());
+		xboxController.start().onTrue(new Rest());
+		// xboxController.x().onTrue(new MiddleNode());
+		// xboxController.y().onTrue(new UpperNode());
+		
+		// xboxController.x().onTrue(new InstantCommand(
+		// 		() -> SmartDashboard.putNumber("wristOffset", SmartDashboard.getNumber("wristOffset", 0) - 1)));
+		// xboxController.x().onTrue(new InstantCommand(
+		// 		() -> SmartDashboard.putNumber("wristOffset", SmartDashboard.getNumber("wristOffset", 0) + 1)));
 
+
+		xboxController.leftBumper().toggleOnTrue(Commands.startEnd(
+			() -> SmartDashboard.putBoolean("FastSpeed", false), 
+			() -> SmartDashboard.putBoolean("FastSpeed", true))
+		);
 		xboxController.rightBumper().onTrue(new InstantCommand(claw::togglePiston, claw));
 
-		xboxController.axisLessThan(1, -0.5).whileTrue(new InstantCommand(() -> claw.setSpeed(-0.1)));
-		xboxController.axisGreaterThan(1, 0.5).whileTrue(new InstantCommand(() -> claw.setSpeed(0.1)));
+		xboxController.axisLessThan(1, -0.5).whileTrue(Commands.startEnd(() -> claw.setSpeed(1), () -> claw.setSpeed(0), claw));
+		xboxController.axisGreaterThan(1, 0.5)
+				.whileTrue(Commands.startEnd(() -> claw.setSpeed(-1), () -> claw.setSpeed(0), claw));
+
+		xboxController.axisLessThan(5, -0.5)
+				.whileTrue(Commands.startEnd(() -> elevator.setSpeed(-0.25), () -> elevator.setSpeed(0), elevator));
+		xboxController.axisLessThan(5, 0.5)
+				.whileTrue(Commands.startEnd(() -> elevator.setSpeed(0.25), () -> elevator.setSpeed(0), elevator));
+		
+		// xboxController.x().whileTrue(new InstantCommand(() -> elevator.setSpeed(0.5)));
+		// xboxController.y().whileTrue(new InstantCommand(() -> elevator.setSpeed(-0.5)));
 	}
 
 	/**
@@ -105,7 +129,7 @@ public class Control {
 
 		// takes the throttle value and takes it from [-1, 1] to [0.2, 1], and
 		// multiplies it by the value
-		return value * (-throttleValue * -0.4 + 0.6);
+		return value * (throttleValue * -0.4 + 0.6);
 	}
 
 	public static double getJoystickX() {

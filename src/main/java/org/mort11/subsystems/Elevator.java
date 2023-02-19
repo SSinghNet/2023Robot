@@ -1,6 +1,7 @@
 package org.mort11.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -29,6 +30,9 @@ public class Elevator extends SubsystemBase {
 		driveNeoFollower = new CANSparkMax(ELEVATOR_FOLLOWER, MotorType.kBrushless);
 		driveNeoFollower.follow(driveNeoMaster, true); // TODO: check invert
 
+		driveNeoMaster.setSoftLimit(SoftLimitDirection.kReverse, TOP_LIMIT);
+		driveNeoMaster.setSoftLimit(SoftLimitDirection.kForward, BOTTOM_LIMIT);
+
 		positionController = new PIDController(KP, KI, KD);
 
 		// limitSwitch = new DigitalInput(LIMIT_SWITCH);
@@ -48,7 +52,7 @@ public class Elevator extends SubsystemBase {
 		driveNeoMaster.setVoltage(positionController.calculate(driveNeoMaster.getEncoder().getPosition(), setpoint));
 	}
 
-	private void setSpeed(double speed) {
+	public void setSpeed(double speed) {
 		driveNeoMaster.set(speed);
 	}
 
@@ -61,7 +65,7 @@ public class Elevator extends SubsystemBase {
 		SmartDashboard.putNumber("Elevator Encoder", driveNeoMaster.getEncoder().getPosition());
 		SmartDashboard.putNumber("elevator setpoint", setpoint);
 
-		setPosition(setpoint);
+		// setPosition(setpoint);
 	}
 
 	/**

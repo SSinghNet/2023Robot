@@ -16,22 +16,22 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 5;
 		public final static int FRONT_LEFT_STEER = 6;
 		public final static int FRONT_LEFT_STEER_ENCODER = 32;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(0);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(251);
 
 		public final static int FRONT_RIGHT_DRIVE = 3;
 		public final static int FRONT_RIGHT_STEER = 4;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 33;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(0);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(201);
 
 		public final static int BACK_LEFT_DRIVE = 2;
 		public final static int BACK_LEFT_STEER = 1;
 		public final static int BACK_LEFT_STEER_ENCODER = 30;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(0);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(135);
 
 		public final static int BACK_RIGHT_DRIVE = 18;
 		public final static int BACK_RIGHT_STEER = 19;
 		public final static int BACK_RIGHT_STEER_ENCODER = 31;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(0);
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
 
 		// TODO: tune pid
 		public final static double ROTATE_TO_ANGLE_KP = 0.02;
@@ -62,26 +62,26 @@ public final class Constants {
 		public final static double MIDDLE_NODE_POSITION = 0;
 		public final static double UPPER_NODE_POSITION = 0;
 
-		public final static double TOP_LIMIT = -26;
-		public final static double BOTTOM_LIMIT = 0;
+		public final static float TOP_LIMIT = -26.0f;
+		public final static float BOTTOM_LIMIT = 0.0f;
 	}
 
 	public final static class Arm {
 		public final static int DRIVE = 27;
 
 		// TODO: tune PID
-		public final static double KP = 0;
+		public final static double KP = 1.1;
 		public final static double KI = 0;
-		public final static double KD = 0;
+		public final static double KD = 0.1;
 		public final static double TOLERANCE = 0;
 
 		// TODO find positions
-		public final static double FLOOR_POSITION = 0;
+		public final static double FLOOR_POSITION = 1.6;
 		public final static double SHELF_POSITION = 0;
 		public final static double SCORING_POSITION = 0;
 
-		public final static double BOTTOM_LIMIT = 1.6;
-		public final static double TOP_LIMIT = 0;
+		public final static float BOTTOM_LIMIT = 1.6f;
+		public final static float TOP_LIMIT = 0.0f;
 	}
 
 	public final static class Claw {
@@ -98,15 +98,15 @@ public final class Constants {
 		public final static int DRIVE = 36;
 		public final static int ENCODER = 9;
 
-		public final static int KP = 0;
-		public final static int KI = 0;
-		public final static int KD = 0;
+		public final static double KP = 0.06;
+		public final static double KI = 0;
+		public final static double KD = 0;
 
 		// TODO test positions
-		public final static double DOWN_POSITION = 93;
-		public final static double RIGHT_POSITION = 45;
-		public final static double UP_POSITION = 0;
-		public final static double LEFT_POSITION = 134;
+		public final static double DOWN_POSITION = 45;
+		public final static double RIGHT_POSITION = 86;
+		public final static double UP_POSITION = 45;
+		public final static double LEFT_POSITION = 0;
 	}
 
 	public final static class RobotSpecs {
