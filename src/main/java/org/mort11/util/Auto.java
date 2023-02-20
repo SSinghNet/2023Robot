@@ -1,11 +1,13 @@
 package org.mort11.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mort11.subsystems.Drivetrain;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
@@ -13,6 +15,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
+import static org.mort11.util.Constants.RobotSpecs.*;
 
 public class Auto {
 	private static Drivetrain drivetrain;
@@ -61,7 +65,26 @@ public class Auto {
 	}
 
 	public static CommandBase autoFromPathGroup(String name) {
-		return autoBuilder.fullAuto(PathPlanner.loadPathGroup(name, new PathConstraints(4, 3)));
+		return autoBuilder.fullAuto(
+				PathPlanner.loadPathGroup(name, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
+	}
+
+	public static CommandBase autoFromPathGroup(ArrayList<PathPlannerTrajectory> paths) {
+		return autoBuilder.fullAuto(paths);
+	}
+
+	public static CommandBase autoFromPaths(ArrayList<String> names) {
+		return autoFromPathGroup(createPathGroup(names));
+	}
+
+	public static ArrayList<PathPlannerTrajectory> createPathGroup(ArrayList<String> names) {
+		ArrayList<PathPlannerTrajectory> paths = new ArrayList<PathPlannerTrajectory>();
+
+		for (String n : names) {
+			paths.add(PathPlanner.loadPath(n, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
+		}
+
+		return paths;
 	}
 
 	/**

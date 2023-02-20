@@ -2,26 +2,18 @@ package org.mort11.commands.drivetrain;
 
 import org.mort11.subsystems.Drivetrain;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class RotateToAngle extends CommandBase {
+public class DriveAtAngle extends CommandBase {
 	private Drivetrain drivetrain;
 	private double angle;
-	
-	/** whether angle is relative to current position */
 	private boolean relative;
 
-	/**
-	 * @param angle
-	 *            angle in getDegrees
-	 * @param relative
-	 *            whether angle is relative to current position
-	 */
-	public RotateToAngle(double angle, boolean relative) {
+	public DriveAtAngle(double angle) {
 		drivetrain = Drivetrain.getInstance();
 		this.angle = angle;
-		this.relative = relative;
 
 		addRequirements(drivetrain);
 	}
@@ -35,13 +27,13 @@ public class RotateToAngle extends CommandBase {
 
 	@Override
 	public void execute() {
-		drivetrain.drive(new ChassisSpeeds(0, 0, drivetrain.getRotateToAngleController()
-				.calculate(drivetrain.getGyroscopeRotation().getDegrees(), angle)));
+		// TODO: prob doesnt work
+		drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0.5, 0, 0, new Rotation2d(angle)));
 	}
 
 	@Override
 	public boolean isFinished() {
-		return drivetrain.getRotateToAngleController().atSetpoint();
+		return false;
 	}
 
 	@Override

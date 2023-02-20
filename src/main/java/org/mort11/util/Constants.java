@@ -40,10 +40,29 @@ public final class Constants {
 		public final static double ROTATE_TO_ANGLE_KD = 0;
 		public final static double ROTATE_TO_ANGLE_TOLERANCE = 0;
 
+		// TODO: tune pid
 		public final static double BALANCE_KP = 0;
 		public final static double BALANCE_KI = 0;
 		public final static double BALANCE_KD = 0;
 		public final static double BALANCE_TOLERANCE = 0;
+
+		// TODO: tune pid
+		public final static double ATX_KP = 0;
+		public final static double ATX_KI = 0;
+		public final static double ATX_KD = 0;
+		public final static double ATX_TOLERANCE = 0;
+
+		// TODO: tune pid
+		public final static double ATY_KP = 0;
+		public final static double ATY_KI = 0;
+		public final static double ATY_KD = 0;
+		public final static double ATY_TOLERANCE = 0;
+
+		// TODO: tune pid
+		public final static double ATOMEGA_KP = 0;
+		public final static double ATOMEGA_KI = 0;
+		public final static double ATOMEGA_KD = 0;
+		public final static double ATOMEGA_TOLERANCE = 0;
 	}
 
 	public final static class Elevator {
@@ -98,6 +117,41 @@ public final class Constants {
 		public final static int KD = 0;
 	}
 
+	public final static class Vision {
+		public static enum Pipeline {
+			DEFAULT(0), CONE(1), CUBE(2), APRIL_TAG(3);
+
+			int id;
+
+			Pipeline(int id) {
+				this.id = id;
+			}
+
+			public int getId() {
+				return id;
+			}
+
+			/**
+			 * Gets id of pipeline for a specific April Tag ID, id 1 at pipeline 3, etc.
+			 */
+			public int getId(int ATID) {
+				if (this.id == 3) {
+					return 2 + ATID;
+				}
+				return id;
+			}
+
+			public static Pipeline getPipeline(int id) {
+				for (Pipeline p : values()) {
+					if (p.getId() == id) {
+						return p;
+					}
+				}
+				return DEFAULT;
+			}
+		}
+	}
+
 	public final static class RobotSpecs {
 		// The left-to-right distance between the drivetrain wheels measured from center
 		// to center.
@@ -113,6 +167,9 @@ public final class Constants {
 				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;
 		public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
 				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
+
+		public static final double MAX_VELOCITY_AUTO = 4;
+		public static final double MAX_ACCELERATION_AUTO = 3;
 	}
 
 }
