@@ -4,15 +4,14 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Claw.*;
 
-import org.mort11.util.Constants;
+import static org.mort11.util.Constants.*;
 
 public class Claw extends SubsystemBase {
 	private static Claw claw;
@@ -22,7 +21,7 @@ public class Claw extends SubsystemBase {
 
 	private DigitalInput irSensor;
 
-	private DoubleSolenoid piston;
+	private Solenoid piston;
 
 	private Claw() {
 		intakeNeoMaster = new CANSparkMax(DRIVE_MASTER, MotorType.kBrushless);
@@ -32,8 +31,8 @@ public class Claw extends SubsystemBase {
 
 		irSensor = new DigitalInput(IR_SENSOR);
 
-		piston = new DoubleSolenoid(Constants.PCM, PneumaticsModuleType.REVPH, PISTON_FORWARD, PISTON_BACKWARD);
-		piston.set(Value.kForward);
+		piston = new Solenoid(PCM, PneumaticsModuleType.CTREPCM, PISTON);
+		piston.set(false);
 	}
 
 	public void setSpeed(double speed) {
@@ -44,7 +43,7 @@ public class Claw extends SubsystemBase {
 		}
 	}
 
-	public void setPiston(DoubleSolenoid.Value value) {
+	public void setPiston(boolean value) {
 		piston.set(value);
 	}
 
@@ -52,7 +51,7 @@ public class Claw extends SubsystemBase {
 		piston.toggle();
 	}
 
-	public DoubleSolenoid.Value getPiston() {
+	public boolean getPiston() {
 		return piston.get();
 	}
 
@@ -63,7 +62,7 @@ public class Claw extends SubsystemBase {
 	@Override
 	public void periodic() {
 		SmartDashboard.putBoolean("Claw IR Sensor", getIrSensor());
-		SmartDashboard.putString("Claw Piston", getPiston().toString());
+		SmartDashboard.putBoolean("Claw Piston", getPiston());
 	}
 
 	/**

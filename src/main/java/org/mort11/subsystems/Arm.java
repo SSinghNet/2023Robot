@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,6 +17,7 @@ public class Arm extends SubsystemBase {
 	private CANSparkMax driveNeo;
 
 	private PIDController armController;
+	private SimpleMotorFeedforward feedforward;
 
 	/** target arm position in encoder units */
 	private double setpoint;
@@ -23,11 +25,17 @@ public class Arm extends SubsystemBase {
 	private Arm() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
 
-		driveNeo.setSoftLimit(SoftLimitDirection.kForward, TOP_LIMIT);
-		driveNeo.setSoftLimit(SoftLimitDirection.kReverse, BOTTOM_LIMIT);
+		driveNeo.setSoftLimit(SoftLimitDirection.kReverse, TOP_LIMIT);
+		driveNeo.setSoftLimit(SoftLimitDirection.kForward, BOTTOM_LIMIT);
+
+		driveNeo.burnFlash();
 
 		armController = new PIDController(KP, KI, KD);
 		armController.setTolerance(TOLERANCE);
+
+		feedforward = new SimpleMotorFeedforward(KS, KV, KA);
+
+		setpoint = REST_POSITION;
 	}
 
 	public PIDController getArmController() {
@@ -50,7 +58,7 @@ public class Arm extends SubsystemBase {
 	}
 
 	private void setPosition(double setpoint) {
-		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
+		driveNeo.setVoltage(feedforward.calculate(0) + armController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
 	}
 
 	private void setSpeed(double speed) {

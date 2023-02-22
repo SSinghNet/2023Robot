@@ -28,6 +28,8 @@ public class Wrist extends SubsystemBase {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
 		SRXEncoder = new PWM(ENCODER);
 		wristController = new PIDController(KP, KI, KD);
+
+		SmartDashboard.putNumber("wristOffset", 0);
 	}
 
 	// public void setSetpointDegrees(double degrees) {
@@ -43,7 +45,7 @@ public class Wrist extends SubsystemBase {
 		driveNeo.setVoltage(wristController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
 	}
 
-	private void setSpeed(double speed) {
+	public void setSpeed(double speed) {
 		driveNeo.set(speed);
 	}
 

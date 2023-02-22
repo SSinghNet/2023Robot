@@ -12,7 +12,7 @@ public class Pneumatic extends SubsystemBase {
 	private Compressor compressor;
 
 	private Pneumatic() {
-		compressor = new Compressor(PCM, PneumaticsModuleType.REVPH);
+		compressor = new Compressor(PCM, PneumaticsModuleType.CTREPCM);
 		compressor.enableDigital();
 	}
 

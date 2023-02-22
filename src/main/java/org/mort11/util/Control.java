@@ -2,7 +2,6 @@ package org.mort11.util;
 
 import static org.mort11.util.Constants.ControlPorts.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
-import org.mort11.util.Constants;
 
 import org.mort11.commands.drivetrain.*;
 import org.mort11.commands.endeffector.*;
@@ -12,6 +11,8 @@ import org.mort11.subsystems.Elevator;
 import org.mort11.subsystems.Wrist;
 import org.mort11.subsystems.Arm;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -20,7 +21,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class Control {
 	private static CommandJoystick joystick;
+	private static CommandJoystick throttle;
 	private static CommandXboxController xboxController;
+	private static XboxController xboxControllerNormal;
 
 	private static Drivetrain drivetrain;
 	private static Arm arm;
@@ -30,7 +33,9 @@ public class Control {
 
 	public static void init() {
 		joystick = new CommandJoystick(JOYSTICK);
+		throttle = new CommandJoystick(THROTTLE);
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
+		xboxControllerNormal = new XboxController(XBOX_CONTROLLER);
 
 		drivetrain = Drivetrain.getInstance();
 		arm = Arm.getInstance();
@@ -64,17 +69,11 @@ public class Control {
 		xboxController.povLeft().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.LEFT_POSITION)));
 		xboxController.povDown().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.DOWN_POSITION)));
 
-		xboxController.a().onTrue(new Floor());
-		xboxController.b().onTrue(new Shelf());
-		xboxController.start().onTrue(new Rest());
-		// xboxController.x().onTrue(new MiddleNode());
-		// xboxController.y().onTrue(new UpperNode());
-		
-		// xboxController.x().onTrue(new InstantCommand(
-		// 		() -> SmartDashboard.putNumber("wristOffset", SmartDashboard.getNumber("wristOffset", 0) - 1)));
-		// xboxController.x().onTrue(new InstantCommand(
-		// 		() -> SmartDashboard.putNumber("wristOffset", SmartDashboard.getNumber("wristOffset", 0) + 1)));
-
+		xboxController.a().onTrue(Commands.parallel(new RumbleController(0.2, 0.5, () -> SmartDashboard.getBoolean("FastSpeed", false)), new Floor()));
+		xboxController.b().onTrue(new Rest());
+		// xboxController.start().onTrue(new Shelf());
+		xboxController.x().onTrue(new MiddleNode());
+		xboxController.y().onTrue(new UpperNode());
 
 		xboxController.leftBumper().toggleOnTrue(Commands.startEnd(
 			() -> SmartDashboard.putBoolean("FastSpeed", false), 
@@ -87,12 +86,12 @@ public class Control {
 				.whileTrue(Commands.startEnd(() -> claw.setSpeed(-1), () -> claw.setSpeed(0), claw));
 
 		xboxController.axisLessThan(5, -0.5)
-				.whileTrue(Commands.startEnd(() -> elevator.setSpeed(-0.25), () -> elevator.setSpeed(0), elevator));
+				.whileTrue(Commands.startEnd(() -> elevator.setSpeed(-0.5), () -> elevator.setSpeed(0), elevator));
 		xboxController.axisLessThan(5, 0.5)
-				.whileTrue(Commands.startEnd(() -> elevator.setSpeed(0.25), () -> elevator.setSpeed(0), elevator));
+				.whileTrue(Commands.startEnd(() -> elevator.setSpeed(0.5), () -> elevator.setSpeed(0), elevator));
 		
-		// xboxController.x().whileTrue(new InstantCommand(() -> elevator.setSpeed(0.5)));
-		// xboxController.y().whileTrue(new InstantCommand(() -> elevator.setSpeed(-0.5)));
+		// xboxController.x().whileTrue(new InstantCommand(() -> elevator.setSetpoint(7)));
+		// xboxController.y().whileTrue(new InstantCommand(() -> elevator.setSetpoint(75)));
 	}
 
 	/**
@@ -133,16 +132,20 @@ public class Control {
 	}
 
 	public static double getJoystickX() {
-		return -modifyJoystickAxis(joystick.getX(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND;
+		return -modifyJoystickAxis(joystick.getX(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND;
 	}
 
 	public static double getJoystickY() {
-		return -modifyJoystickAxis(joystick.getY(), joystick.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND;
+		return -modifyJoystickAxis(joystick.getY(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND;
 	}
 
 	public static double getJoystickTwist() {
-		return -modifyJoystickAxis(joystick.getRawAxis(3), joystick.getRawAxis(2))
+		return -modifyJoystickAxis(joystick.getTwist(), throttle.getRawAxis(2))
 				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
+	}
+
+	public static void setControllerRumble(double value) {
+		xboxControllerNormal.setRumble(RumbleType.kBothRumble, value);
 	}
 
 }

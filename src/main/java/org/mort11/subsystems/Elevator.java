@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,6 +22,7 @@ public class Elevator extends SubsystemBase {
 	// private DigitalInput limitSwitch;
 
 	private PIDController positionController;
+	private ElevatorFeedforward feedforward;
 
 	/** target elevator position in encoder units */
 	private double setpoint;
@@ -28,13 +30,19 @@ public class Elevator extends SubsystemBase {
 	private Elevator() {
 		driveNeoMaster = new CANSparkMax(ELEVATOR_MASTER, MotorType.kBrushless);
 		driveNeoFollower = new CANSparkMax(ELEVATOR_FOLLOWER, MotorType.kBrushless);
-		driveNeoFollower.follow(driveNeoMaster, true); // TODO: check invert
+		driveNeoFollower.follow(driveNeoMaster, true);
 
 		driveNeoMaster.setSoftLimit(SoftLimitDirection.kReverse, TOP_LIMIT);
 		driveNeoMaster.setSoftLimit(SoftLimitDirection.kForward, BOTTOM_LIMIT);
 
-		positionController = new PIDController(KP, KI, KD);
+		driveNeoMaster.setSmartCurrentLimit(20);
 
+		driveNeoMaster.burnFlash();
+
+		positionController = new PIDController(KP, KI, KD);
+		feedforward = new ElevatorFeedforward(KS, KG, KV, KA);
+
+		setpoint = BOTTOM_LIMIT;
 		// limitSwitch = new DigitalInput(LIMIT_SWITCH);
 	}
 
@@ -49,7 +57,7 @@ public class Elevator extends SubsystemBase {
 	}
 
 	private void setPosition(double setpoint) {
-		driveNeoMaster.setVoltage(positionController.calculate(driveNeoMaster.getEncoder().getPosition(), setpoint));
+		driveNeoMaster.setVoltage(feedforward.calculate(0) + positionController.calculate(driveNeoMaster.getEncoder().getPosition(), setpoint));
 	}
 
 	public void setSpeed(double speed) {
@@ -65,7 +73,7 @@ public class Elevator extends SubsystemBase {
 		SmartDashboard.putNumber("Elevator Encoder", driveNeoMaster.getEncoder().getPosition());
 		SmartDashboard.putNumber("elevator setpoint", setpoint);
 
-		// setPosition(setpoint);
+		setPosition(setpoint);
 	}
 
 	/**

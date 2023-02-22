@@ -9,6 +9,7 @@ public final class Constants {
 
 	public final static class ControlPorts {
 		public final static int JOYSTICK = 0;
+		public final static int THROTTLE = 1;
 		public final static int XBOX_CONTROLLER = 2;
 	}
 
@@ -26,7 +27,7 @@ public final class Constants {
 		public final static int BACK_LEFT_DRIVE = 2;
 		public final static int BACK_LEFT_STEER = 1;
 		public final static int BACK_LEFT_STEER_ENCODER = 30;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(135);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(135 + 359);
 
 		public final static int BACK_RIGHT_DRIVE = 18;
 		public final static int BACK_RIGHT_STEER = 19;
@@ -50,38 +51,48 @@ public final class Constants {
 		public final static int ELEVATOR_FOLLOWER = 8;
 		public final static double ELEVATOR_SPEED = .5;
 
-		public final static int KP = 0;
-		public final static int KI = 0;
-		public final static int KD = 0;
+		public final static double KP = 0.275;
+		public final static double KI = 0;
+		public final static double KD = 0.02;
+
+		public final static double KS = -0.017718;
+		public final static double KV = 4.1738;
+		public final static double KA = 0.24129;
+		public final static double KG = 0.4651; 
 
 		public final static int LIMIT_SWITCH = 4;
 
 		// TODO find positions
 		public final static double FLOOR_POSITION = 0;
 		public final static double SHELF_POSITION = 0;
-		public final static double MIDDLE_NODE_POSITION = 0;
-		public final static double UPPER_NODE_POSITION = 0;
+		public final static double MIDDLE_NODE_POSITION = 54;
+		public final static double UPPER_NODE_POSITION = 87;
 
-		public final static float TOP_LIMIT = -26.0f;
-		public final static float BOTTOM_LIMIT = 0.0f;
+		public final static float TOP_LIMIT = 90.0f;
+		public final static float BOTTOM_LIMIT = 1.0f;
 	}
 
 	public final static class Arm {
 		public final static int DRIVE = 27;
 
 		// TODO: tune PID
-		public final static double KP = 1.1;
-		public final static double KI = 0;
-		public final static double KD = 0.1;
-		public final static double TOLERANCE = 0;
+		public final static double KP = 0.3; // 2.55
+		public final static double KI = 0; // 0.09
+		public final static double KD = 0.05; // 0.2
+		public final static double TOLERANCE = 0.1;
+
+		public final static double KS = 0.28856;
+		public final static double KV = 6.6348;
+		public final static double KA = 0.85592;
 
 		// TODO find positions
-		public final static double FLOOR_POSITION = 1.6;
+		public final static double FLOOR_POSITION = -38;
 		public final static double SHELF_POSITION = 0;
-		public final static double SCORING_POSITION = 0;
+		public final static double SCORING_POSITION = 2;
+		public final static double REST_POSITION = -11;
 
-		public final static float BOTTOM_LIMIT = 1.6f;
-		public final static float TOP_LIMIT = 0.0f;
+		public final static float BOTTOM_LIMIT = -40.0f;
+		public final static float TOP_LIMIT = 2.5f;
 	}
 
 	public final static class Claw {
@@ -90,8 +101,7 @@ public final class Constants {
 
 		public final static int IR_SENSOR = 0;
 
-		public final static int PISTON_FORWARD = 14;
-		public final static int PISTON_BACKWARD = 15;
+		public final static int PISTON = 0;
 	}
 
 	public final static class Wrist {

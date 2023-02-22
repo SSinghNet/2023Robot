@@ -81,7 +81,8 @@ public class Drivetrain extends SubsystemBase {
 				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, FRONT_LEFT_DRIVE)
 				.withSteerMotor(MotorType.NEO, FRONT_LEFT_STEER).withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER)
-				.withSteerOffset(FRONT_LEFT_STEER_OFFSET).build();
+				.withSteerOffset(FRONT_LEFT_STEER_OFFSET)
+				.build();
 		frontRightModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, FRONT_RIGHT_DRIVE)
@@ -97,6 +98,7 @@ public class Drivetrain extends SubsystemBase {
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, BACK_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.NEO, BACK_RIGHT_STEER).withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER)
 				.withSteerOffset(BACK_RIGHT_STEER_OFFSET).build();
+	
 	}
 
 	public AHRS getNavX() {
