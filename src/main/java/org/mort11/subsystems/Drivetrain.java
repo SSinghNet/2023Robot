@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
 import com.swervedrivespecialties.swervelib.MotorType;
@@ -41,7 +42,8 @@ public class Drivetrain extends SubsystemBase {
 	private ChassisSpeeds chassisSpeeds;
 
 	private PIDController rotateToAngleController;
-	private PIDController balanceController;
+	private PIDController balanceControllerX;
+	private PIDController balanceControllerY;
 
 	private PIDController aprilTagXController;
 	private PIDController aprilTagYController;
@@ -72,8 +74,11 @@ public class Drivetrain extends SubsystemBase {
 		rotateToAngleController.enableContinuousInput(-180.0f, 180.0f);
 		rotateToAngleController.setTolerance(ROTATE_TO_ANGLE_TOLERANCE);
 
-		balanceController = new PIDController(BALANCE_KP, BALANCE_KI, BALANCE_KD);
-		balanceController.setTolerance(BALANCE_TOLERANCE);
+		balanceControllerX = new PIDController(BALANCE_KP, BALANCE_KI, BALANCE_KD);
+		balanceControllerX.setTolerance(BALANCE_TOLERANCE);
+
+		balanceControllerY = new PIDController(BALANCE_KP, BALANCE_KI, BALANCE_KD);
+		balanceControllerY.setTolerance(BALANCE_TOLERANCE);
 
 		aprilTagXController = new PIDController(ATX_KP, ATX_KI, ATX_KD);
 		aprilTagXController.setTolerance(ATX_TOLERANCE);
@@ -107,14 +112,19 @@ public class Drivetrain extends SubsystemBase {
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, BACK_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.NEO, BACK_RIGHT_STEER).withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER)
 				.withSteerOffset(BACK_RIGHT_STEER_OFFSET).build();
+
 	}
 
 	public AHRS getNavX() {
 		return navX;
 	}
 
-	public PIDController getBalanceController() {
-		return balanceController;
+	public PIDController getBalanceControllerX() {
+		return balanceControllerX;
+	}
+
+	public PIDController getBalanceControllerY() {
+		return balanceControllerY;
 	}
 
 	/** Sets the gyroscope angle to zero. */
@@ -189,6 +199,14 @@ public class Drivetrain extends SubsystemBase {
 		return rotateToAngleController;
 	}
 
+	public double getPitch() {
+		return navX.getPitch() - 0.3;
+	}
+
+	public double getRoll() {
+		return navX.getRoll() + 1;
+	}
+
 	public PIDController getAprilTagXController() {
 		return aprilTagXController;
 	}
@@ -207,6 +225,11 @@ public class Drivetrain extends SubsystemBase {
 
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
+
+		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
+		SmartDashboard.putNumber("Pitch", getPitch());
+		SmartDashboard.putNumber("Roll", getRoll());
+
 	}
 
 	/**

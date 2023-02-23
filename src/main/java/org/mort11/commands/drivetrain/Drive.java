@@ -1,4 +1,4 @@
-package org.mort11.commands.defaults;
+package org.mort11.commands.drivetrain;
 
 import java.util.function.DoubleSupplier;
 
@@ -7,7 +7,7 @@ import org.mort11.subsystems.Drivetrain;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class DriveDefault extends CommandBase {
+public class Drive extends CommandBase {
 	private Drivetrain drivetrain;
 
 	private final DoubleSupplier translationXSupplier;
@@ -26,7 +26,7 @@ public class DriveDefault extends CommandBase {
 	 * @param fieldOriented
 	 *            Whether field-oriented drive is used
 	 */
-	public DriveDefault(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
+	public Drive(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
 			DoubleSupplier rotationSupplier, boolean fieldOriented) {
 		drivetrain = Drivetrain.getInstance();
 
@@ -49,7 +49,7 @@ public class DriveDefault extends CommandBase {
 	 * @param rotationSupplier
 	 *            Supplier for rotational movement
 	 */
-	public DriveDefault(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
+	public Drive(DoubleSupplier translationXSupplier, DoubleSupplier translationYSupplier,
 			DoubleSupplier rotationSupplier) {
 		this(translationXSupplier, translationYSupplier, rotationSupplier, false);
 	}

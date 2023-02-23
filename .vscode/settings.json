@@ -1,6 +1,8 @@
 {
   "java.configuration.updateBuildConfiguration": "automatic",
   "java.server.launchMode": "Standard",
+  "editor.insertSpaces": true,
+  "editor.tabSize": 4,
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,

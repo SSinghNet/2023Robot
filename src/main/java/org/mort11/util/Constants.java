@@ -5,33 +5,33 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import edu.wpi.first.math.util.Units;
 
 public final class Constants {
-	public final static int PCM = 0;
+	public final static int PCM = 26;
 
 	public final static class ControlPorts {
-		public final static int LEFT_JOYSTICK = 0;
-		public final static int RIGHT_JOYSTICK = 1;
+		public final static int JOYSTICK = 0;
+		public final static int THROTTLE = 1;
 		public final static int XBOX_CONTROLLER = 2;
 	}
 
 	public final static class Drivetrain {
-		public final static int FRONT_LEFT_DRIVE = 1;
-		public final static int FRONT_LEFT_STEER = 2;
-		public final static int FRONT_LEFT_STEER_ENCODER = 10;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(187); // 253 //295
+		public final static int FRONT_LEFT_DRIVE = 5;
+		public final static int FRONT_LEFT_STEER = 6;
+		public final static int FRONT_LEFT_STEER_ENCODER = 32;
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(251);
 
-		public final static int FRONT_RIGHT_DRIVE = 7;
-		public final static int FRONT_RIGHT_STEER = 8;
-		public final static int FRONT_RIGHT_STEER_ENCODER = 11;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(252);
+		public final static int FRONT_RIGHT_DRIVE = 3;
+		public final static int FRONT_RIGHT_STEER = 4;
+		public final static int FRONT_RIGHT_STEER_ENCODER = 33;
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(201);
 
-		public final static int BACK_LEFT_DRIVE = 3;
-		public final static int BACK_LEFT_STEER = 4;
-		public final static int BACK_LEFT_STEER_ENCODER = 9;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(136);
+		public final static int BACK_LEFT_DRIVE = 2;
+		public final static int BACK_LEFT_STEER = 1;
+		public final static int BACK_LEFT_STEER_ENCODER = 30;
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(135 + 359);
 
-		public final static int BACK_RIGHT_DRIVE = 5;
-		public final static int BACK_RIGHT_STEER = 6;
-		public final static int BACK_RIGHT_STEER_ENCODER = 12;
+		public final static int BACK_RIGHT_DRIVE = 18;
+		public final static int BACK_RIGHT_STEER = 19;
+		public final static int BACK_RIGHT_STEER_ENCODER = 31;
 		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
 
 		// TODO: tune pid
@@ -40,11 +40,10 @@ public final class Constants {
 		public final static double ROTATE_TO_ANGLE_KD = 0;
 		public final static double ROTATE_TO_ANGLE_TOLERANCE = 0;
 
-		// TODO: tune pid
-		public final static double BALANCE_KP = 0;
-		public final static double BALANCE_KI = 0;
-		public final static double BALANCE_KD = 0;
-		public final static double BALANCE_TOLERANCE = 0;
+		public final static double BALANCE_KP = 0.033;
+		public final static double BALANCE_KI = 0.0002;
+		public final static double BALANCE_KD = 0.008;
+		public final static double BALANCE_TOLERANCE = 0.5;
 
 		// TODO: tune pid
 		public final static double ATX_KP = 0;
@@ -66,55 +65,79 @@ public final class Constants {
 	}
 
 	public final static class Elevator {
-		// TODO ports
-		public final static int ELEVATOR_MASTER = 0;
-		public final static int ELEVATOR_FOLLOWER = 0;
+		public final static int ELEVATOR_MASTER = 7;
+		public final static int ELEVATOR_FOLLOWER = 8;
 		public final static double ELEVATOR_SPEED = .5;
 
-		public final static int KP = 0;
-		public final static int KI = 0;
-		public final static int KD = 0;
+		public final static double KP = 0.275;
+		public final static double KI = 0;
+		public final static double KD = 0.02;
 
-		public final static int LIMIT_SWITCH = 0;
+		public final static double KS = -0.017718;
+		public final static double KV = 4.1738;
+		public final static double KA = 0.24129;
+		public final static double KG = 0.4651;
+
+		public final static int LIMIT_SWITCH = 4;
+
+		// TODO find positions
+		public final static double FLOOR_POSITION = 1;
+		public final static double SHELF_POSITION = 50;
+		public final static double MIDDLE_NODE_POSITION = 54;
+		public final static double UPPER_NODE_POSITION = 87;
+
+		public final static float TOP_LIMIT = 90.0f;
+		public final static float BOTTOM_LIMIT = 1.0f;
+		public final static float RANGE = TOP_LIMIT - BOTTOM_LIMIT;
 	}
 
 	public final static class Arm {
-		// TODO: port
-		public final static int DRIVE = 0;
-
-		// TODO: change constant values
-		public final static double HYBRID_LEVEL = 0;
-		public final static double CENTER_LEVEL = 0;
-		public final static double TOP_LEVEL = 0;
+		public final static int DRIVE = 27;
 
 		// TODO: tune PID
-		public final static double KP = 0;
-		public final static double KI = 0;
-		public final static double KD = 0;
-		public final static double TOLERANCE = 0;
+		public final static double KP = 0.3; // 2.55
+		public final static double KI = 0; // 0.09
+		public final static double KD = 0.055; // 0.2
+		public final static double TOLERANCE = 0.1;
 
+		public final static double KS = 0.28856;
+		public final static double KV = 6.6349;
+		public final static double KA = 0.85592;
+
+		// TODO find positions
+		public final static double FLOOR_POSITION = -38;
+		public final static double SCORING_POSITION = 4;
+		public final static double REST_POSITION = -8;
+
+		public final static float BOTTOM_LIMIT = -40.0f;
+		public final static float TOP_LIMIT = 2.5f;
 	}
 
 	public final static class Claw {
-		// TODO: Ports
-		public final static int DRIVE_MASTER = 0;
-		public final static int DRIVE_FOLLOWER = 0;
+		public final static int DRIVE_MASTER = 34;
+		public final static int DRIVE_FOLLOWER = 35;
 
 		public final static int IR_SENSOR = 0;
 
-		public final static int PISTON_FORWARD = 0;
-		public final static int PISTON_BACKWARD = 0;
+		public final static int PISTON = 0;
 
+		public final static double CONE_SPEED = 0.5;
+		public final static double CUBE_SPEED = 0.1;
 	}
 
 	public final static class Wrist {
-		// TODO: Ports
-		public final static int DRIVE = 0;
-		public final static int ENCODER = 0;
+		public final static int DRIVE = 36;
+		public final static int ENCODER = 9;
 
-		public final static int KP = 0;
-		public final static int KI = 0;
-		public final static int KD = 0;
+		public final static double KP = 0.06;
+		public final static double KI = 0;
+		public final static double KD = 0;
+
+		// TODO test positions
+		public final static double DOWN_POSITION = 45;
+		public final static double RIGHT_POSITION = 86;
+		public final static double UP_POSITION = 45;
+		public final static double LEFT_POSITION = 0;
 	}
 
 	public final static class Vision {

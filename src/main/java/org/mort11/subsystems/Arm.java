@@ -1,30 +1,48 @@
 package org.mort11.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Arm.*;
 
 public class Arm extends SubsystemBase {
 	private static Arm arm;
-	private PIDController armController;
 
-	private static CANSparkMax driveNeo;
+	private CANSparkMax driveNeo;
+
+	private PIDController armController;
+	private SimpleMotorFeedforward feedforward;
+
+	/** target arm position in encoder units */
+	private double setpoint;
 
 	private Arm() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
+
+		driveNeo.setSoftLimit(SoftLimitDirection.kReverse, TOP_LIMIT);
+		driveNeo.setSoftLimit(SoftLimitDirection.kForward, BOTTOM_LIMIT);
+
+		driveNeo.burnFlash();
+
 		armController = new PIDController(KP, KI, KD);
 		armController.setTolerance(TOLERANCE);
+
+		feedforward = new SimpleMotorFeedforward(KS, KV, KA);
+
+		setpoint = REST_POSITION;
 	}
 
 	public PIDController getArmController() {
 		return armController;
 	}
 
-	public static CANSparkMax getNeoMotor() {
+	public CANSparkMax getNeoMotor() {
 		return driveNeo;
 	}
 
@@ -32,16 +50,44 @@ public class Arm extends SubsystemBase {
 	 * Uses close loop controller to set the voltage of of the motor that controls
 	 * the position of the arm, based on a given target position
 	 *
-	 * @param targetPosition
+	 * @param setpoint
 	 *            Value of the position we are targeting.
 	 */
-	public void setArmPosition(double targetPosition) {
-		driveNeo.setVoltage(armController.calculate(driveNeo.getEncoder().getPosition(), targetPosition));
+	public void setSetpoint(double setpoint) {
+		this.setpoint = setpoint;
+	}
+
+	public double getSetpoint() {
+		return setpoint;
+	}
+
+	public boolean atSetpoint() {
+		return armController.atSetpoint();
+	}
+
+	public boolean nearSetpoint() {
+		return Math.abs(driveNeo.getEncoder().getPosition() - setpoint) < 5;
+	}
+
+	private void setPosition(double setpoint) {
+		driveNeo.setVoltage(
+				feedforward.calculate(0) + armController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
+	}
+
+	private void setSpeed(double speed) {
+		driveNeo.set(speed);
+	}
+
+	public double getPosition() {
+		return driveNeo.getEncoder().getPosition();
 	}
 
 	@Override
 	public void periodic() {
+		SmartDashboard.putNumber("Built-In Arm Encoder", getPosition());
+		SmartDashboard.putNumber("arm setpoint", setpoint);
 
+		setPosition(setpoint);
 	}
 
 	/**
