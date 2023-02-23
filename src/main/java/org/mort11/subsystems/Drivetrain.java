@@ -45,6 +45,10 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController balanceControllerX;
 	private PIDController balanceControllerY;
 
+	private PIDController aprilTagXController;
+	private PIDController aprilTagYController;
+	private PIDController aprilTagOmegaController;
+
 	private Drivetrain() {
 		navX = new AHRS(SerialPort.Port.kMXP);
 
@@ -75,6 +79,13 @@ public class Drivetrain extends SubsystemBase {
 
 		balanceControllerY = new PIDController(BALANCE_KP, BALANCE_KI, BALANCE_KD);
 		balanceControllerY.setTolerance(BALANCE_TOLERANCE);
+
+		aprilTagXController = new PIDController(ATX_KP, ATX_KI, ATX_KD);
+		aprilTagXController.setTolerance(ATX_TOLERANCE);
+		aprilTagYController = new PIDController(ATY_KP, ATY_KI, ATY_KD);
+		aprilTagYController.setTolerance(ATY_TOLERANCE);
+		aprilTagOmegaController = new PIDController(ATOMEGA_KP, ATOMEGA_KI, ATOMEGA_KD);
+		aprilTagOmegaController.setTolerance(ATOMEGA_TOLERANCE);
 	}
 
 	/** Configures all the swerve drive modules */
@@ -194,6 +205,18 @@ public class Drivetrain extends SubsystemBase {
 
 	public double getRoll() {
 		return navX.getRoll() + 1;
+	}
+
+	public PIDController getAprilTagXController() {
+		return aprilTagXController;
+	}
+
+	public PIDController getAprilTagYController() {
+		return aprilTagYController;
+	}
+
+	public PIDController getAprilTagOmegaController() {
+		return aprilTagOmegaController;
 	}
 
 	@Override
