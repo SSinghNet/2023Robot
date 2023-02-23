@@ -15,11 +15,7 @@ public class MiddleNode extends SequentialCommandGroup {
 	public MiddleNode() {
 		elevator = Elevator.getInstance();
 		arm = Arm.getInstance();
-		addCommands(
-			new Rest(),
-			new InstantCommand(() -> elevator.setSetpoint(Constants.Elevator.MIDDLE_NODE_POSITION)),
-			new WaitCommand(0.5),
-			new InstantCommand(() -> arm.setSetpoint(Constants.Arm.SCORING_POSITION))
-		);
+		addCommands(new Rest(), new InstantCommand(() -> elevator.setSetpoint(Constants.Elevator.MIDDLE_NODE_POSITION)),
+				new WaitCommand(1), new InstantCommand(() -> arm.setSetpoint(Constants.Arm.SCORING_POSITION)));
 	}
 }

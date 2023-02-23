@@ -15,10 +15,7 @@ public class Rest extends SequentialCommandGroup {
 	public Rest() {
 		elevator = Elevator.getInstance();
 		arm = Arm.getInstance();
-		addCommands(
-			new InstantCommand(() -> arm.setSetpoint(Constants.Arm.REST_POSITION)),
-			new WaitCommand(.5),
-			new InstantCommand(() -> elevator.setSetpoint(Constants.Elevator.FLOOR_POSITION))
-		);
+		addCommands(new InstantCommand(() -> arm.setSetpoint(Constants.Arm.REST_POSITION)), new WaitCommand(.5),
+				new InstantCommand(() -> elevator.setSetpoint(Constants.Elevator.FLOOR_POSITION)));
 	}
 }

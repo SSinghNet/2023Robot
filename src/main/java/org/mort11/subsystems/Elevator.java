@@ -56,21 +56,34 @@ public class Elevator extends SubsystemBase {
 		this.setpoint = setpoint;
 	}
 
-	private void setPosition(double setpoint) {
-		driveNeoMaster.setVoltage(feedforward.calculate(0) + positionController.calculate(driveNeoMaster.getEncoder().getPosition(), setpoint));
-	}
-
-	public void setSpeed(double speed) {
-		driveNeoMaster.set(speed);
+	public double getSetpoint() {
+		return setpoint;
 	}
 
 	public boolean atSetpoint() {
 		return positionController.atSetpoint();
 	}
 
+	public boolean nearSetpoint() {
+		return Math.abs(driveNeoMaster.getEncoder().getPosition() - setpoint) < 5;
+	}
+
+	private void setPosition(double setpoint) {
+		driveNeoMaster.setVoltage(feedforward.calculate(0)
+				+ positionController.calculate(driveNeoMaster.getEncoder().getPosition(), setpoint));
+	}
+
+	public void setSpeed(double speed) {
+		driveNeoMaster.set(speed);
+	}
+
+	public double getPosition() {
+		return driveNeoMaster.getEncoder().getPosition();
+	}
+
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Elevator Encoder", driveNeoMaster.getEncoder().getPosition());
+		SmartDashboard.putNumber("Elevator Encoder", getPosition());
 		SmartDashboard.putNumber("elevator setpoint", setpoint);
 
 		setPosition(setpoint);

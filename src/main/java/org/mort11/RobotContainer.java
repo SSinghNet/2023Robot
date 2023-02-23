@@ -4,6 +4,10 @@
 
 package org.mort11;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cameraserver.CameraServerShared;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import org.mort11.subsystems.Arm;
@@ -40,6 +44,10 @@ public class RobotContainer {
 
 		// create autonomous commands and chooser
 		Auto.init();
+
+		UsbCamera camera = new UsbCamera("camera", 0);
+		MjpegServer mjpegServer = new MjpegServer("Usb Camera", 1181);
+		mjpegServer.setSource(camera);
 	}
 
 	/**

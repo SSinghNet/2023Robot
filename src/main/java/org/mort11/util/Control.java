@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -35,7 +36,7 @@ public class Control {
 		joystick = new CommandJoystick(JOYSTICK);
 		throttle = new CommandJoystick(THROTTLE);
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
-		xboxControllerNormal = new XboxController(XBOX_CONTROLLER);
+		xboxControllerNormal = xboxController.getHID();
 
 		drivetrain = Drivetrain.getInstance();
 		arm = Arm.getInstance();
@@ -52,11 +53,12 @@ public class Control {
 	 * Configure secondary button bindings
 	 */
 	public static void configureBindings() {
-		drivetrain
-				.setDefaultCommand(new Drive(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true));
+		drivetrain.setDefaultCommand(
+				new Drive(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true));
 
 		// driver
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
+		joystick.button(2).whileTrue(new Balance());
 
 		joystick.povRight().whileTrue(new RotateToAngle(-90, false));
 		joystick.povUp().whileTrue(new RotateToAngle(0, false));
@@ -69,29 +71,35 @@ public class Control {
 		xboxController.povLeft().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.LEFT_POSITION)));
 		xboxController.povDown().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.DOWN_POSITION)));
 
-		xboxController.a().onTrue(Commands.parallel(new RumbleController(0.2, 0.5, () -> SmartDashboard.getBoolean("FastSpeed", false)), new Floor()));
+		// xboxController.a().onTrue(Commands.parallel(new RumbleController(0.2, 0.5, ()
+		// -> SmartDashboard.getBoolean("FastSpeed", false)), new Floor()));
+		xboxController.a().onTrue(Commands.parallel(new RumbleController(0.2, 0.5, () -> true), new Floor()));
 		xboxController.b().onTrue(new Rest());
-		// xboxController.start().onTrue(new Shelf());
 		xboxController.x().onTrue(new MiddleNode());
 		xboxController.y().onTrue(new UpperNode());
+		xboxController.start().onTrue(new Shelf());
 
-		xboxController.leftBumper().toggleOnTrue(Commands.startEnd(
-			() -> SmartDashboard.putBoolean("FastSpeed", false), 
-			() -> SmartDashboard.putBoolean("FastSpeed", true))
-		);
+		xboxController.leftBumper().toggleOnTrue(Commands.startEnd(() -> SmartDashboard.putBoolean("FastSpeed", false),
+				() -> SmartDashboard.putBoolean("FastSpeed", true)));
 		xboxController.rightBumper().onTrue(new InstantCommand(claw::togglePiston, claw));
 
-		xboxController.axisLessThan(1, -0.5).whileTrue(Commands.startEnd(() -> claw.setSpeed(1), () -> claw.setSpeed(0), claw));
+		xboxController.axisLessThan(1, -0.5)
+				.whileTrue(Commands.startEnd(() -> claw.setSpeed(false), () -> claw.setSpeed(0), claw));
 		xboxController.axisGreaterThan(1, 0.5)
-				.whileTrue(Commands.startEnd(() -> claw.setSpeed(-1), () -> claw.setSpeed(0), claw));
+				.whileTrue(Commands.startEnd(() -> claw.setSpeed(true), () -> claw.setSpeed(0), claw));
 
-		xboxController.axisLessThan(5, -0.5)
-				.whileTrue(Commands.startEnd(() -> elevator.setSpeed(-0.5), () -> elevator.setSpeed(0), elevator));
-		xboxController.axisLessThan(5, 0.5)
-				.whileTrue(Commands.startEnd(() -> elevator.setSpeed(0.5), () -> elevator.setSpeed(0), elevator));
-		
-		// xboxController.x().whileTrue(new InstantCommand(() -> elevator.setSetpoint(7)));
-		// xboxController.y().whileTrue(new InstantCommand(() -> elevator.setSetpoint(75)));
+		// xboxController.axisLessThan(5, -0.5)
+		// .whileTrue(Commands.startEnd(() -> elevator.setSpeed(-0.5), () ->
+		// elevator.setSpeed(0), elevator));
+		// xboxController.axisLessThan(5, 0.5)
+		// .whileTrue(Commands.startEnd(() -> elevator.setSpeed(0.5), () ->
+		// elevator.setSpeed(0), elevator));
+
+		// xboxController.axisLessThan(4, -0.5).and(() ->
+		// xboxControllerNormal.getBackButton());
+
+		xboxController.axisLessThan(5, -0.5).whileTrue(new MoveArm(0.1));
+		xboxController.axisGreaterThan(5, 0.5).whileTrue(new MoveArm(-0.1));
 	}
 
 	/**

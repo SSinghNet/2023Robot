@@ -57,21 +57,34 @@ public class Arm extends SubsystemBase {
 		this.setpoint = setpoint;
 	}
 
-	private void setPosition(double setpoint) {
-		driveNeo.setVoltage(feedforward.calculate(0) + armController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
-	}
-
-	private void setSpeed(double speed) {
-		driveNeo.set(speed);
+	public double getSetpoint() {
+		return setpoint;
 	}
 
 	public boolean atSetpoint() {
 		return armController.atSetpoint();
 	}
 
+	public boolean nearSetpoint() {
+		return Math.abs(driveNeo.getEncoder().getPosition() - setpoint) < 5;
+	}
+
+	private void setPosition(double setpoint) {
+		driveNeo.setVoltage(
+				feedforward.calculate(0) + armController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
+	}
+
+	private void setSpeed(double speed) {
+		driveNeo.set(speed);
+	}
+
+	public double getPosition() {
+		return driveNeo.getEncoder().getPosition();
+	}
+
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Arm Built-In Encoder", driveNeo.getEncoder().getPosition());
+		SmartDashboard.putNumber("Built-In Arm Encoder", getPosition());
 		SmartDashboard.putNumber("arm setpoint", setpoint);
 
 		setPosition(setpoint);

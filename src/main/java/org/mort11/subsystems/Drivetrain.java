@@ -42,7 +42,8 @@ public class Drivetrain extends SubsystemBase {
 	private ChassisSpeeds chassisSpeeds;
 
 	private PIDController rotateToAngleController;
-	private PIDController balanceController;
+	private PIDController balanceControllerX;
+	private PIDController balanceControllerY;
 
 	private Drivetrain() {
 		navX = new AHRS(SerialPort.Port.kMXP);
@@ -69,8 +70,11 @@ public class Drivetrain extends SubsystemBase {
 		rotateToAngleController.enableContinuousInput(-180.0f, 180.0f);
 		rotateToAngleController.setTolerance(ROTATE_TO_ANGLE_TOLERANCE);
 
-		balanceController = new PIDController(BALANCE_KP, BALANCE_KI, BALANCE_KD);
-		balanceController.setTolerance(BALANCE_TOLERANCE);
+		balanceControllerX = new PIDController(BALANCE_KP, BALANCE_KI, BALANCE_KD);
+		balanceControllerX.setTolerance(BALANCE_TOLERANCE);
+
+		balanceControllerY = new PIDController(BALANCE_KP, BALANCE_KI, BALANCE_KD);
+		balanceControllerY.setTolerance(BALANCE_TOLERANCE);
 	}
 
 	/** Configures all the swerve drive modules */
@@ -81,8 +85,7 @@ public class Drivetrain extends SubsystemBase {
 				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, FRONT_LEFT_DRIVE)
 				.withSteerMotor(MotorType.NEO, FRONT_LEFT_STEER).withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER)
-				.withSteerOffset(FRONT_LEFT_STEER_OFFSET)
-				.build();
+				.withSteerOffset(FRONT_LEFT_STEER_OFFSET).build();
 		frontRightModule = new MkSwerveModuleBuilder()
 				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, FRONT_RIGHT_DRIVE)
@@ -98,15 +101,19 @@ public class Drivetrain extends SubsystemBase {
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, BACK_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.NEO, BACK_RIGHT_STEER).withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER)
 				.withSteerOffset(BACK_RIGHT_STEER_OFFSET).build();
-	
+
 	}
 
 	public AHRS getNavX() {
 		return navX;
 	}
 
-	public PIDController getBalanceController() {
-		return balanceController;
+	public PIDController getBalanceControllerX() {
+		return balanceControllerX;
+	}
+
+	public PIDController getBalanceControllerY() {
+		return balanceControllerY;
 	}
 
 	/** Sets the gyroscope angle to zero. */
@@ -181,6 +188,14 @@ public class Drivetrain extends SubsystemBase {
 		return rotateToAngleController;
 	}
 
+	public double getPitch() {
+		return navX.getPitch() - 0.3;
+	}
+
+	public double getRoll() {
+		return navX.getRoll() + 1;
+	}
+
 	@Override
 	public void periodic() {
 		odometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
@@ -189,8 +204,8 @@ public class Drivetrain extends SubsystemBase {
 		setModuleStates(states);
 
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
-		SmartDashboard.putNumber("Pitch", navX.getPitch());
-		SmartDashboard.putNumber("Roll", navX.getRoll());
+		SmartDashboard.putNumber("Pitch", getPitch());
+		SmartDashboard.putNumber("Roll", getRoll());
 
 	}
 

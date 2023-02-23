@@ -22,19 +22,24 @@ public class Balance extends CommandBase {
 	@Override
 	public void execute() {
 
-		if (Math.abs(drivetrain.getNavX().getPitch()) > 0.5) {
-			drivetrain.drive(new ChassisSpeeds(0,
-					drivetrain.getBalanceController().calculate(-drivetrain.getNavX().getPitch()), 0));
-		} else if (Math.abs(drivetrain.getNavX().getRoll()) > 0.5) {
-			drivetrain.drive(new ChassisSpeeds(
-					drivetrain.getBalanceController().calculate(-drivetrain.getNavX().getRoll()), 0, 0));
-		}
+		// if (Math.abs(drivetrain.getNavX().getPitch()) > 0.5) {
+		// drivetrain.drive(new ChassisSpeeds(0,
+		// drivetrain.getBalanceController().calculate(-drivetrain.getPitch(), 0), 0));
+		// } else if (Math.abs(drivetrain.getNavX().getRoll()) > 0.5) {
+		// drivetrain.drive(new ChassisSpeeds(
+		// drivetrain.getBalanceController().calculate(-drivetrain.getRoll(), 0), 0,
+		// 0));
+		// }
+		drivetrain.drive(new ChassisSpeeds(-drivetrain.getBalanceControllerX().calculate(drivetrain.getRoll(), 0),
+				-drivetrain.getBalanceControllerY().calculate(drivetrain.getPitch(), 0), 0));
 
 	}
 
 	@Override
 	public boolean isFinished() {
-		return drivetrain.getBalanceController().atSetpoint();
+		// return Math.abs(drivetrain.getRoll()) < 0.5 &&
+		// Math.abs(drivetrain.getPitch()) < 0.5;
+		return false;
 	}
 
 	@Override

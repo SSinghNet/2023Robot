@@ -40,10 +40,10 @@ public final class Constants {
 		public final static double ROTATE_TO_ANGLE_KD = 0;
 		public final static double ROTATE_TO_ANGLE_TOLERANCE = 0;
 
-		public final static double BALANCE_KP = 0;
-		public final static double BALANCE_KI = 0;
-		public final static double BALANCE_KD = 0;
-		public final static double BALANCE_TOLERANCE = 0;
+		public final static double BALANCE_KP = 0.033;
+		public final static double BALANCE_KI = 0.0002;
+		public final static double BALANCE_KD = 0.008;
+		public final static double BALANCE_TOLERANCE = 0.5;
 	}
 
 	public final static class Elevator {
@@ -58,18 +58,19 @@ public final class Constants {
 		public final static double KS = -0.017718;
 		public final static double KV = 4.1738;
 		public final static double KA = 0.24129;
-		public final static double KG = 0.4651; 
+		public final static double KG = 0.4651;
 
 		public final static int LIMIT_SWITCH = 4;
 
 		// TODO find positions
-		public final static double FLOOR_POSITION = 0;
-		public final static double SHELF_POSITION = 0;
+		public final static double FLOOR_POSITION = 1;
+		public final static double SHELF_POSITION = 50;
 		public final static double MIDDLE_NODE_POSITION = 54;
 		public final static double UPPER_NODE_POSITION = 87;
 
 		public final static float TOP_LIMIT = 90.0f;
 		public final static float BOTTOM_LIMIT = 1.0f;
+		public final static float RANGE = TOP_LIMIT - BOTTOM_LIMIT;
 	}
 
 	public final static class Arm {
@@ -78,18 +79,17 @@ public final class Constants {
 		// TODO: tune PID
 		public final static double KP = 0.3; // 2.55
 		public final static double KI = 0; // 0.09
-		public final static double KD = 0.05; // 0.2
+		public final static double KD = 0.055; // 0.2
 		public final static double TOLERANCE = 0.1;
 
 		public final static double KS = 0.28856;
-		public final static double KV = 6.6348;
+		public final static double KV = 6.6349;
 		public final static double KA = 0.85592;
 
 		// TODO find positions
 		public final static double FLOOR_POSITION = -38;
-		public final static double SHELF_POSITION = 0;
-		public final static double SCORING_POSITION = 2;
-		public final static double REST_POSITION = -11;
+		public final static double SCORING_POSITION = 4;
+		public final static double REST_POSITION = -8;
 
 		public final static float BOTTOM_LIMIT = -40.0f;
 		public final static float TOP_LIMIT = 2.5f;
@@ -102,6 +102,9 @@ public final class Constants {
 		public final static int IR_SENSOR = 0;
 
 		public final static int PISTON = 0;
+
+		public final static double CONE_SPEED = 0.5;
+		public final static double CUBE_SPEED = 0.1;
 	}
 
 	public final static class Wrist {

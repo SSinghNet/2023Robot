@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Claw.*;
 
+import org.mort11.util.Constants;
+
 import static org.mort11.util.Constants.*;
 
 public class Claw extends SubsystemBase {
@@ -36,10 +38,14 @@ public class Claw extends SubsystemBase {
 	}
 
 	public void setSpeed(double speed) {
+		intakeNeoMaster.set(speed);
+	}
+
+	public void setSpeed(boolean in) {
 		if (SmartDashboard.getBoolean("FastSpeed", false)) {
-			intakeNeoMaster.set(speed);
+			setSpeed(in ? -Constants.Claw.CONE_SPEED : Constants.Claw.CONE_SPEED);
 		} else {
-			intakeNeoMaster.set(speed * 0.1);
+			setSpeed(in ? -Constants.Claw.CUBE_SPEED : Constants.Claw.CUBE_SPEED);
 		}
 	}
 

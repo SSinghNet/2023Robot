@@ -12,36 +12,37 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class RumbleController extends CommandBase {
-  private Timer timer;
-  private double time;
-  private double rumbleValue;
+	private Timer timer;
+	private double time;
+	private double rumbleValue;
 
-  /** Creates a new RumbleController. */
-  public RumbleController(double time, double rumbleValue, BooleanSupplier condition) {
-    this.time = time;
-    this.rumbleValue = condition.getAsBoolean() ? rumbleValue : 0;
-    timer = new Timer();
-  }
+	/** Creates a new RumbleController. */
+	public RumbleController(double time, double rumbleValue, BooleanSupplier condition) {
+		this.time = time;
+		this.rumbleValue = condition.getAsBoolean() ? rumbleValue : 0;
+		timer = new Timer();
+	}
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    Control.setControllerRumble(rumbleValue);
-  }
+	// Called when the command is initially scheduled.
+	@Override
+	public void initialize() {
+		Control.setControllerRumble(rumbleValue);
+	}
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
+	// Called every time the scheduler runs while the command is scheduled.
+	@Override
+	public void execute() {
+	}
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    Control.setControllerRumble(0);
-  }
+	// Called once the command ends or is interrupted.
+	@Override
+	public void end(boolean interrupted) {
+		Control.setControllerRumble(0);
+	}
 
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return timer.get() < time;
-  }
+	// Returns true when the command should end.
+	@Override
+	public boolean isFinished() {
+		return timer.get() < time;
+	}
 }
