@@ -5,7 +5,6 @@
 package org.mort11;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cameraserver.CameraServerShared;
 import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +14,7 @@ import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Elevator;
 import org.mort11.subsystems.Pneumatic;
+import org.mort11.subsystems.Vision;
 import org.mort11.subsystems.Wrist;
 import org.mort11.util.Auto;
 import org.mort11.util.Control;
@@ -26,6 +26,7 @@ public class RobotContainer {
 	private Elevator elevator;
 	private Pneumatic pneumatic;
 	private Wrist wrist;
+	private Vision vision;
 
 	public RobotContainer() {
 		// initialize subsystems
@@ -35,6 +36,7 @@ public class RobotContainer {
 		elevator = Elevator.getInstance();
 		pneumatic = Pneumatic.getInstance();
 		wrist = Wrist.getInstance();
+		vision = vision.getInstance();
 
 		// initalize controllers
 		Control.init();
@@ -45,9 +47,6 @@ public class RobotContainer {
 		// create autonomous commands and chooser
 		Auto.init();
 
-		UsbCamera camera = new UsbCamera("camera", 0);
-		MjpegServer mjpegServer = new MjpegServer("Usb Camera", 1181);
-		mjpegServer.setSource(camera);
 	}
 
 	/**

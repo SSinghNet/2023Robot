@@ -3,6 +3,8 @@ package org.mort11;
 import org.mort11.subsystems.Drivetrain;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.MjpegServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -22,6 +24,11 @@ public class Robot extends TimedRobot {
 		// and put our
 		// autonomous chooser on the dashboard.
 		robotContainer = new RobotContainer();
+
+		UsbCamera camera = new UsbCamera("camera", 0);
+		MjpegServer mjpegServer = new MjpegServer("Usb Camera", 1181);
+		mjpegServer.setSource(camera);
+		mjpegServer.setFPS(5);
 
 		CameraServer.startAutomaticCapture();
 	}

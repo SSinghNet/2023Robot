@@ -3,6 +3,10 @@ package org.mort11.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.mort11.commands.endeffector.Rest;
+import org.mort11.commands.endeffector.TimedIntake;
+import org.mort11.commands.endeffector.UpperNode;
+import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
 
 import com.pathplanner.lib.PathConstraints;
@@ -15,6 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import static org.mort11.util.Constants.RobotSpecs.*;
 
@@ -58,6 +64,21 @@ public class Auto {
 		// By default, the nothing option is selected
 		autoChooser.setDefaultOption("nothing", null);
 		autoChooser.addOption("Test", autoFromPathGroup("Test"));
+		autoChooser.addOption("One Cube Upper", new SequentialCommandGroup(
+			new UpperNode(),
+			new TimedIntake(0.2, false),
+			new Rest()
+		));
+
+		autoChooser.addOption("One Cone Upper", new SequentialCommandGroup(
+			new UpperNode(),
+			new InstantCommand(
+				() -> Claw.getInstance().setPiston(true)
+			),
+			new Rest()
+		));
+
+
 	}
 
 	public static void addEvents() {

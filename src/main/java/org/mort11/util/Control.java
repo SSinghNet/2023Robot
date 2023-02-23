@@ -24,7 +24,6 @@ public class Control {
 	private static CommandJoystick joystick;
 	private static CommandJoystick throttle;
 	private static CommandXboxController xboxController;
-	private static XboxController xboxControllerNormal;
 
 	private static Drivetrain drivetrain;
 	private static Arm arm;
@@ -36,7 +35,6 @@ public class Control {
 		joystick = new CommandJoystick(JOYSTICK);
 		throttle = new CommandJoystick(THROTTLE);
 		xboxController = new CommandXboxController(XBOX_CONTROLLER);
-		xboxControllerNormal = xboxController.getHID();
 
 		drivetrain = Drivetrain.getInstance();
 		arm = Arm.getInstance();
@@ -71,9 +69,7 @@ public class Control {
 		xboxController.povLeft().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.LEFT_POSITION)));
 		xboxController.povDown().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.DOWN_POSITION)));
 
-		// xboxController.a().onTrue(Commands.parallel(new RumbleController(0.2, 0.5, ()
-		// -> SmartDashboard.getBoolean("FastSpeed", false)), new Floor()));
-		xboxController.a().onTrue(Commands.parallel(new RumbleController(0.2, 0.5, () -> true), new Floor()));
+		xboxController.a().onTrue(new Floor());
 		xboxController.b().onTrue(new Rest());
 		xboxController.x().onTrue(new MiddleNode());
 		xboxController.y().onTrue(new UpperNode());
@@ -81,12 +77,29 @@ public class Control {
 
 		xboxController.leftBumper().toggleOnTrue(Commands.startEnd(() -> SmartDashboard.putBoolean("FastSpeed", false),
 				() -> SmartDashboard.putBoolean("FastSpeed", true)));
+		xboxController.leftBumper()
+				.onTrue(new InstantCommand(() -> xboxController.getHID().setRumble(RumbleType.kBothRumble, 1)));
+		xboxController.leftBumper()
+				.onFalse(new InstantCommand(() -> xboxController.getHID().setRumble(RumbleType.kBothRumble, 0)));
 		xboxController.rightBumper().onTrue(new InstantCommand(claw::togglePiston, claw));
 
 		xboxController.axisLessThan(1, -0.5)
 				.whileTrue(Commands.startEnd(() -> claw.setSpeed(false), () -> claw.setSpeed(0), claw));
 		xboxController.axisGreaterThan(1, 0.5)
 				.whileTrue(Commands.startEnd(() -> claw.setSpeed(true), () -> claw.setSpeed(0), claw));
+				
+		xboxController.axisLessThan(1, -0.5).whileTrue(
+				new RumbleController(0.3)
+		);
+
+		xboxController.axisGreaterThan(1, 0.5).whileTrue(
+			new RumbleController(0.3)
+	);
+
+
+		// xboxController.axisLessThan(1, -0.5).or(xboxController.axisGreaterThan(1, 0.5)).and(() -> SmartDashboard.putBoolean("FastSpeed", false))
+		// 		.toggleOnTrue(Commands.startEnd(() -> xboxController.getHID().setRumble(RumbleType.kBothRumble, 0.5),
+		// 				() -> xboxController.getHID().setRumble(RumbleType.kBothRumble, 0)));
 
 		// xboxController.axisLessThan(5, -0.5)
 		// .whileTrue(Commands.startEnd(() -> elevator.setSpeed(-0.5), () ->
@@ -153,7 +166,7 @@ public class Control {
 	}
 
 	public static void setControllerRumble(double value) {
-		xboxControllerNormal.setRumble(RumbleType.kBothRumble, value);
+		xboxController.getHID().setRumble(RumbleType.kBothRumble, value);
 	}
 
 }

@@ -15,11 +15,8 @@ public class Floor extends SequentialCommandGroup {
 	public Floor() {
 		elevator = Elevator.getInstance();
 		arm = Arm.getInstance();
-		addCommands(
-				elevator.getPosition() > 2 ? new Rest() : new InstantCommand(),
-				new InstantCommand(() -> elevator.setSetpoint(Constants.Elevator.FLOOR_POSITION)),
-				new WaitCommand(0.3),
-				new InstantCommand(() -> arm.setSetpoint(Constants.Arm.FLOOR_POSITION))
-				);
+		addCommands(elevator.getPosition() > 2 ? new Rest() : new InstantCommand(),
+				new InstantCommand(() -> elevator.setSetpoint(Constants.Elevator.FLOOR_POSITION)), new WaitCommand(0.3),
+				new InstantCommand(() -> arm.setSetpoint(Constants.Arm.FLOOR_POSITION)));
 	}
 }
