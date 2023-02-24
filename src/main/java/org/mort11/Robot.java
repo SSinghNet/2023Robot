@@ -1,5 +1,6 @@
 package org.mort11;
 
+import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
 
 import edu.wpi.first.cameraserver.CameraServer;
@@ -28,8 +29,7 @@ public class Robot extends TimedRobot {
 		UsbCamera camera = new UsbCamera("camera", 0);
 		MjpegServer mjpegServer = new MjpegServer("Usb Camera", 1181);
 		mjpegServer.setSource(camera);
-		mjpegServer.setFPS(5);
-
+		
 		CameraServer.startAutomaticCapture();
 	}
 
@@ -100,9 +100,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testInit() {
-		// Cancels all running commands at the start of test mode.
-		CommandScheduler.getInstance().cancelAll();
 		Drivetrain.getInstance().getNavX().calibrate();
+		Claw.getInstance().setPiston(false);
 	}
 
 	/** This function is called periodically during test mode. */

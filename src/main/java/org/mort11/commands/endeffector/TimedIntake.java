@@ -24,6 +24,7 @@ public class TimedIntake extends CommandBase {
 
     @Override
     public void initialize() {
+        timer.reset();
         timer.start();
 
         SmartDashboard.putBoolean("FastSpeed", isCone);

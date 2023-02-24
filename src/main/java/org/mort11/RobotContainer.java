@@ -4,9 +4,6 @@
 
 package org.mort11;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.MjpegServer;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import org.mort11.subsystems.Arm;

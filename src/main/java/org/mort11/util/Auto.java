@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.mort11.commands.endeffector.Rest;
+import org.mort11.commands.endeffector.SetArm;
+import org.mort11.commands.endeffector.SetElevator;
 import org.mort11.commands.endeffector.TimedIntake;
 import org.mort11.commands.endeffector.UpperNode;
 import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
+import org.mort11.util.Constants.Arm;
+import org.mort11.util.Constants.Elevator;
 
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
@@ -21,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import static org.mort11.util.Constants.RobotSpecs.*;
 
@@ -65,18 +70,30 @@ public class Auto {
 		autoChooser.setDefaultOption("nothing", null);
 		autoChooser.addOption("Test", autoFromPathGroup("Test"));
 		autoChooser.addOption("One Cube Upper", new SequentialCommandGroup(
-			new UpperNode(),
-			new TimedIntake(0.2, false),
+			new SetArm(Arm.REST_POSITION),
+			new SetElevator(Elevator.UPPER_NODE_POSITION),
+			new SetArm(Arm.SCORING_POSITION),
+			new TimedIntake(1.5, false),
+			new WaitCommand(1),
 			new Rest()
 		));
 
 		autoChooser.addOption("One Cone Upper", new SequentialCommandGroup(
-			new UpperNode(),
+			new SetArm(Arm.REST_POSITION),
+			new SetElevator(Elevator.UPPER_NODE_POSITION),
+			new SetArm(Arm.SCORING_POSITION),
 			new InstantCommand(
 				() -> Claw.getInstance().setPiston(true)
 			),
+			new WaitCommand(0.4),
+			new InstantCommand(
+				() -> Claw.getInstance().setPiston(false)
+			),
 			new Rest()
 		));
+
+		autoChooser.addOption("intake", new TimedIntake(1.5, false)
+		);
 
 
 	}

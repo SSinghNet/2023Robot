@@ -129,9 +129,9 @@ public final class Constants {
 		public final static int DRIVE = 36;
 		public final static int ENCODER = 9;
 
-		public final static double KP = 0.06;
+		public final static double KP = 0.1;
 		public final static double KI = 0;
-		public final static double KD = 0;
+		public final static double KD = 0.007;
 
 		// TODO test positions
 		public final static double DOWN_POSITION = 45;
