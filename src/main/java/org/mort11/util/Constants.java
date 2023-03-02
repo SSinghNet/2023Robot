@@ -40,10 +40,10 @@ public final class Constants {
 		public final static double ROTATE_TO_ANGLE_KD = 0;
 		public final static double ROTATE_TO_ANGLE_TOLERANCE = 0;
 
-		public final static double BALANCE_KP = 0.033;
-		public final static double BALANCE_KI = 0.0002;
-		public final static double BALANCE_KD = 0.008;
-		public final static double BALANCE_TOLERANCE = 0.5;
+		public final static double BALANCE_KP = 0.025; // 0.033
+		public final static double BALANCE_KI = 0.0; // 0.0002
+		public final static double BALANCE_KD = 0.005; // 0.008
+		public final static double BALANCE_TOLERANCE = 0.25;
 
 		// TODO: tune pid
 		public final static double ATX_KP = 0;
@@ -185,9 +185,9 @@ public final class Constants {
 
 		public static final double MAX_VOLTAGE = 12.0;
 
-		public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0
+		public static final double MAX_VELOCITY_METERS_PER_SECOND = (6380.0 / 60.0
 				* SdsModuleConfigurations.MK4I_L2.getDriveReduction()
-				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI;
+				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI) * 0.75;
 		public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
 				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 

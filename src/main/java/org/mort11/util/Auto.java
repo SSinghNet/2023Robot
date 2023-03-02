@@ -3,8 +3,11 @@ package org.mort11.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.mort11.commands.drivetrain.Balance;
+import org.mort11.commands.drivetrain.TimedDrive;
 import org.mort11.commands.endeffector.Rest;
 import org.mort11.commands.endeffector.SetArm;
+import org.mort11.commands.endeffector.SetClawPiston;
 import org.mort11.commands.endeffector.SetElevator;
 import org.mort11.commands.endeffector.TimedIntake;
 import org.mort11.commands.endeffector.UpperNode;
@@ -68,33 +71,63 @@ public class Auto {
 	public static void addAutoOptions() {
 		// By default, the nothing option is selected
 		autoChooser.setDefaultOption("nothing", null);
+
 		autoChooser.addOption("Test", autoFromPathGroup("Test"));
+		
 		autoChooser.addOption("One Cube Upper", new SequentialCommandGroup(
-			new SetArm(Arm.REST_POSITION),
-			new SetElevator(Elevator.UPPER_NODE_POSITION),
-			new SetArm(Arm.SCORING_POSITION),
+			new UpperNode(),
 			new TimedIntake(1.5, false),
 			new WaitCommand(1),
 			new Rest()
 		));
-
 		autoChooser.addOption("One Cone Upper", new SequentialCommandGroup(
-			new SetArm(Arm.REST_POSITION),
-			new SetElevator(Elevator.UPPER_NODE_POSITION),
-			new SetArm(Arm.SCORING_POSITION),
-			new InstantCommand(
-				() -> Claw.getInstance().setPiston(true)
-			),
+			new UpperNode(),
+			new SetClawPiston(true),
 			new WaitCommand(0.4),
-			new InstantCommand(
-				() -> Claw.getInstance().setPiston(false)
-			),
+			new SetClawPiston(false),
 			new Rest()
 		));
 
-		autoChooser.addOption("intake", new TimedIntake(1.5, false)
-		);
-
+		autoChooser.addOption("Upper Cube, Engage",  new SequentialCommandGroup(
+			new UpperNode(),
+			new SetClawPiston(true),
+			new WaitCommand(0.4),
+			new SetClawPiston(false),
+			new Rest(),
+			new TimedDrive(2.4, 0.8, 0, 0),
+			new Balance()
+		));
+		autoChooser.addOption("Upper Cube, Taxi",  new SequentialCommandGroup(
+			new UpperNode(),
+			new SetClawPiston(true),
+			new WaitCommand(0.4),
+			new SetClawPiston(false),
+			new Rest(),
+			new TimedDrive(3.1, 1, 0, 0),
+			new Balance()
+		));
+		autoChooser.addOption("Upper Cube, Taxi, Engage (LEFT)",  new SequentialCommandGroup(
+			// new UpperNode(),
+			// new SetClawPiston(true),
+			// new WaitCommand(0.4),
+			// new SetClawPiston(false),
+			// new Rest(),
+			new TimedDrive(3.1, 1, 0, 0),
+			new TimedDrive(1, 0, -1, 0),
+			new TimedDrive(1, -1, 0, 0),
+			new Balance()
+		));
+		autoChooser.addOption("Upper Cube, Taxi, Engage (RIGHT)",  new SequentialCommandGroup(
+			// new UpperNode(),
+			// new SetClawPiston(true),
+			// new WaitCommand(0.4),
+			// new SetClawPiston(false),
+			// new Rest(),
+			new TimedDrive(3.5, 1, 0, 0),
+			new TimedDrive(2.5, 0, 1, 0),
+			new TimedDrive(2.5, -1, 0, 0),
+			new Balance()
+		));
 
 	}
 

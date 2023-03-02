@@ -153,16 +153,16 @@ public class Control {
 	}
 
 	public static double getJoystickX() {
-		return -modifyJoystickAxis(joystick.getX(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND;
+		return -(modifyJoystickAxis(joystick.getX(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND) * 0.75;
 	}
 
 	public static double getJoystickY() {
-		return -modifyJoystickAxis(joystick.getY(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND;
+		return -(modifyJoystickAxis(joystick.getY(), throttle.getRawAxis(2)) * MAX_VELOCITY_METERS_PER_SECOND);
 	}
 
 	public static double getJoystickTwist() {
-		return -modifyJoystickAxis(joystick.getTwist(), throttle.getRawAxis(2))
-				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
+		return -(modifyJoystickAxis(joystick.getTwist(), throttle.getRawAxis(2))
+				* MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 	}
 
 	public static void setControllerRumble(double value) {
