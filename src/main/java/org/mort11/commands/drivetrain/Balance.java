@@ -30,12 +30,9 @@ public class Balance extends CommandBase {
 		// drivetrain.getBalanceController().calculate(-drivetrain.getRoll(), 0), 0,
 		// 0));
 		// }
-		drivetrain.drive(new ChassisSpeeds(
-				-drivetrain.getBalanceControllerX().calculate(drivetrain.getRoll(), 0),
-			0,
+		drivetrain.drive(new ChassisSpeeds(-drivetrain.getBalanceControllerX().calculate(drivetrain.getRoll(), 0), 0,
 				// -drivetrain.getBalanceControllerY().calculate(drivetrain.getPitch(), 0),
-				0)
-				);
+				0));
 
 	}
 

@@ -7,42 +7,42 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class TimedIntake extends CommandBase {
-    private Claw claw;
-    
-    private Timer timer;
-    private double time;
-    private boolean isCone;
+	private Claw claw;
 
-    public TimedIntake(double time, boolean isCone) {
-        claw = Claw.getInstance();
-        timer = new Timer();
-        this.time = time;
-        this.isCone = isCone;
+	private Timer timer;
+	private double time;
+	private boolean isCone;
 
-        addRequirements(claw);
-    }
+	public TimedIntake(double time, boolean isCone) {
+		claw = Claw.getInstance();
+		timer = new Timer();
+		this.time = time;
+		this.isCone = isCone;
 
-    @Override
-    public void initialize() {
-        timer.reset();
-        timer.start();
+		addRequirements(claw);
+	}
 
-        SmartDashboard.putBoolean("FastSpeed", isCone);
-        claw.setSpeed(false);
-    }
+	@Override
+	public void initialize() {
+		timer.reset();
+		timer.start();
 
-    @Override
-    public void execute() {
+		SmartDashboard.putBoolean("FastSpeed", isCone);
+		claw.setSpeed(false);
+	}
 
-    }
+	@Override
+	public void execute() {
 
-    @Override
-    public void end(boolean interrupted) {
-        claw.setSpeed(0);
-    }
+	}
 
-    @Override
-    public boolean isFinished() {
-        return timer.get() > time;
-    }
+	@Override
+	public void end(boolean interrupted) {
+		claw.setSpeed(0);
+	}
+
+	@Override
+	public boolean isFinished() {
+		return timer.get() > time;
+	}
 }

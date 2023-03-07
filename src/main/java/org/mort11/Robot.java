@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
 		UsbCamera camera = new UsbCamera("camera", 0);
 		MjpegServer mjpegServer = new MjpegServer("Usb Camera", 1181);
 		mjpegServer.setSource(camera);
-		
+
 		CameraServer.startAutomaticCapture();
 	}
 
@@ -75,6 +75,8 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.schedule();
 		}
+
+		Drivetrain.getInstance().zeroGyroscope();
 	}
 
 	/** This function is called periodically during autonomous. */

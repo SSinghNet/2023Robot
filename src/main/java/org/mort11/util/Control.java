@@ -87,29 +87,10 @@ public class Control {
 				.whileTrue(Commands.startEnd(() -> claw.setSpeed(false), () -> claw.setSpeed(0), claw));
 		xboxController.axisGreaterThan(1, 0.5)
 				.whileTrue(Commands.startEnd(() -> claw.setSpeed(true), () -> claw.setSpeed(0), claw));
-				
-		xboxController.axisLessThan(1, -0.5).whileTrue(
-				new RumbleController(0.3)
-		);
 
-		xboxController.axisGreaterThan(1, 0.5).whileTrue(
-			new RumbleController(0.3)
-	);
+		xboxController.axisLessThan(1, -0.5).whileTrue(new RumbleController(0.3));
 
-
-		// xboxController.axisLessThan(1, -0.5).or(xboxController.axisGreaterThan(1, 0.5)).and(() -> SmartDashboard.putBoolean("FastSpeed", false))
-		// 		.toggleOnTrue(Commands.startEnd(() -> xboxController.getHID().setRumble(RumbleType.kBothRumble, 0.5),
-		// 				() -> xboxController.getHID().setRumble(RumbleType.kBothRumble, 0)));
-
-		// xboxController.axisLessThan(5, -0.5)
-		// .whileTrue(Commands.startEnd(() -> elevator.setSpeed(-0.5), () ->
-		// elevator.setSpeed(0), elevator));
-		// xboxController.axisLessThan(5, 0.5)
-		// .whileTrue(Commands.startEnd(() -> elevator.setSpeed(0.5), () ->
-		// elevator.setSpeed(0), elevator));
-
-		// xboxController.axisLessThan(4, -0.5).and(() ->
-		// xboxControllerNormal.getBackButton());
+		xboxController.axisGreaterThan(1, 0.5).whileTrue(new RumbleController(0.3));
 
 		xboxController.axisLessThan(5, -0.5).whileTrue(new MoveArm(0.1));
 		xboxController.axisGreaterThan(5, 0.5).whileTrue(new MoveArm(-0.1));

@@ -7,9 +7,6 @@ import org.mort11.util.Constants;
 public class Rest extends SequentialCommandGroup {
 
 	public Rest() {
-		addCommands(
-				new SetArm(Constants.Arm.REST_POSITION),
-				new SetElevator(Constants.Elevator.FLOOR_POSITION)
-		);
+		addCommands(new SetArm(Constants.Arm.REST_POSITION), new SetElevator(Constants.Elevator.FLOOR_POSITION));
 	}
 }

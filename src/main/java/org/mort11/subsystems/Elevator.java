@@ -65,7 +65,7 @@ public class Elevator extends SubsystemBase {
 	}
 
 	public boolean nearSetpoint() {
-		return Math.abs(driveNeoMaster.getEncoder().getPosition() - setpoint) < 5;
+		return Math.abs(driveNeoMaster.getEncoder().getPosition() - setpoint) < 10;
 	}
 
 	private void setPosition(double setpoint) {

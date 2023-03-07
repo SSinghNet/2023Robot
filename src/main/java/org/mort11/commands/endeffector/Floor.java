@@ -7,10 +7,7 @@ import org.mort11.util.Constants;
 public class Floor extends SequentialCommandGroup {
 
 	public Floor() {
-		addCommands(
-				new SetArm(Constants.Arm.REST_POSITION),
-				new SetElevator(Constants.Elevator.FLOOR_POSITION),
-				new SetArm(Constants.Arm.FLOOR_POSITION)
-		);
+		addCommands(new SetArm(Constants.Arm.REST_POSITION), new SetElevator(Constants.Elevator.FLOOR_POSITION),
+				new SetArm(Constants.Arm.FLOOR_POSITION));
 	}
 }
