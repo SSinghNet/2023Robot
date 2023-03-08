@@ -67,7 +67,7 @@ public class Claw extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putBoolean("Claw IR Sensor", getIrSensor());
+		// SmartDashboard.putBoolean("Claw IR Sensor", getIrSensor());
 		SmartDashboard.putBoolean("Claw Piston", getPiston());
 	}
 

@@ -178,10 +178,10 @@ public final class Constants {
 	public final static class RobotSpecs {
 		// The left-to-right distance between the drivetrain wheels measured from center
 		// to center.
-		public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(24);
+		public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(23.8);
 		// The front-to-back distance between the drivetrain wheels measured from center
 		// to center.
-		public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(24);
+		public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(23.8);
 
 		public static final double MAX_VOLTAGE = 12.0;
 
@@ -191,8 +191,8 @@ public final class Constants {
 		public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
 				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
-		public static final double MAX_VELOCITY_AUTO = 4;
-		public static final double MAX_ACCELERATION_AUTO = 3;
+		public static final double MAX_VELOCITY_AUTO = 2;
+		public static final double MAX_ACCELERATION_AUTO = 1;
 	}
 
 }

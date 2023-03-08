@@ -90,25 +90,27 @@ public class Drivetrain extends SubsystemBase {
 
 	/** Configures all the swerve drive modules */
 	private void configModules() {
-		ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+		// ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
 		frontLeftModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
+				// .withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4)
+				// .withPosition(0, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, FRONT_LEFT_DRIVE)
 				.withSteerMotor(MotorType.NEO, FRONT_LEFT_STEER).withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER)
 				.withSteerOffset(FRONT_LEFT_STEER_OFFSET).build();
 		frontRightModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
+				// .withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4)
+				// .withPosition(2, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, FRONT_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.NEO, FRONT_RIGHT_STEER).withSteerEncoderPort(FRONT_RIGHT_STEER_ENCODER)
 				.withSteerOffset(FRONT_RIGHT_STEER_OFFSET).build();
 		backLeftModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
+				// .withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, BACK_LEFT_DRIVE)
 				.withSteerMotor(MotorType.NEO, BACK_LEFT_STEER).withSteerEncoderPort(BACK_LEFT_STEER_ENCODER)
 				.withSteerOffset(BACK_LEFT_STEER_OFFSET).build();
 		backRightModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
+				// .withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2).withDriveMotor(MotorType.NEO, BACK_RIGHT_DRIVE)
 				.withSteerMotor(MotorType.NEO, BACK_RIGHT_STEER).withSteerEncoderPort(BACK_RIGHT_STEER_ENCODER)
 				.withSteerOffset(BACK_RIGHT_STEER_OFFSET).build();
@@ -221,14 +223,18 @@ public class Drivetrain extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		odometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
+		odometry.update(getGyroscopeRotation(), getModulePositions());
 
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
 
-		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
-		SmartDashboard.putNumber("Pitch", getPitch());
-		SmartDashboard.putNumber("Roll", getRoll());
+		SmartDashboard.putNumber(
+			"Pose Rotation", getPose().getRotation().getDegrees()
+		);
+
+		// SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
+		// SmartDashboard.putNumber("Pitch", getPitch());
+		// SmartDashboard.putNumber("Roll", getRoll());
 
 	}
 

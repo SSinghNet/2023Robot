@@ -55,9 +55,9 @@ public class Wrist extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("Built-In Wrist Encoder", driveNeo.getEncoder().getPosition());
-		SmartDashboard.putNumber("SRX Wrist Encoder", SRXEncoder.getRaw());
-		SmartDashboard.putNumber("wrist setpoint", setpoint);
+		// SmartDashboard.putNumber("Built-In Wrist Encoder", driveNeo.getEncoder().getPosition());
+		// SmartDashboard.putNumber("SRX Wrist Encoder", SRXEncoder.getRaw());
+		// SmartDashboard.putNumber("wrist setpoint", setpoint);
 
 		setPosition(setpoint);
 	}

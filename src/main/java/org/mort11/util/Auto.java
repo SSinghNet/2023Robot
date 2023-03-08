@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.mort11.commands.drivetrain.Balance;
 import org.mort11.commands.drivetrain.TimedDrive;
 import org.mort11.commands.endeffector.Rest;
+import org.mort11.commands.endeffector.ScoreCone;
 import org.mort11.commands.endeffector.SetArm;
 import org.mort11.commands.endeffector.SetClawPiston;
 import org.mort11.commands.endeffector.SetElevator;
@@ -21,7 +22,10 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -37,7 +41,7 @@ public class Auto {
 
 	private static HashMap<String, Command> eventMap;
 
-	private static SwerveAutoBuilder autoBuilder;
+	// private static SwerveAutoBuilder autoBuilder;
 
 	private static SendableChooser<Command> autoChooser;
 
@@ -47,19 +51,19 @@ public class Auto {
 
 		drivetrain = Drivetrain.getInstance();
 
-		autoBuilder = new SwerveAutoBuilder(drivetrain::getPose, // Pose2d supplier
-				drivetrain::resetPose, // Pose2d consumer, used to reset odometry at the beginning of auto
-				drivetrain.driveKinematics, // SwerveDriveKinematics
-				new PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X
-													// and Y PID controllers)
-				new PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the
-													// rotation controller)
-				drivetrain::setModuleStates, // Module states consumer used to output to the drive subsystem
-				eventMap, false, // Should the path be automatically mirrored depending on alliance color.
-									// Optional, defaults to true
-				drivetrain // The drive subsystem. Used to properly set the requirements of path following
-							// commands
-		);
+		// autoBuilder = new SwerveAutoBuilder(drivetrain::getPose, // Pose2d supplier
+		// 		drivetrain::resetPose, // Pose2d consumer, used to reset odometry at the beginning of auto
+		// 		drivetrain.driveKinematics, // SwerveDriveKinematics
+		// 		new PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X
+		// 											// and Y PID controllers)
+		// 		new PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the
+		// 											// rotation controller)
+		// 		drivetrain::setModuleStates, // Module states consumer used to output to the drive subsystem
+		// 		eventMap, false, // Should the path be automatically mirrored depending on alliance color.
+		// 							// Optional, defaults to true
+		// 		drivetrain // The drive subsystem. Used to properly set the requirements of path following
+		// 					// commands
+		// );
 
 		autoChooser = new SendableChooser<Command>();
 		addAutoOptions();
@@ -72,26 +76,26 @@ public class Auto {
 		// By default, the nothing option is selected
 		autoChooser.setDefaultOption("nothing", null);
 
-		autoChooser.addOption("Test", autoFromPathGroup("Test"));
+		// autoChooser.addOption("Test", autoFromPathGroup("Test"));
 
 		autoChooser.addOption("One Cube Upper", new SequentialCommandGroup(new UpperNode(), new TimedIntake(1.5, false),
 				new WaitCommand(1), new Rest()));
 		autoChooser.addOption("One Cone Upper", new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true),
 				new WaitCommand(0.4), new SetClawPiston(false), new Rest()));
 
-		autoChooser.addOption("Upper Cube, Engage",
-				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
-						new SetClawPiston(false), new Rest(), new TimedDrive(2.4, 0.8, 0, 0), new Balance()));
+		autoChooser.addOption("Upper Cone, Engage",
+				new SequentialCommandGroup(
+					new ScoreCone(), new TimedDrive(2.4, 0.8, 0, 0), new Balance()));
 
-		autoChooser.addOption("Upper Cube, Taxi, Engage",
+		autoChooser.addOption("Upper Cone, Taxi, Engage",
 				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
 						new SetClawPiston(false), new Rest(), new TimedDrive(2.6, 1.6, 0, 0), new WaitCommand(0.3),
 						new TimedDrive(1.1, -1.6, 0, 0), new Balance()));
 
-		autoChooser.addOption("Upper Cube, Taxi",
+		autoChooser.addOption("Upper Cone, Taxi",
 				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
 						new SetClawPiston(false), new Rest(), new TimedDrive(2.8, 1.5, 0, 0), new Balance()));
-		autoChooser.addOption("Upper Cube, Taxi, Engage (LEFT)", new SequentialCommandGroup(
+		autoChooser.addOption("Upper Cone, Taxi, Engage (LEFT)", new SequentialCommandGroup(
 				// new UpperNode(),
 				// new SetClawPiston(true),
 				// new WaitCommand(0.4),
@@ -108,24 +112,44 @@ public class Auto {
 				new TimedDrive(3.5, 1.5, 0, 0), new TimedDrive(2.5, 0, 1, 0), new TimedDrive(2.5, -1, 0, 0),
 				new Balance()));
 
+		PathPlannerTrajectory traj = PathPlanner.loadPath("Test", new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO));		
+		autoChooser.addOption("Test PP", 
+		new SequentialCommandGroup(
+			new InstantCommand(() -> {
+			  // Reset odometry for the first path you run during auto
+				  drivetrain.resetPose(new Pose2d());
+			}),
+			new PPSwerveControllerCommand(
+				traj, 
+				drivetrain::getPose, // Pose supplier
+				drivetrain.driveKinematics, // SwerveDriveKinematics
+				new PIDController(0.01, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+				new PIDController(0.01, 0, 0), // Y controller (usually the same values as X controller)
+				new PIDController(0.005, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+				drivetrain::setModuleStates, // Module states consumer
+				true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+				drivetrain // Requires this drive subsystem
+			)
+			)
+		);				
 	}
 
 	public static void addEvents() {
 		eventMap.put(null, null);
 	}
 
-	public static CommandBase autoFromPathGroup(String name) {
-		return autoBuilder.fullAuto(
-				PathPlanner.loadPathGroup(name, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
-	}
+	// public static CommandBase autoFromPathGroup(String name) {
+	// 	return autoBuilder.fullAuto(
+	// 			PathPlanner.loadPathGroup(name, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
+	// }
 
-	public static CommandBase autoFromPathGroup(ArrayList<PathPlannerTrajectory> paths) {
-		return autoBuilder.fullAuto(paths);
-	}
+	// public static CommandBase autoFromPathGroup(ArrayList<PathPlannerTrajectory> paths) {
+	// 	return autoBuilder.fullAuto(paths);
+	// }
 
-	public static CommandBase autoFromPaths(ArrayList<String> names) {
-		return autoFromPathGroup(createPathGroup(names));
-	}
+	// public static CommandBase autoFromPaths(ArrayList<String> names) {
+	// 	return autoFromPathGroup(createPathGroup(names));
+	// }
 
 	public static ArrayList<PathPlannerTrajectory> createPathGroup(ArrayList<String> names) {
 		ArrayList<PathPlannerTrajectory> paths = new ArrayList<PathPlannerTrajectory>();
