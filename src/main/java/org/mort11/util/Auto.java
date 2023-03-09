@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.mort11.commands.drivetrain.Balance;
 import org.mort11.commands.drivetrain.TimedDrive;
+import org.mort11.commands.endeffector.Floor;
 import org.mort11.commands.endeffector.Rest;
 import org.mort11.commands.endeffector.ScoreCone;
 import org.mort11.commands.endeffector.SetArm;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -80,16 +82,14 @@ public class Auto {
 
 		autoChooser.addOption("One Cube Upper", new SequentialCommandGroup(new UpperNode(), new TimedIntake(1.5, false),
 				new WaitCommand(1), new Rest()));
-		autoChooser.addOption("One Cone Upper", new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true),
-				new WaitCommand(0.4), new SetClawPiston(false), new Rest()));
+		autoChooser.addOption("One Cone Upper", new ScoreCone());
 
 		autoChooser.addOption("Upper Cone, Engage",
 				new SequentialCommandGroup(
 					new ScoreCone(), new TimedDrive(2.4, 0.8, 0, 0), new Balance()));
 
 		autoChooser.addOption("Upper Cone, Taxi, Engage",
-				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
-						new SetClawPiston(false), new Rest(), new TimedDrive(2.6, 1.6, 0, 0), new WaitCommand(0.3),
+				new SequentialCommandGroup(new ScoreCone(), new TimedDrive(2.6, 1.6, 0, 0), new WaitCommand(0.3),
 						new TimedDrive(1.1, -1.6, 0, 0), new Balance()));
 
 		autoChooser.addOption("Upper Cone, Taxi",
@@ -112,30 +112,49 @@ public class Auto {
 				new TimedDrive(3.5, 1.5, 0, 0), new TimedDrive(2.5, 0, 1, 0), new TimedDrive(2.5, -1, 0, 0),
 				new Balance()));
 
-		PathPlannerTrajectory traj = PathPlanner.loadPath("Test", new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO));		
-		autoChooser.addOption("Test PP", 
-		new SequentialCommandGroup(
-			new InstantCommand(() -> {
-			  // Reset odometry for the first path you run during auto
-				  drivetrain.resetPose(new Pose2d());
-			}),
-			new PPSwerveControllerCommand(
-				traj, 
-				drivetrain::getPose, // Pose supplier
-				drivetrain.driveKinematics, // SwerveDriveKinematics
-				new PIDController(0.01, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-				new PIDController(0.01, 0, 0), // Y controller (usually the same values as X controller)
-				new PIDController(0.005, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
-				drivetrain::setModuleStates, // Module states consumer
-				true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-				drivetrain // Requires this drive subsystem
+		autoChooser.addOption("Test PP", autoFromPath("Test", true));
+		autoChooser.addOption("2m PP", autoFromPath("2m", true));
+
+		autoChooser.addOption("Upper Cone Left Taxi Grab Second", 
+				new SequentialCommandGroup(
+					new ScoreCone(),
+					new ParallelCommandGroup(
+						new SetArm(-28),
+						new TimedIntake(10, true),
+						autoFromPath("Grab2nd", true)
+					),
+				new Rest()
 			)
-			)
-		);				
+		);
+		
 	}
 
 	public static void addEvents() {
 		eventMap.put(null, null);
+	}
+
+	public static CommandBase autoFromPath(String name, boolean isFirstPath) {
+		PathPlannerTrajectory traj = PathPlanner.loadPath(name, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO));		
+ 
+		return new SequentialCommandGroup(
+			new InstantCommand(() -> {
+					// Reset odometry for the first path you run during auto
+					if (isFirstPath) {
+						drivetrain.resetPose(new Pose2d());
+					}
+			}),
+			new PPSwerveControllerCommand(
+				traj, 
+				drivetrain::getPose, 
+				drivetrain.driveKinematics, 
+				drivetrain.getAutoXController(),
+				drivetrain.getAutoYController(),
+				drivetrain.getAutoRotationController(),
+				drivetrain::setModuleStates,
+				true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+				drivetrain 
+				)
+			);				
 	}
 
 	// public static CommandBase autoFromPathGroup(String name) {

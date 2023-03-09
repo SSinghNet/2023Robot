@@ -92,8 +92,8 @@ public class Control {
 
 		xboxController.axisGreaterThan(1, 0.5).whileTrue(new RumbleController(0.3));
 
-		xboxController.axisLessThan(5, -0.5).whileTrue(new MoveArm(0.1));
-		xboxController.axisGreaterThan(5, 0.5).whileTrue(new MoveArm(-0.1));
+		xboxController.axisLessThan(4, -0.5).whileTrue(new MoveArm(0.1));
+		xboxController.axisGreaterThan(4, 0.5).whileTrue(new MoveArm(-0.1));
 	}
 
 	/**

@@ -28,7 +28,7 @@ public class TimedIntake extends CommandBase {
 		timer.start();
 
 		SmartDashboard.putBoolean("FastSpeed", isCone);
-		claw.setSpeed(false);
+		claw.setSpeed(true);
 	}
 
 	@Override

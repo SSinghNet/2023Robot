@@ -62,6 +62,16 @@ public final class Constants {
 		public final static double ATOMEGA_KI = 0;
 		public final static double ATOMEGA_KD = 0;
 		public final static double ATOMEGA_TOLERANCE = 0;
+
+		public final static double AUTO_XY_KP = 0.02;
+		public final static double AUTO_XY_KI = 0.025;
+		public final static double AUTO_XY_KD = 0.00;
+
+		public final static double AUTO_ROTATION_KP = 0.02;
+		public final static double AUTO_ROTATION_KI = 0.025;
+		public final static double AUTO_ROTATION_KD = 0.00;
+
+		public final static double AUTO_TOLERANCE = 1;
 	}
 
 	public final static class Elevator {
@@ -95,19 +105,19 @@ public final class Constants {
 		public final static int DRIVE = 27;
 
 		// TODO: tune PID
-		public final static double KP = 0.29; // 0.2
-		public final static double KI = 0;
-		public final static double KD = 0.08; // 0.055
-		public final static double TOLERANCE = 0.7;
+		public final static double KP = 0.17; // 0.29
+		public final static double KI = 0.6;
+		public final static double KD = 0.3; // 0.055
+		public final static double TOLERANCE = 0.5;
 
-		public final static double KS = 0.31561; // 0.28856
-		public final static double KV = 6.1178; // 6.6349
-		public final static double KA = 1.3974; // 0.85592
+		public final static double KS = 0.41861; 
+		public final static double KV = 3.178;
+		public final static double KA = 8.5554;
 
 		// TODO find positions
-		public final static double FLOOR_POSITION = -41;
-		public final static double SCORING_POSITION = 4;
-		public final static double REST_POSITION = -8.1;
+		public final static double FLOOR_POSITION = -32;
+		public final static double SCORING_POSITION = 3;
+		public final static double REST_POSITION = -6.5;
 
 		public final static float BOTTOM_LIMIT = -40.0f;
 		public final static float TOP_LIMIT = 2.5f;
@@ -122,7 +132,7 @@ public final class Constants {
 		public final static int PISTON = 7;
 
 		public final static double CONE_SPEED = 0.5;
-		public final static double CUBE_SPEED = 0.1;
+		public final static double CUBE_SPEED = 0.15;
 	}
 
 	public final static class Wrist {

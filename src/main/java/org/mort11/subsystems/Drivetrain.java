@@ -42,12 +42,17 @@ public class Drivetrain extends SubsystemBase {
 	private ChassisSpeeds chassisSpeeds;
 
 	private PIDController rotateToAngleController;
+
 	private PIDController balanceControllerX;
 	private PIDController balanceControllerY;
 
 	private PIDController aprilTagXController;
 	private PIDController aprilTagYController;
 	private PIDController aprilTagOmegaController;
+
+	private PIDController autoXController;
+	private PIDController autoYController;
+	private PIDController autoRotationController;
 
 	private Drivetrain() {
 		navX = new AHRS(SerialPort.Port.kMXP);
@@ -86,6 +91,13 @@ public class Drivetrain extends SubsystemBase {
 		aprilTagYController.setTolerance(ATY_TOLERANCE);
 		aprilTagOmegaController = new PIDController(ATOMEGA_KP, ATOMEGA_KI, ATOMEGA_KD);
 		aprilTagOmegaController.setTolerance(ATOMEGA_TOLERANCE);
+
+		autoXController = new PIDController(AUTO_XY_KP, AUTO_XY_KI, AUTO_XY_KD);
+		autoXController.setTolerance(AUTO_TOLERANCE);
+		autoYController = new PIDController(AUTO_XY_KP, AUTO_XY_KI, AUTO_XY_KD);
+		autoYController.setTolerance(AUTO_TOLERANCE);
+		autoRotationController = new PIDController(AUTO_ROTATION_KP, AUTO_ROTATION_KI, AUTO_ROTATION_KD);
+		autoRotationController.setTolerance(AUTO_TOLERANCE);
 	}
 
 	/** Configures all the swerve drive modules */
@@ -219,6 +231,18 @@ public class Drivetrain extends SubsystemBase {
 
 	public PIDController getAprilTagOmegaController() {
 		return aprilTagOmegaController;
+	}
+
+	public PIDController getAutoXController() {
+		return autoXController;
+	}
+
+	public PIDController getAutoYController() {
+		return autoYController;
+	}
+
+	public PIDController getAutoRotationController() {
+		return autoRotationController;
 	}
 
 	@Override
