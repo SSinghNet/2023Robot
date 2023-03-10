@@ -62,6 +62,16 @@ public final class Constants {
 		public final static double ATOMEGA_KI = 0;
 		public final static double ATOMEGA_KD = 0;
 		public final static double ATOMEGA_TOLERANCE = 0;
+
+		public final static double AUTO_XY_KP = 0.02;
+		public final static double AUTO_XY_KI = 0.025;
+		public final static double AUTO_XY_KD = 0.00;
+
+		public final static double AUTO_ROTATION_KP = 0.02;
+		public final static double AUTO_ROTATION_KI = 0.025;
+		public final static double AUTO_ROTATION_KD = 0.00;
+
+		public final static double AUTO_TOLERANCE = 1;
 	}
 
 	public final static class Elevator {
