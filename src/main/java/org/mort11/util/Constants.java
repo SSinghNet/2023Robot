@@ -100,7 +100,7 @@ public final class Constants {
 		public final static double KD = 0.1; // 0.055
 		public final static double TOLERANCE = 0.7;
 
-		public final static double KS = 0.41861; 
+		public final static double KS = 0.41861;
 		public final static double KV = 3.178;
 		public final static double KA = 8.5554;
 
