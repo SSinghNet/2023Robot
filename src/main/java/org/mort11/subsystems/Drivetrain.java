@@ -3,8 +3,10 @@ package org.mort11.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.swervedrivespecialties.swervelib.MkSwerveModuleBuilder;
@@ -130,6 +132,7 @@ public class Drivetrain extends SubsystemBase {
 	/** Sets the gyroscope angle to zero. */
 	public void zeroGyroscope() {
 		navX.zeroYaw();
+		resetPose(new Pose2d());
 	}
 
 	/**
@@ -219,6 +222,8 @@ public class Drivetrain extends SubsystemBase {
 		return aprilTagOmegaController;
 	}
 
+	Field2d field = new Field2d();
+
 	@Override
 	public void periodic() {
 		odometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
@@ -227,8 +232,11 @@ public class Drivetrain extends SubsystemBase {
 		setModuleStates(states);
 
 		SmartDashboard.putNumber("Angle", getGyroscopeRotation().getDegrees());
-		SmartDashboard.putNumber("Pitch", getPitch());
-		SmartDashboard.putNumber("Roll", getRoll());
+		// SmartDashboard.putNumber("Pitch", getPitch());
+		// SmartDashboard.putNumber("Roll", getRoll());
+
+		field.setRobotPose(getPose());
+		Shuffleboard.getTab("test").add("field", field).withWidget(BuiltInWidgets.kField);
 
 	}
 

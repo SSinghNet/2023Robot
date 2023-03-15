@@ -81,7 +81,7 @@ public class Auto {
 
 		autoChooser.addOption("Upper Cube, Engage",
 				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
-						new SetClawPiston(false), new Rest(), new TimedDrive(2.4, 0.8, 0, 0), new Balance()));
+						new SetClawPiston(false), new Rest(), new TimedDrive(2.7, 0.9, 0, 0), new Balance()));
 
 		autoChooser.addOption("Upper Cube, Taxi, Engage",
 				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
