@@ -237,7 +237,7 @@ public class Drivetrain extends SubsystemBase {
 		return aprilTagOmegaController;
 	}
 
-	Field2d field = new Field2d();
+	// Field2d field = new Field2d();
 
 	@Override
 	public void periodic() {
@@ -250,8 +250,8 @@ public class Drivetrain extends SubsystemBase {
 		// SmartDashboard.putNumber("Pitch", getPitch());
 		// SmartDashboard.putNumber("Roll", getRoll());
 
-		field.setRobotPose(getPose());
-		Shuffleboard.getTab("test").add("field", field).withWidget(BuiltInWidgets.kField);
+		// field.setRobotPose(getPose());
+		// Shuffleboard.getTab("test").add("field", field).withWidget(BuiltInWidgets.kField);
 
 	}
 

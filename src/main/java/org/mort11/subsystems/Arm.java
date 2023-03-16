@@ -54,7 +54,7 @@ public class Arm extends SubsystemBase {
 	 *            Value of the position we are targeting.
 	 */
 	public void setSetpoint(double setpoint) {
-		armController.reset();
+		// armController.reset();
 		this.setpoint = setpoint;
 	}
 
