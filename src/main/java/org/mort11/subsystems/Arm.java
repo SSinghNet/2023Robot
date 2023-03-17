@@ -70,9 +70,22 @@ public class Arm extends SubsystemBase {
 		return Math.abs(driveNeo.getEncoder().getPosition() - setpoint) < 5;
 	}
 
+	/** @return whether arm is clear so it is safe to move elevator */
+	public boolean isClear() {
+		return driveNeo.getEncoder().getPosition() < TOP_CLEAR && driveNeo.getEncoder().getPosition() > BOTTOM_CLEAR;
+	}
+
 	private void setPosition(double setpoint) {
+		double output = (feedforward.calculate(0) + armController.calculate(driveNeo.getEncoder().getPosition(), setpoint)) 
+				* (100 * Math.abs(Math.sin(driveNeo.getEncoder().getPosition() * (1 / 7)) + 0.01));
+
 		driveNeo.setVoltage(
-				feedforward.calculate(0) + armController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
+				
+			output
+				
+		);
+
+		SmartDashboard.putNumber("arm output", output);
 	}
 
 	private void setSpeed(double speed) {

@@ -2,8 +2,11 @@ package org.mort11.subsystems;
 
 import org.mort11.util.Constants.Vision.Pipeline;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
@@ -68,8 +71,22 @@ public class Vision extends SubsystemBase {
 		return (double) getCamTran()[5];
 	}
 
-	public Number[] getPose() {
-		return llTable.getEntry("botpose").getNumberArray(null);
+	public Pose2d getPose() {
+		double[] poseNum = new double[6];
+
+		if (DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+			poseNum = llTable.getEntry("botpose_wpired").getDoubleArray(new double[6]);
+		} else {
+			poseNum = llTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
+		}
+
+		return new Pose2d(poseNum[0], poseNum[1],
+				new Rotation2d(Math.toRadians(poseNum[5])));
+
+	}
+	
+	public double getLatency() {
+		return llTable.getEntry("botpose").getDoubleArray(new double[6])[6];
 	}
 
 	public int getATId() {

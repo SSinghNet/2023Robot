@@ -3,6 +3,7 @@ package org.mort11.util;
 import static org.mort11.util.Constants.ControlPorts.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
 
+import org.mort11.commands.auto.PlaceConeGrabCube;
 import org.mort11.commands.drivetrain.*;
 import org.mort11.commands.endeffector.*;
 import org.mort11.subsystems.Claw;
@@ -11,12 +12,18 @@ import org.mort11.subsystems.Elevator;
 import org.mort11.subsystems.Wrist;
 import org.mort11.subsystems.Arm;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -58,6 +65,16 @@ public class Control {
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
 		joystick.button(2).whileTrue(new Balance());
 
+		joystick.button(3).whileTrue(new MoveToPos(new Transform2d(
+			new Translation2d(0, 2), new Rotation2d(0)
+		)));
+
+		joystick.button(4).whileTrue(new MoveToPos(new Transform2d(
+			new Translation2d(2, 0), new Rotation2d(0)
+		)));
+
+		joystick.button(5).whileTrue(new PlaceConeGrabCube());
+
 		joystick.povRight().whileTrue(new RotateToAngle(-90, false));
 		joystick.povUp().whileTrue(new RotateToAngle(0, false));
 		joystick.povLeft().whileTrue(new RotateToAngle(90, false));
@@ -69,11 +86,18 @@ public class Control {
 		xboxController.povLeft().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.LEFT_POSITION)));
 		xboxController.povDown().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.DOWN_POSITION)));
 
-		xboxController.a().onTrue(new Floor());
-		xboxController.b().onTrue(new Rest());
-		xboxController.x().onTrue(new MiddleNode());
-		xboxController.y().onTrue(new UpperNode());
-		xboxController.start().onTrue(new Shelf());
+		// xboxController.a().onTrue(new Floor());
+		// xboxController.b().onTrue(new Rest());
+		// xboxController.x().onTrue(new MiddleNode());
+		// xboxController.y().onTrue(new UpperNode());
+		// xboxController.start().onTrue(new Shelf());
+
+		xboxController.a().onTrue(SetArmAndElevator.FLOOR);
+		xboxController.b().onTrue(SetArmAndElevator.REST);
+		xboxController.x().onTrue(SetArmAndElevator.MIDDLE_NODE);
+		xboxController.y().onTrue(SetArmAndElevator.UPPER_NODE);
+		xboxController.start().onTrue(SetArmAndElevator.SHELF);
+		xboxController.back().onTrue(SetArmAndElevator.ZERO);
 
 		xboxController.leftBumper().toggleOnTrue(Commands.startEnd(() -> SmartDashboard.putBoolean("FastSpeed", false),
 				() -> SmartDashboard.putBoolean("FastSpeed", true)));
@@ -94,6 +118,10 @@ public class Control {
 
 		xboxController.axisLessThan(4, -0.5).whileTrue(new MoveArm(0.1));
 		xboxController.axisGreaterThan(4, 0.5).whileTrue(new MoveArm(-0.1));
+
+		//check axis
+		xboxController.axisLessThan(5, -0.5).whileTrue(new MoveElevator(0.1));
+		xboxController.axisGreaterThan(5, 0.5).whileTrue(new MoveElevator(-0.1));
 	}
 
 	/**

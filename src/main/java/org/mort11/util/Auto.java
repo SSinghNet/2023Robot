@@ -35,31 +35,31 @@ import static org.mort11.util.Constants.RobotSpecs.*;
 public class Auto {
 	private static Drivetrain drivetrain;
 
-	private static HashMap<String, Command> eventMap;
+	// private static HashMap<String, Command> eventMap;
 
-	private static SwerveAutoBuilder autoBuilder;
+	// private static SwerveAutoBuilder autoBuilder;
 
 	private static SendableChooser<Command> autoChooser;
 
 	public static void init() {
-		eventMap = new HashMap<String, Command>();
-		addEvents();
+		// eventMap = new HashMap<String, Command>();
+		// addEvents();
 
 		drivetrain = Drivetrain.getInstance();
 
-		autoBuilder = new SwerveAutoBuilder(drivetrain::getPose, // Pose2d supplier
-				drivetrain::resetPose, // Pose2d consumer, used to reset odometry at the beginning of auto
-				drivetrain.driveKinematics, // SwerveDriveKinematics
-				new PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X
-													// and Y PID controllers)
-				new PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the
-													// rotation controller)
-				drivetrain::setModuleStates, // Module states consumer used to output to the drive subsystem
-				eventMap, false, // Should the path be automatically mirrored depending on alliance color.
-									// Optional, defaults to true
-				drivetrain // The drive subsystem. Used to properly set the requirements of path following
-							// commands
-		);
+		// autoBuilder = new SwerveAutoBuilder(drivetrain::getPose, // Pose2d supplier
+		// 		drivetrain::resetPose, // Pose2d consumer, used to reset odometry at the beginning of auto
+		// 		drivetrain.driveKinematics, // SwerveDriveKinematics
+		// 		new PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X
+		// 											// and Y PID controllers)
+		// 		new PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the
+		// 											// rotation controller)
+		// 		drivetrain::setModuleStates, // Module states consumer used to output to the drive subsystem
+		// 		eventMap, false, // Should the path be automatically mirrored depending on alliance color.
+		// 							// Optional, defaults to true
+		// 		drivetrain // The drive subsystem. Used to properly set the requirements of path following
+		// 					// commands
+		// );
 
 		autoChooser = new SendableChooser<Command>();
 		addAutoOptions();
@@ -72,26 +72,27 @@ public class Auto {
 		// By default, the nothing option is selected
 		autoChooser.setDefaultOption("nothing", null);
 
-		autoChooser.addOption("Test", autoFromPathGroup("Test"));
+		// autoChooser.addOption("Test", autoFromPathGroup("Test"));
 
-		autoChooser.addOption("One Cube Upper", new SequentialCommandGroup(new UpperNode(), new TimedIntake(1.5, false),
+		autoChooser.addOption("One Cube Upper", new SequentialCommandGroup(new UpperNode(), new TimedIntake(1.5, false, false),
 				new WaitCommand(1), new Rest()));
 		autoChooser.addOption("One Cone Upper", new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true),
 				new WaitCommand(0.4), new SetClawPiston(false), new Rest()));
 
-		autoChooser.addOption("Upper Cube, Engage",
+		autoChooser.addOption("Upper Cone, Engage",
 				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
 						new SetClawPiston(false), new Rest(), new TimedDrive(2.7, 0.9, 0, 0), new Balance()));
 
-		autoChooser.addOption("Upper Cube, Taxi, Engage",
+		//TODO: set arm TOP_CLEAR instead of rest to reduce stress on amr
+		autoChooser.addOption("Upper Cone, Taxi, Engage",
 				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
 						new SetClawPiston(false), new Rest(), new TimedDrive(2.6, 1.6, 0, 0), new WaitCommand(0.3),
 						new TimedDrive(1.1, -1.6, 0, 0), new Balance()));
 
-		autoChooser.addOption("Upper Cube, Taxi",
+		autoChooser.addOption("Upper Cone, Taxi",
 				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
 						new SetClawPiston(false), new Rest(), new TimedDrive(2.8, 1.5, 0, 0), new Balance()));
-		autoChooser.addOption("Upper Cube, Taxi, Engage (LEFT)", new SequentialCommandGroup(
+		autoChooser.addOption("Upper Cone, Taxi, Engage (LEFT)", new SequentialCommandGroup(
 				// new UpperNode(),
 				// new SetClawPiston(true),
 				// new WaitCommand(0.4),
@@ -99,7 +100,7 @@ public class Auto {
 				// new Rest(),
 				new TimedDrive(3.5, 1.5, 0, 0), new TimedDrive(2.5, 0, -1, 0), new TimedDrive(1.3, -1, 0, 0),
 				new Balance()));
-		autoChooser.addOption("Upper Cube, Taxi, Engage (RIGHT)", new SequentialCommandGroup(
+		autoChooser.addOption("Upper Cone, Taxi, Engage (RIGHT)", new SequentialCommandGroup(
 				// new UpperNode(),
 				// new SetClawPiston(true),
 				// new WaitCommand(0.4),
@@ -110,32 +111,32 @@ public class Auto {
 
 	}
 
-	public static void addEvents() {
-		eventMap.put(null, null);
-	}
+	// public static void addEvents() {
+	// 	eventMap.put(null, null);
+	// }
 
-	public static CommandBase autoFromPathGroup(String name) {
-		return autoBuilder.fullAuto(
-				PathPlanner.loadPathGroup(name, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
-	}
+	// public static CommandBase autoFromPathGroup(String name) {
+	// 	return autoBuilder.fullAuto(
+	// 			PathPlanner.loadPathGroup(name, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
+	// }
 
-	public static CommandBase autoFromPathGroup(ArrayList<PathPlannerTrajectory> paths) {
-		return autoBuilder.fullAuto(paths);
-	}
+	// public static CommandBase autoFromPathGroup(ArrayList<PathPlannerTrajectory> paths) {
+	// 	return autoBuilder.fullAuto(paths);
+	// }
 
-	public static CommandBase autoFromPaths(ArrayList<String> names) {
-		return autoFromPathGroup(createPathGroup(names));
-	}
+	// public static CommandBase autoFromPaths(ArrayList<String> names) {
+	// 	return autoFromPathGroup(createPathGroup(names));
+	// }
 
-	public static ArrayList<PathPlannerTrajectory> createPathGroup(ArrayList<String> names) {
-		ArrayList<PathPlannerTrajectory> paths = new ArrayList<PathPlannerTrajectory>();
+	// public static ArrayList<PathPlannerTrajectory> createPathGroup(ArrayList<String> names) {
+	// 	ArrayList<PathPlannerTrajectory> paths = new ArrayList<PathPlannerTrajectory>();
 
-		for (String n : names) {
-			paths.add(PathPlanner.loadPath(n, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
-		}
+	// 	for (String n : names) {
+	// 		paths.add(PathPlanner.loadPath(n, new PathConstraints(MAX_VELOCITY_AUTO, MAX_ACCELERATION_AUTO)));
+	// 	}
 
-		return paths;
-	}
+	// 	return paths;
+	// }
 
 	/**
 	 * @return selected auto from auto chooser

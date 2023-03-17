@@ -12,12 +12,14 @@ public class TimedIntake extends CommandBase {
 	private Timer timer;
 	private double time;
 	private boolean isCone;
+	private boolean in;
 
-	public TimedIntake(double time, boolean isCone) {
+	public TimedIntake(double time, boolean isCone, boolean in) {
 		claw = Claw.getInstance();
 		timer = new Timer();
 		this.time = time;
 		this.isCone = isCone;
+		this.in = in;
 
 		addRequirements(claw);
 	}
@@ -28,7 +30,7 @@ public class TimedIntake extends CommandBase {
 		timer.start();
 
 		SmartDashboard.putBoolean("FastSpeed", isCone);
-		claw.setSpeed(false);
+		claw.setSpeed(in);
 	}
 
 	@Override

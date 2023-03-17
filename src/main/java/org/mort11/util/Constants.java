@@ -63,15 +63,30 @@ public final class Constants {
 		public final static double ATOMEGA_KD = 0;
 		public final static double ATOMEGA_TOLERANCE = 0;
 
-		public final static double AUTO_XY_KP = 0.02;
-		public final static double AUTO_XY_KI = 0.025;
-		public final static double AUTO_XY_KD = 0.00;
+		public final static double ODOMX_KP = 0.85;
+		public final static double ODOMX_KI = 0;
+		public final static double ODOMX_KD = 0;
+		public final static double ODOMX_TOLERANCE = 0.05;
 
-		public final static double AUTO_ROTATION_KP = 0.02;
-		public final static double AUTO_ROTATION_KI = 0.025;
-		public final static double AUTO_ROTATION_KD = 0.00;
+		public final static double ODOMY_KP = 0.85;
+		public final static double ODOMY_KI = 0.0;
+		public final static double ODOMY_KD = 0;
+		public final static double ODOMY_TOLERANCE = 0.05;
 
-		public final static double AUTO_TOLERANCE = 1;
+		public final static double ODOMOMEGA_KP = 0.1;
+		public final static double ODOMOMEGA_KI = 0;
+		public final static double ODOMOMEGA_KD = 0.01;
+		public final static double ODOMOMEGA_TOLERANCE = 0.1;
+
+		// public final static double AUTO_XY_KP = 0.02;
+		// public final static double AUTO_XY_KI = 0.025;
+		// public final static double AUTO_XY_KD = 0.00;
+
+		// public final static double AUTO_ROTATION_KP = 0.02;
+		// public final static double AUTO_ROTATION_KI = 0.025;
+		// public final static double AUTO_ROTATION_KD = 0.00;
+
+		// public final static double AUTO_TOLERANCE = 1;
 	}
 
 	public final static class Elevator {
@@ -103,9 +118,8 @@ public final class Constants {
 
 	public final static class Arm {
 		public final static int DRIVE = 27;
-
 		// TODO: tune PID
-		public final static double KP = 0.2; // 0.2
+		public final static double KP = 0.25; // 0.2
 		public final static double KI = 0.4;
 		public final static double KD = 0.1; // 0.055
 		public final static double TOLERANCE = 0.7;
@@ -117,7 +131,10 @@ public final class Constants {
 		// TODO find positions
 		public final static double FLOOR_POSITION = -32;
 		public final static double SCORING_POSITION = 3;
-		public final static double REST_POSITION = -7.6;
+		public final static double REST_POSITION = -4.5;
+		
+		public final static double TOP_CLEAR = -6.5;
+		public final static double BOTTOM_CLEAR = -20;
 
 		public final static float BOTTOM_LIMIT = -40.0f;
 		public final static float TOP_LIMIT = 2.5f;
@@ -188,10 +205,10 @@ public final class Constants {
 	public final static class RobotSpecs {
 		// The left-to-right distance between the drivetrain wheels measured from center
 		// to center.
-		public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(24);
+		public static final double DRIVETRAIN_TRACKWIDTH_METERS = Units.inchesToMeters(23.75);
 		// The front-to-back distance between the drivetrain wheels measured from center
 		// to center.
-		public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(24);
+		public static final double DRIVETRAIN_WHEELBASE_METERS = Units.inchesToMeters(23.75);
 
 		public static final double MAX_VOLTAGE = 12.0;
 

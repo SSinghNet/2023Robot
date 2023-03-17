@@ -15,6 +15,7 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -39,7 +40,7 @@ public class Drivetrain extends SubsystemBase {
 	private SwerveModule backRightModule;
 
 	public SwerveDriveKinematics driveKinematics;
-	private SwerveDriveOdometry odometry;
+	private SwerveDrivePoseEstimator odometry;
 
 	private ChassisSpeeds chassisSpeeds;
 
@@ -50,6 +51,12 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController aprilTagXController;
 	private PIDController aprilTagYController;
 	private PIDController aprilTagOmegaController;
+
+	private PIDController odomXController;
+	private PIDController odomYController;
+	private PIDController odomOmegaController;
+
+	private Field2d field;
 
 	private Drivetrain() {
 		navX = new AHRS(SerialPort.Port.kMXP);
@@ -68,7 +75,7 @@ public class Drivetrain extends SubsystemBase {
 				// Back right
 				new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0));
 
-		odometry = new SwerveDriveOdometry(driveKinematics, getGyroscopeRotation(), getModulePositions());
+		odometry = new SwerveDrivePoseEstimator(driveKinematics, getGyroscopeRotation(), getModulePositions(), new Pose2d());
 
 		resetPose(new Pose2d(0, 0, new Rotation2d(0, 0)));
 
@@ -88,14 +95,27 @@ public class Drivetrain extends SubsystemBase {
 		aprilTagYController.setTolerance(ATY_TOLERANCE);
 		aprilTagOmegaController = new PIDController(ATOMEGA_KP, ATOMEGA_KI, ATOMEGA_KD);
 		aprilTagOmegaController.setTolerance(ATOMEGA_TOLERANCE);
+
+		odomXController = new PIDController(ODOMX_KP, ODOMX_KI, ODOMX_KD);
+		odomXController.setTolerance(ODOMX_TOLERANCE);
+		odomYController = new PIDController(ODOMY_KP, ODOMY_KI, ODOMY_KD);
+		odomYController.setTolerance(ODOMY_TOLERANCE);
+		odomOmegaController = new PIDController(ODOMOMEGA_KP, ODOMOMEGA_KI, ODOMOMEGA_KD);
+		odomOmegaController.setTolerance(ODOMOMEGA_TOLERANCE);
+
+		field = new Field2d();
+		Shuffleboard.getTab("test2").add("fieldTHING", field).withWidget(BuiltInWidgets.kField);
+		Shuffleboard.getTab("test2").add("odometry x", odometry.getEstimatedPosition().getX());
+		Shuffleboard.getTab("test2").add("odometry y", odometry.getEstimatedPosition().getY());
+		Shuffleboard.getTab("test2").add("odometry theta", odometry.getEstimatedPosition().getRotation().getDegrees());
 	}
 
 	/** Configures all the swerve drive modules */
 	private void configModules() {
-		ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+		// ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
 		frontLeftModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
+				// .withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
 				// .withDriveMotor(MotorType.NEO, FRONT_LEFT_DRIVE)
 				// .withSteerMotor(MotorType.NEO, FRONT_LEFT_STEER)
@@ -104,7 +124,7 @@ public class Drivetrain extends SubsystemBase {
 				.withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER)
 				.withSteerOffset(FRONT_LEFT_STEER_OFFSET).build();
 		frontRightModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
+				// .withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
 				// .withDriveMotor(MotorType.NEO, FRONT_RIGHT_DRIVE)
 				// .withSteerMotor(MotorType.NEO, FRONT_RIGHT_STEER)
@@ -113,7 +133,8 @@ public class Drivetrain extends SubsystemBase {
 				.withSteerEncoderPort(FRONT_RIGHT_STEER_ENCODER)
 				.withSteerOffset(FRONT_RIGHT_STEER_OFFSET).build();
 		backLeftModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0)).withGearRatio(SdsModuleConfigurations.MK4I_L2)
+				// .withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
+				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
 				// .withDriveMotor(MotorType.NEO, BACK_LEFT_DRIVE)
 				// .withSteerMotor(MotorType.NEO, BACK_LEFT_STEER)
 				.withDriveMotor(MotorType.FALCON, BACK_LEFT_DRIVE)
@@ -121,7 +142,7 @@ public class Drivetrain extends SubsystemBase {
 				.withSteerEncoderPort(BACK_LEFT_STEER_ENCODER)
 				.withSteerOffset(BACK_LEFT_STEER_OFFSET).build();
 		backRightModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
+				// .withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
 				// .withDriveMotor(MotorType.NEO, BACK_RIGHT_DRIVE)
 				// .withSteerMotor(MotorType.NEO, BACK_RIGHT_STEER)
@@ -147,7 +168,9 @@ public class Drivetrain extends SubsystemBase {
 	/** Sets the gyroscope angle to zero. */
 	public void zeroGyroscope() {
 		navX.zeroYaw();
-		resetPose(new Pose2d());
+		resetPose(
+			new Pose2d(getPose().getX(), getPose().getY(), new Rotation2d(0))
+		);
 	}
 
 	/**
@@ -172,10 +195,10 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	/**
-	 * @return Pose2d
+	 * @return Pose2d (meters)
 	 */
 	public Pose2d getPose() {
-		return odometry.getPoseMeters();
+		return odometry.getEstimatedPosition();
 	}
 
 	/**
@@ -237,11 +260,21 @@ public class Drivetrain extends SubsystemBase {
 		return aprilTagOmegaController;
 	}
 
-	// Field2d field = new Field2d();
+	public PIDController getOdomXController() {
+		return odomXController;
+	}
+
+	public PIDController getOdomYController() {
+		return odomYController;
+	}
+
+	public PIDController getOdomOmegaController() {
+		return odomOmegaController;
+	}
 
 	@Override
 	public void periodic() {
-		odometry.update(Rotation2d.fromDegrees(navX.getFusedHeading()), getModulePositions());
+		odometry.update(getGyroscopeRotation(), getModulePositions());
 
 		SwerveModuleState[] states = driveKinematics.toSwerveModuleStates(chassisSpeeds);
 		setModuleStates(states);
@@ -250,9 +283,9 @@ public class Drivetrain extends SubsystemBase {
 		// SmartDashboard.putNumber("Pitch", getPitch());
 		// SmartDashboard.putNumber("Roll", getRoll());
 
-		// field.setRobotPose(getPose());
-		// Shuffleboard.getTab("test").add("field", field).withWidget(BuiltInWidgets.kField);
+		field.setRobotPose(getPose());
 
+		// odometry.addVisionMeasurement(Vision.getInstance().getPose(), Vision.getInstance().getLatency());
 	}
 
 	/**
