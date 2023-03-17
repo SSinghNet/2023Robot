@@ -63,7 +63,6 @@ public class Auto {
 		autoChooser.addOption("Upper Cone, Engage",
 				new SequentialCommandGroup(new ScoreCone(), new TimedDrive(2.7, 0.9, 0, 0), new Balance()));
 
-		// TODO: set arm TOP_CLEAR instead of rest to reduce stress on amr
 		autoChooser.addOption("Upper Cone, Taxi, Engage",
 				new SequentialCommandGroup(new UpperNode(), new SetClawPiston(true), new WaitCommand(0.4),
 						new SetClawPiston(false), new Rest(), new TimedDrive(2.6, 1.6, 0, 0), new WaitCommand(0.3),

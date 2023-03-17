@@ -14,6 +14,12 @@ public class TimedIntake extends CommandBase {
 	private boolean isCone;
 	private boolean in;
 
+	/**
+	 * Run intake for specified amount of time
+	 * @param time time (seconds)
+	 * @param isCone cone?
+	 * @param in intake?
+	 */
 	public TimedIntake(double time, boolean isCone, boolean in) {
 		claw = Claw.getInstance();
 		timer = new Timer();

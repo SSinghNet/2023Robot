@@ -34,7 +34,6 @@ public final class Constants {
 		public final static int BACK_RIGHT_STEER_ENCODER = 31;
 		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
 
-		// TODO: tune pid
 		public final static double ROTATE_TO_ANGLE_KP = 0.1;
 		public final static double ROTATE_TO_ANGLE_KI = 0;
 		public final static double ROTATE_TO_ANGLE_KD = 0.01;
@@ -105,7 +104,6 @@ public final class Constants {
 
 		public final static int LIMIT_SWITCH = 4;
 
-		// TODO find positions
 		public final static double FLOOR_POSITION = 0.2;
 		public final static double SHELF_POSITION = 50;
 		public final static double MIDDLE_NODE_POSITION = 54;
@@ -118,7 +116,7 @@ public final class Constants {
 
 	public final static class Arm {
 		public final static int DRIVE = 27;
-		// TODO: tune PID
+
 		public final static double KP = 0.25; // 0.2
 		public final static double KI = 0.4;
 		public final static double KD = 0.1; // 0.055
@@ -128,7 +126,6 @@ public final class Constants {
 		public final static double KV = 3.178;
 		public final static double KA = 8.5554;
 
-		// TODO find positions
 		public final static double FLOOR_POSITION = -32;
 		public final static double SCORING_POSITION = 3;
 		public final static double REST_POSITION = -4.5;
@@ -160,7 +157,6 @@ public final class Constants {
 		public final static double KI = 0;
 		public final static double KD = 0.007;
 
-		// TODO test positions
 		public final static double DOWN_POSITION = 45;
 		public final static double RIGHT_POSITION = 86;
 		public final static double UP_POSITION = 45;

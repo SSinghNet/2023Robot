@@ -84,6 +84,7 @@ public class MoveToPos extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
+		//TODO: not ending; check
 		return drivetrain.getOdomXController().atSetpoint() && drivetrain.getOdomYController().atSetpoint()
 				&& drivetrain.getOdomOmegaController().atSetpoint();
 	}
