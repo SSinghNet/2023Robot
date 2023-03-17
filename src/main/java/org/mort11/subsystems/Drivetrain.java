@@ -190,7 +190,7 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	/**
-	 * @return Pose2d (meters)
+	 * @return Pose2d (meters, radians)
 	 */
 	public Pose2d getPose() {
 		return odometry.getEstimatedPosition();
@@ -201,6 +201,18 @@ public class Drivetrain extends SubsystemBase {
 	 */
 	public void resetPose(Pose2d pose) {
 		odometry.resetPosition(getGyroscopeRotation(), getModulePositions(), pose);
+	}
+
+	/**
+	 * Resets pose with x, y, and theta values
+	 * @param x (meters)
+	 * @param y (meters)
+	 * @param theta (degrees)
+	 */
+	public void resetPose(double x, double y, double theta){
+		resetPose(
+			new Pose2d(x, y, new Rotation2d(Math.toRadians(theta)))
+		);
 	}
 
 	/**
