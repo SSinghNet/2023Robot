@@ -26,13 +26,17 @@ public class PlaceConeGrabCube extends SequentialCommandGroup {
 	public PlaceConeGrabCube() {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
-		addCommands(new InstantCommand(
-				() -> drivetrain.resetPose(new Pose2d(new Translation2d(0, 0), new Rotation2d(Math.toRadians(-10))))),
-				new ClearArm(), new SetElevator(Constants.Elevator.FLOOR_POSITION),
-				new SetArm(Constants.Arm.FLOOR_POSITION), new SetClawPiston(true), new ParallelCommandGroup(
-						// new TimedIntake(2, false),
-						new MoveToPos(new Transform2d(new Translation2d(Units.inchesToMeters(218), 0),
-								new Rotation2d(Math.toRadians(10)))) // 227
-				), new SetClawPiston(false), new SetArm(Constants.Arm.REST_POSITION));
+		addCommands(
+			new InstantCommand(() -> drivetrain.resetPose(0, 0, -10)),
+			new ClearArm(),
+			new SetElevator(Constants.Elevator.FLOOR_POSITION),
+			new SetArm(Constants.Arm.FLOOR_POSITION),
+			new SetClawPiston(true),
+			new ParallelCommandGroup(
+				// new TimedIntake(2, false),
+				new MoveToPos(Units.inchesToMeters(218), 0, 10) // 227
+			),
+			new SetClawPiston(false),
+			new SetArm(Constants.Arm.REST_POSITION));
 	}
 }

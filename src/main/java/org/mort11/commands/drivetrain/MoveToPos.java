@@ -3,6 +3,7 @@ package org.mort11.commands.drivetrain;
 import org.mort11.subsystems.Drivetrain;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -16,6 +17,10 @@ public class MoveToPos extends CommandBase {
 
 	private Pose2d newPose;
 
+	/**
+	 * Moves to position relative to the current position
+	 * @param transform2d transformation to make to the current pose
+	 */
 	public MoveToPos(Transform2d transform2d) {
 		drivetrain = Drivetrain.getInstance();
 
@@ -24,11 +29,26 @@ public class MoveToPos extends CommandBase {
 		addRequirements(drivetrain);
 	}
 
+	/**
+	 * Moves to position relative to the current position
+	 * @param x translation in the x direction (meters)
+	 * @param y translation in the y direction (meters)
+	 * @param theta rotation (degrees)
+	 */
+	public MoveToPos(double x, double y, double theta) {
+		this(
+			new Transform2d(
+				new Translation2d(x, y),
+				new Rotation2d(Math.toRadians(theta))
+			)
+		);
+	}
+
 	@Override
 	public void initialize() {
 		newPose = new Pose2d(
-				new Translation2d(drivetrain.getPose().getX() + transform2d.getX(),
-						drivetrain.getPose().getY() + transform2d.getY()),
+				drivetrain.getPose().getX() + transform2d.getX(),
+						drivetrain.getPose().getY() + transform2d.getY(),
 				(drivetrain.getPose().getRotation().plus(transform2d.getRotation())));
 
 		System.out.println("old" + drivetrain.getPose().getX());
