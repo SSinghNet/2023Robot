@@ -80,11 +80,10 @@ public class Vision extends SubsystemBase {
 			poseNum = llTable.getEntry("botpose_wpiblue").getDoubleArray(new double[6]);
 		}
 
-		return new Pose2d(poseNum[0], poseNum[1],
-				new Rotation2d(Math.toRadians(poseNum[5])));
+		return new Pose2d(poseNum[0], poseNum[1], new Rotation2d(Math.toRadians(poseNum[5])));
 
 	}
-	
+
 	public double getLatency() {
 		return llTable.getEntry("botpose").getDoubleArray(new double[6])[6];
 	}

@@ -76,13 +76,14 @@ public class Arm extends SubsystemBase {
 	}
 
 	private void setPosition(double setpoint) {
-		double output = (feedforward.calculate(0) + armController.calculate(driveNeo.getEncoder().getPosition(), setpoint)) 
+		double output = (feedforward.calculate(0)
+				+ armController.calculate(driveNeo.getEncoder().getPosition(), setpoint))
 				* (100 * Math.abs(Math.sin(driveNeo.getEncoder().getPosition() * (1 / 7)) + 0.01));
 
 		driveNeo.setVoltage(
-				
-			output
-				
+
+				output
+
 		);
 
 		SmartDashboard.putNumber("arm output", output);

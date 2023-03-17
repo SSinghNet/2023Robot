@@ -65,13 +65,9 @@ public class Control {
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
 		joystick.button(2).whileTrue(new Balance());
 
-		joystick.button(3).whileTrue(new MoveToPos(new Transform2d(
-			new Translation2d(0, 2), new Rotation2d(0)
-		)));
+		joystick.button(3).whileTrue(new MoveToPos(new Transform2d(new Translation2d(0, 2), new Rotation2d(0))));
 
-		joystick.button(4).whileTrue(new MoveToPos(new Transform2d(
-			new Translation2d(2, 0), new Rotation2d(0)
-		)));
+		joystick.button(4).whileTrue(new MoveToPos(new Transform2d(new Translation2d(2, 0), new Rotation2d(0))));
 
 		joystick.button(5).whileTrue(new PlaceConeGrabCube());
 
@@ -119,7 +115,7 @@ public class Control {
 		xboxController.axisLessThan(4, -0.5).whileTrue(new MoveArm(0.1));
 		xboxController.axisGreaterThan(4, 0.5).whileTrue(new MoveArm(-0.1));
 
-		//check axis
+		// check axis
 		xboxController.axisLessThan(5, -0.5).whileTrue(new MoveElevator(0.1));
 		xboxController.axisGreaterThan(5, 0.5).whileTrue(new MoveElevator(-0.1));
 	}

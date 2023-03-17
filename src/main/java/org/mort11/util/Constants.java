@@ -132,7 +132,7 @@ public final class Constants {
 		public final static double FLOOR_POSITION = -32;
 		public final static double SCORING_POSITION = 3;
 		public final static double REST_POSITION = -4.5;
-		
+
 		public final static double TOP_CLEAR = -6.5;
 		public final static double BOTTOM_CLEAR = -20;
 
