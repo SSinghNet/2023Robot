@@ -1,24 +1,36 @@
 package org.mort11.commands.endeffector;
 
 import org.mort11.subsystems.Arm;
+import org.mort11.subsystems.Elevator;
 import org.mort11.util.Constants;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ClearArm extends CommandBase {
 	private Arm arm;
+	private Elevator elevator;
+	private double elevatorSetpoint;
+	private boolean skipClear = false;
 
-	public ClearArm() {
+	public ClearArm(double elevatorSetpoint) {
+		this.elevatorSetpoint = elevatorSetpoint;
 		arm = Arm.getInstance();
-		addRequirements(arm);
+		elevator = Elevator.getInstance();
+		addRequirements(arm); //this command must NOT move the elevator
 	}
 
 	@Override
 	public void initialize() {
-		if (arm.getPosition() < Constants.Arm.BOTTOM_CLEAR) {
-			arm.setSetpoint(Constants.Arm.BOTTOM_CLEAR + 3);
+		if (elevatorSetpoint < 1 && elevator.getPosition() < 1) {
+			skipClear = true;
+		} else if (elevatorSetpoint > (Constants.Elevator.SHELF_POSITION - 1) && elevator.getPosition() > (Constants.Elevator.SHELF_POSITION - 1)) {
+			skipClear = true;
 		} else {
-			arm.setSetpoint(Constants.Arm.TOP_CLEAR - 3);
+			skipClear = false;
+		}
+
+		if (!skipClear) {
+			arm.setSetpoint(Constants.Arm.TOP_CLEAR - 4.5);
 		}
 	}
 
@@ -32,6 +44,10 @@ public class ClearArm extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		return arm.isClear();
+		if (skipClear) {
+			return true;
+		} else {
+			return arm.isClear();
+		}
 	}
 }

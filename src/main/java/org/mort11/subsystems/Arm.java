@@ -67,7 +67,7 @@ public class Arm extends SubsystemBase {
 	}
 
 	public boolean nearSetpoint() {
-		return Math.abs(driveNeo.getEncoder().getPosition() - setpoint) < 5;
+		return Math.abs(driveNeo.getEncoder().getPosition() - setpoint) < 3;
 	}
 
 	/** @return whether arm is clear so it is safe to move elevator */
@@ -77,14 +77,10 @@ public class Arm extends SubsystemBase {
 
 	private void setPosition(double setpoint) {
 		double output = (feedforward.calculate(0)
-				+ armController.calculate(driveNeo.getEncoder().getPosition(), setpoint))
-				* (100 * Math.abs(Math.sin(driveNeo.getEncoder().getPosition() * (1 / 7)) + 0.01));
-
-		driveNeo.setVoltage(
-
-				output
-
-		);
+				+ armController.calculate(getPosition(), setpoint))
+				* (100 * Math.abs(Math.sin(getPosition() * (1 / 7)) + 0.01));
+		// double output = 1 * sin(getPositionDegrees()) + armController.calculate(getPosition(), setpoint);
+		driveNeo.setVoltage(output);
 
 		SmartDashboard.putNumber("arm output", output);
 	}
@@ -97,9 +93,15 @@ public class Arm extends SubsystemBase {
 		return driveNeo.getEncoder().getPosition();
 	}
 
+	public double getPositionDegrees() {
+		// return -6.22548502 * getPosition() -60.27542694;
+		return -6.274 * (getPosition() + 9.8);
+	}
+
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Built-In Arm Encoder", getPosition());
+		SmartDashboard.putNumber("arm degrees", getPositionDegrees());
 		SmartDashboard.putNumber("arm setpoint", setpoint);
 
 		setPosition(setpoint);

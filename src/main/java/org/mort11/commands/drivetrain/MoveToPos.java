@@ -80,6 +80,10 @@ public class MoveToPos extends CommandBase {
 		SmartDashboard.putNumber("x out", x);
 		SmartDashboard.putNumber("y out", y);
 		SmartDashboard.putNumber("omega out", omega);
+
+		SmartDashboard.putNumber("x error", drivetrain.getOdomXController().getPositionError());
+		SmartDashboard.putNumber("y error", drivetrain.getOdomYController().getPositionError());
+		SmartDashboard.putNumber("omega error", drivetrain.getOdomOmegaController().getPositionError());
 	}
 
 	@Override

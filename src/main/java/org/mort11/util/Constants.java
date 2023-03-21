@@ -17,22 +17,22 @@ public final class Constants {
 		public final static int FRONT_LEFT_DRIVE = 5;
 		public final static int FRONT_LEFT_STEER = 6;
 		public final static int FRONT_LEFT_STEER_ENCODER = 32;
-		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(251);
+		public final static double FRONT_LEFT_STEER_OFFSET = -Math.toRadians(72 + 180);
 
 		public final static int FRONT_RIGHT_DRIVE = 3;
 		public final static int FRONT_RIGHT_STEER = 4;
 		public final static int FRONT_RIGHT_STEER_ENCODER = 33;
-		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(201);
+		public final static double FRONT_RIGHT_STEER_OFFSET = -Math.toRadians(21 + 180);
 
 		public final static int BACK_LEFT_DRIVE = 2;
 		public final static int BACK_LEFT_STEER = 1;
 		public final static int BACK_LEFT_STEER_ENCODER = 30;
-		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(135 + 359);
+		public final static double BACK_LEFT_STEER_OFFSET = -Math.toRadians(318 + 180);
 
 		public final static int BACK_RIGHT_DRIVE = 18;
 		public final static int BACK_RIGHT_STEER = 19;
 		public final static int BACK_RIGHT_STEER_ENCODER = 31;
-		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(344);
+		public final static double BACK_RIGHT_STEER_OFFSET = -Math.toRadians(162 + 180);
 
 		public final static double ROTATE_TO_ANGLE_KP = 0.1;
 		public final static double ROTATE_TO_ANGLE_KI = 0;
@@ -45,47 +45,38 @@ public final class Constants {
 		public final static double BALANCE_TOLERANCE = 0.25;
 
 		// TODO: tune pid
-		public final static double ATX_KP = 0;
+		public final static double ATX_KP = 1.1;
 		public final static double ATX_KI = 0;
 		public final static double ATX_KD = 0;
-		public final static double ATX_TOLERANCE = 0;
+		public final static double ATX_TOLERANCE = 0.01;
 
 		// TODO: tune pid
-		public final static double ATY_KP = 0;
+		public final static double ATY_KP = 1.1;
 		public final static double ATY_KI = 0;
 		public final static double ATY_KD = 0;
-		public final static double ATY_TOLERANCE = 0;
+		public final static double ATY_TOLERANCE = 0.01;
 
 		// TODO: tune pid
-		public final static double ATOMEGA_KP = 0;
+		public final static double ATOMEGA_KP = 0.02;
 		public final static double ATOMEGA_KI = 0;
 		public final static double ATOMEGA_KD = 0;
-		public final static double ATOMEGA_TOLERANCE = 0;
+		public final static double ATOMEGA_TOLERANCE = 0.01;
 
 		public final static double ODOMX_KP = 0.85;
 		public final static double ODOMX_KI = 0;
 		public final static double ODOMX_KD = 0;
-		public final static double ODOMX_TOLERANCE = 0.05;
+		public final static double ODOMX_TOLERANCE = 0.23;
 
 		public final static double ODOMY_KP = 0.85;
 		public final static double ODOMY_KI = 0.0;
 		public final static double ODOMY_KD = 0;
-		public final static double ODOMY_TOLERANCE = 0.05;
+		public final static double ODOMY_TOLERANCE = 0.23;
 
 		public final static double ODOMOMEGA_KP = 0.1;
 		public final static double ODOMOMEGA_KI = 0;
 		public final static double ODOMOMEGA_KD = 0.01;
-		public final static double ODOMOMEGA_TOLERANCE = 0.1;
+		public final static double ODOMOMEGA_TOLERANCE = 3;
 
-		// public final static double AUTO_XY_KP = 0.02;
-		// public final static double AUTO_XY_KI = 0.025;
-		// public final static double AUTO_XY_KD = 0.00;
-
-		// public final static double AUTO_ROTATION_KP = 0.02;
-		// public final static double AUTO_ROTATION_KI = 0.025;
-		// public final static double AUTO_ROTATION_KD = 0.00;
-
-		// public final static double AUTO_TOLERANCE = 1;
 	}
 
 	public final static class Elevator {
@@ -93,7 +84,7 @@ public final class Constants {
 		public final static int ELEVATOR_FOLLOWER = 8;
 		public final static double ELEVATOR_SPEED = .5;
 
-		public final static double KP = 0.4; // 0.275
+		public final static double KP = 0.43; // 0.275
 		public final static double KI = 0;
 		public final static double KD = 0.035;
 
@@ -117,10 +108,10 @@ public final class Constants {
 	public final static class Arm {
 		public final static int DRIVE = 27;
 
-		public final static double KP = 0.25; // 0.2
-		public final static double KI = 0.4;
-		public final static double KD = 0.1; // 0.055
-		public final static double TOLERANCE = 0.7;
+		public final static double KP = 0.26; // 0.2
+		public final static double KI = 0.44;
+		public final static double KD = 0.12; // 0.055
+		public final static double TOLERANCE = 0.5;
 
 		public final static double KS = 0.41861;
 		public final static double KV = 3.178;
@@ -128,10 +119,11 @@ public final class Constants {
 
 		public final static double FLOOR_POSITION = -32;
 		public final static double SCORING_POSITION = 3;
-		public final static double REST_POSITION = -4.5;
+		public final static double REST_POSITION = -6; // -4.5
+		public final static double CLAMP_POSITION = -4.5;
 
-		public final static double TOP_CLEAR = -6.5;
-		public final static double BOTTOM_CLEAR = -20;
+		public final static double TOP_CLEAR = -6;
+		public final static double BOTTOM_CLEAR = -19;
 
 		public final static float BOTTOM_LIMIT = -40.0f;
 		public final static float TOP_LIMIT = 2.5f;
@@ -165,7 +157,7 @@ public final class Constants {
 
 	public final static class Vision {
 		public static enum Pipeline {
-			DEFAULT(0), CONE(1), CUBE(2), APRIL_TAG(3);
+			DEFAULT(0), APRIL_TAG(1);
 
 			int id;
 
@@ -181,8 +173,8 @@ public final class Constants {
 			 * Gets id of pipeline for a specific April Tag ID, id 1 at pipeline 3, etc.
 			 */
 			public int getId(int ATID) {
-				if (this.id == 3) {
-					return 2 + ATID;
+				if (this.id == 1) {
+					return ATID;
 				}
 				return id;
 			}
@@ -210,7 +202,7 @@ public final class Constants {
 
 		public static final double MAX_VELOCITY_METERS_PER_SECOND = (6380.0 / 60.0
 				* SdsModuleConfigurations.MK4I_L2.getDriveReduction()
-				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI) * 0.875;
+				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI) * 0.9;
 		public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
 				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 

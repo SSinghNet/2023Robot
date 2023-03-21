@@ -25,18 +25,29 @@ public class MoveToAprilTag extends CommandBase {
 	@Override
 	public void initialize() {
 		vision.setPipeline(Pipeline.APRIL_TAG, id);
+		drivetrain.getAprilTagXController().reset();
+		drivetrain.getAprilTagYController().reset();
+		drivetrain.getAprilTagOmegaController().reset();
 	}
 
 	@Override
 	public void execute() {
-		drivetrain.drive(new ChassisSpeeds(-drivetrain.getAprilTagXController().calculate(vision.getCamTranZ(), 0),
-				drivetrain.getAprilTagYController().calculate(vision.getCamTranX(), 0),
-				-drivetrain.getAprilTagOmegaController().calculate(vision.getCamTranYaw(), 0)));
+		double x = -drivetrain.getAprilTagXController().calculate(vision.getCamTranZ(), -1.3);
+		double y = 
+		// vision.getCamTranZ() > -1.5 ? 
+				-drivetrain.getAprilTagYController().calculate(vision.getCamTranX(), 0);
+				// : 0;
+				double omega = 
+		// vision.getCamTranZ() > -1.5 ? 
+				-drivetrain.getAprilTagOmegaController().calculate(vision.getCamTranYaw(), 0);
+				//  : 0;
+
+		drivetrain.drive(new ChassisSpeeds(x, y, omega));
 	}
 
 	@Override
 	public boolean isFinished() {
-		return !vision.hasTarget() || vision.getATId() != id
+		return !vision.hasTarget() 
 				|| (drivetrain.getAprilTagXController().atSetpoint() && drivetrain.getAprilTagYController().atSetpoint()
 						&& drivetrain.getAprilTagOmegaController().atSetpoint());
 	}

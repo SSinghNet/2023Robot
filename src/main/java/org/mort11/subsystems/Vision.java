@@ -44,7 +44,7 @@ public class Vision extends SubsystemBase {
 
 	// Translation (x, y, z) Rotation(pitch, yaw, roll)
 	public Number[] getCamTran() {
-		return llTable.getEntry("camtran").getNumberArray(new Number[0]);
+		return llTable.getEntry("targetpose_robotspace").getNumberArray(new Number[0]);
 	}
 
 	public double getCamTranX() {
