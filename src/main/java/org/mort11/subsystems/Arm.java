@@ -82,7 +82,7 @@ public class Arm extends SubsystemBase {
 		// double output = 1 * sin(getPositionDegrees()) + armController.calculate(getPosition(), setpoint);
 		driveNeo.setVoltage(output);
 
-		SmartDashboard.putNumber("arm output", output);
+		// SmartDashboard.putNumber("arm output", output);
 	}
 
 	private void setSpeed(double speed) {

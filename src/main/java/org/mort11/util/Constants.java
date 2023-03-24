@@ -130,15 +130,15 @@ public final class Constants {
 	}
 
 	public final static class Claw {
-		public final static int DRIVE_MASTER = 34;
-		public final static int DRIVE_FOLLOWER = 35;
+		public final static int DRIVE_MASTER = 35;
+		public final static int DRIVE_FOLLOWER = 34;
 
 		public final static int IR_SENSOR = 0;
 
 		public final static int PISTON = 7;
 
 		public final static double CONE_SPEED = 0.5;
-		public final static double CUBE_SPEED = 0.1;
+		public final static double CUBE_SPEED = 0.15;
 	}
 
 	public final static class Wrist {

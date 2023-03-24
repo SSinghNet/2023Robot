@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -29,16 +30,19 @@ public class Claw extends SubsystemBase {
 		intakeNeoMaster = new CANSparkMax(DRIVE_MASTER, MotorType.kBrushless);
 		intakeNeoFollower = new CANSparkMax(DRIVE_FOLLOWER, MotorType.kBrushless);
 
-		intakeNeoFollower.follow(intakeNeoMaster, false);
+		// intakeNeoFollower.follow(intakeNeoMaster, false);
 
 		irSensor = new DigitalInput(IR_SENSOR);
 
 		piston = new Solenoid(PCM, PneumaticsModuleType.CTREPCM, PISTON);
 		piston.set(false);
+
 	}
 
 	public void setSpeed(double speed) {
 		intakeNeoMaster.set(speed);
+		intakeNeoFollower.set(speed);
+		// System.out.println(speed);
 	}
 
 	public void setSpeed(boolean in) {
@@ -69,6 +73,7 @@ public class Claw extends SubsystemBase {
 	public void periodic() {
 		SmartDashboard.putBoolean("Claw IR Sensor", getIrSensor());
 		SmartDashboard.putBoolean("Claw Piston", getPiston());
+
 	}
 
 	/**

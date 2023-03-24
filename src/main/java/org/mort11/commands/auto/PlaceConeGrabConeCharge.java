@@ -1,15 +1,13 @@
 package org.mort11.commands.auto;
 
+import org.mort11.commands.drivetrain.Balance;
 import org.mort11.commands.drivetrain.MoveToAprilTag;
 import org.mort11.commands.drivetrain.MoveToPos;
-import org.mort11.commands.endeffector.ClearArm;
-import org.mort11.commands.endeffector.Floor;
-import org.mort11.commands.endeffector.Rest;
+import org.mort11.commands.drivetrain.TimedDrive;
 import org.mort11.commands.endeffector.ScoreCone;
 import org.mort11.commands.endeffector.SetArm;
 import org.mort11.commands.endeffector.SetArmAndElevator;
 import org.mort11.commands.endeffector.SetClawPiston;
-import org.mort11.commands.endeffector.SetElevator;
 import org.mort11.commands.endeffector.TimedIntake;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Wrist;
@@ -22,10 +20,10 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class PlaceConeGrabCone extends SequentialCommandGroup {
+public class PlaceConeGrabConeCharge extends SequentialCommandGroup {
 	private Drivetrain drivetrain;
 
-	public PlaceConeGrabCone() {
+	public PlaceConeGrabConeCharge() {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
 		addCommands(
@@ -62,14 +60,23 @@ public class PlaceConeGrabCone extends SequentialCommandGroup {
 			new WaitCommand(0.2),
 			
 			new ParallelCommandGroup(
+				new TimedIntake(2, true, true),
 				new InstantCommand(() -> Wrist.getInstance().setSetpoint(Constants.Wrist.RIGHT_POSITION)),
 				new SetArm(Constants.Arm.REST_POSITION),
-				new MoveToPos(Units.inchesToMeters(-190), 0.5, 0)
-			),
-			new MoveToAprilTag(6).withTimeout(1.5),
-			new MoveToPos(-0.25, Units.inchesToMeters(-31), 0),
-			new ScoreCone(),
-			new Rest()
+				new SequentialCommandGroup(
+					new TimedDrive(1, -1.5, -1.75, 0),
+								// new MoveToPos(Units.inchesToMeters(-40), Units.inchesToMeters(-60), 0),
+					new WaitCommand(0.1),
+					new TimedDrive(1.45, -1.8, 0, 0)
+					// new MoveToPos(Units.inchesToMeters(-50), 0, 0)
+				)
+            ),
+            new Balance()
+			// SetArmAndElevator.middleNode(),
+			// new SetClawPiston(true),
+			// new WaitCommand(0.5),
+			// new SetClawPiston(false),
+			// new Rest()
 			// new ParallelCommandGroup(
 			// 	new SequentialCommandGroup(
 			// 		new SetClawPiston(false),

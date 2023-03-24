@@ -3,7 +3,7 @@ package org.mort11.util;
 import static org.mort11.util.Constants.ControlPorts.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
 
-import org.mort11.commands.auto.PlaceConeGrabCone;
+import org.mort11.commands.auto.PlaceConeGrabConeCommunity;
 import org.mort11.commands.drivetrain.*;
 import org.mort11.commands.endeffector.*;
 import org.mort11.subsystems.Claw;
@@ -74,23 +74,23 @@ public class Control {
 				)
 		);
 
-		//TODO: chnage back 
+		
 		joystick.button(5).whileTrue(
 				new MoveToAprilTag(
-				// DriverStation.getAlliance() == Alliance.Blue ? 6 : 3
-						6
+				DriverStation.getAlliance() == Alliance.Blue ? 6 : 3
+						// 6
 				)
 		);
 		joystick.button(3).whileTrue(
 				new MoveToAprilTag(
-				// DriverStation.getAlliance() == Alliance.Blue ? 7 : 2
-					7
+				DriverStation.getAlliance() == Alliance.Blue ? 7 : 2
+					// 7
 				)
 		);
 		joystick.button(4).whileTrue(
 				new MoveToAprilTag(
-				// DriverStation.getAlliance() == Alliance.Blue ? 8 : 1
-					8
+				DriverStation.getAlliance() == Alliance.Blue ? 8 : 1
+					// 8
 				)
 		);
 
@@ -137,6 +137,11 @@ public class Control {
 		xboxController.leftBumper()
 				.onFalse(new InstantCommand(() -> xboxController.getHID().setRumble(RumbleType.kBothRumble, 0)));
 		xboxController.rightBumper().onTrue(new InstantCommand(claw::togglePiston, claw));
+
+		// xboxController.axisLessThan(1, -0.5)
+		// 		.whileTrue(Commands.startEnd(() -> claw.setSpeed(false), () -> claw.setSpeed(0), claw));
+		// xboxController.axisGreaterThan(1, 0.5)
+		// 		.whileTrue(Commands.startEnd(() -> claw.setSpeed(true), () -> claw.setSpeed(0), claw));
 
 		xboxController.axisLessThan(1, -0.5)
 				.whileTrue(Commands.startEnd(() -> claw.setSpeed(false), () -> claw.setSpeed(0), claw));

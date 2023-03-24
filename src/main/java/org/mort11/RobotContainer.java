@@ -4,6 +4,7 @@
 
 package org.mort11;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import org.mort11.subsystems.Arm;
@@ -35,6 +36,7 @@ public class RobotContainer {
 		wrist = Wrist.getInstance();
 		vision = vision.getInstance();
 
+
 		// initalize controllers
 		Control.init();
 
@@ -44,6 +46,7 @@ public class RobotContainer {
 		// create autonomous commands and chooser
 		Auto.init();
 
+		// Shuffleboard.getTab("test3").add(claw);
 	}
 
 	/**
