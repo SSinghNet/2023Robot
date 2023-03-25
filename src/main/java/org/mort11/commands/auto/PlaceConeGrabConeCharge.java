@@ -14,6 +14,7 @@ import org.mort11.subsystems.Wrist;
 import org.mort11.util.Constants;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -26,6 +27,9 @@ public class PlaceConeGrabConeCharge extends SequentialCommandGroup {
 	public PlaceConeGrabConeCharge() {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
+
+		int isBlue = DriverStation.getAlliance() == DriverStation.Alliance.Blue ? 1 : -1;
+
 		addCommands(
 			new InstantCommand(() -> drivetrain.resetPose(0, 0, 0)),
 			new ScoreCone(),
@@ -44,7 +48,7 @@ public class PlaceConeGrabConeCharge extends SequentialCommandGroup {
 				// ),
 			new ParallelDeadlineGroup(
 				new SequentialCommandGroup(
-					new MoveToPos(0, Units.inchesToMeters(43), 0),
+					new MoveToPos(0, isBlue * Units.inchesToMeters(43), 0),
 					new MoveToPos(Units.inchesToMeters(200), 0, 0),
 					new MoveToPos(Units.inchesToMeters(6), 0, 0)
 				),
@@ -64,7 +68,7 @@ public class PlaceConeGrabConeCharge extends SequentialCommandGroup {
 				new InstantCommand(() -> Wrist.getInstance().setSetpoint(Constants.Wrist.RIGHT_POSITION)),
 				new SetArm(Constants.Arm.REST_POSITION),
 				new SequentialCommandGroup(
-					new TimedDrive(1, -1.5, -1.75, 0),
+					new TimedDrive(1, -1.5, isBlue * -1.75, 0),
 								// new MoveToPos(Units.inchesToMeters(-40), Units.inchesToMeters(-60), 0),
 					new WaitCommand(0.1),
 					new TimedDrive(1.45, -1.8, 0, 0)

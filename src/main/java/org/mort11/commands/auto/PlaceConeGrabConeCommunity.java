@@ -12,6 +12,7 @@ import org.mort11.subsystems.Wrist;
 import org.mort11.util.Constants;
 
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -24,6 +25,9 @@ public class PlaceConeGrabConeCommunity extends SequentialCommandGroup {
 	public PlaceConeGrabConeCommunity() {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
+
+		int isBlue = DriverStation.getAlliance() == DriverStation.Alliance.Blue ? 1 : -1;
+
 		addCommands(
 			new InstantCommand(() -> drivetrain.resetPose(0, 0, 0)),
 			SetArmAndElevator.upperNode(),
@@ -44,7 +48,7 @@ public class PlaceConeGrabConeCommunity extends SequentialCommandGroup {
 				// ),
 			new ParallelDeadlineGroup(
 				new SequentialCommandGroup(
-					new MoveToPos(0, Units.inchesToMeters(43), 0),
+					new MoveToPos(0, isBlue * Units.inchesToMeters(43), 0),
 					new MoveToPos(Units.inchesToMeters(200), 0, 0),
 					new MoveToPos(Units.inchesToMeters(6), 0, 0)
 				),
@@ -65,7 +69,7 @@ public class PlaceConeGrabConeCommunity extends SequentialCommandGroup {
 				new TimedIntake(2, true, true),
 				new InstantCommand(() -> Wrist.getInstance().setSetpoint(Constants.Wrist.RIGHT_POSITION)),
 				new SetArm(Constants.Arm.REST_POSITION),
-				new MoveToPos(Units.inchesToMeters(-190), 0.5, 0)
+				new MoveToPos(Units.inchesToMeters(-190), isBlue * 0.5, 0)
 			),
 			new MoveToAprilTag(6).withTimeout(1.5)
 			// new MoveToPos(-0.25, Units.inchesToMeters(-33), 0)
