@@ -68,7 +68,7 @@ public class Auto {
 					SetArmAndElevator.rest(),
 					new TimedDrive(3, 1.7, 0, 0),
 					new WaitCommand(0.1),
-					new TimedDrive(2, -1.7, 0, 0),
+					new TimedDrive(2, -1.8, 0, 0),
 					new Balance()
 				)
 		);
