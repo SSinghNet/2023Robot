@@ -155,6 +155,26 @@ public final class Constants {
 		public final static double LEFT_POSITION = 0;
 	}
 
+	public final static class Floortake {
+		public final static int DRIVE = 50; // TODO: set
+		public final static int FLIP = 51; // TODO: set
+
+		public final static double DRIVE_SPEED = 0.5; // TODO: set
+
+		public final static double FLIP_IN_POS = 0; // TODO: set
+		public final static double FLIP_OUT_POS = 10; // TODO: set
+
+		// TODO: run ff
+		public final static double FLIP_KS = 0;
+		public final static double FLIP_KV = 0;
+		public final static double FLIP_KA = 0;
+
+		// TODO: tune pid
+		public final static double FLIP_KP = 0;
+		public final static double FLIP_KI = 0;
+		public final static double FLIP_KD = 0;
+	}
+
 	public final static class Vision {
 		public static enum Pipeline {
 			DEFAULT(0), APRIL_TAG(1);
