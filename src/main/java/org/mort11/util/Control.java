@@ -60,7 +60,7 @@ public class Control {
 	/**
 	 * Configure secondary button bindings
 	 */
- 	public static void configureBindings() {
+	public static void configureBindings() {
 		drivetrain.setDefaultCommand(
 				new Drive(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true));
 
@@ -68,38 +68,20 @@ public class Control {
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
 
 		joystick.button(2).whileTrue(
-			new SequentialCommandGroup(
-				new MoveToPos(0, Units.inchesToMeters(30), 0),
-				new MoveToPos(-0.5, 0, 0)
-				)
-		);
+				new SequentialCommandGroup(new MoveToPos(0, Units.inchesToMeters(30), 0), new MoveToPos(-0.5, 0, 0)));
 
-		
-		joystick.button(5).whileTrue(
-				new MoveToAprilTag(
-				DriverStation.getAlliance() == Alliance.Blue ? 6 : 3
-						// 6
-				)
-		);
-		joystick.button(3).whileTrue(
-				new MoveToAprilTag(
-				DriverStation.getAlliance() == Alliance.Blue ? 7 : 2
-					// 7
-				)
-		);
-		joystick.button(4).whileTrue(
-				new MoveToAprilTag(
-				DriverStation.getAlliance() == Alliance.Blue ? 8 : 1
-					// 8
-				)
-		);
+		joystick.button(5).whileTrue(new MoveToAprilTag(DriverStation.getAlliance() == Alliance.Blue ? 6 : 3
+		// 6
+		));
+		joystick.button(3).whileTrue(new MoveToAprilTag(DriverStation.getAlliance() == Alliance.Blue ? 7 : 2
+		// 7
+		));
+		joystick.button(4).whileTrue(new MoveToAprilTag(DriverStation.getAlliance() == Alliance.Blue ? 8 : 1
+		// 8
+		));
 
 		joystick.button(6).whileTrue(
-			new SequentialCommandGroup(
-					new MoveToPos(0, Units.inchesToMeters(-31), 0),
-					new MoveToPos(-0.5, 0, 0)
-			)
-		);
+				new SequentialCommandGroup(new MoveToPos(0, Units.inchesToMeters(-31), 0), new MoveToPos(-0.5, 0, 0)));
 
 		// joystick.button(7).whileTrue(new PlaceConeGrabCube());
 
@@ -127,7 +109,7 @@ public class Control {
 		xboxController.start().onTrue(SetArmAndElevator.shelf());
 		xboxController.back().onTrue(SetArmAndElevator.zero());
 
-		//TODO: check right trigger axis
+		// TODO: check right trigger axis
 		xboxController.axisGreaterThan(3, 0.5).onTrue(SetArmAndElevator.clamp());
 
 		xboxController.leftBumper().toggleOnTrue(Commands.startEnd(() -> SmartDashboard.putBoolean("FastSpeed", false),
@@ -139,9 +121,11 @@ public class Control {
 		xboxController.rightBumper().onTrue(new InstantCommand(claw::togglePiston, claw));
 
 		// xboxController.axisLessThan(1, -0.5)
-		// 		.whileTrue(Commands.startEnd(() -> claw.setSpeed(false), () -> claw.setSpeed(0), claw));
+		// .whileTrue(Commands.startEnd(() -> claw.setSpeed(false), () ->
+		// claw.setSpeed(0), claw));
 		// xboxController.axisGreaterThan(1, 0.5)
-		// 		.whileTrue(Commands.startEnd(() -> claw.setSpeed(true), () -> claw.setSpeed(0), claw));
+		// .whileTrue(Commands.startEnd(() -> claw.setSpeed(true), () ->
+		// claw.setSpeed(0), claw));
 
 		xboxController.axisLessThan(1, -0.5)
 				.whileTrue(Commands.startEnd(() -> claw.setSpeed(false), () -> claw.setSpeed(0), claw));

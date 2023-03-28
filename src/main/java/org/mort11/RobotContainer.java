@@ -36,7 +36,6 @@ public class RobotContainer {
 		wrist = Wrist.getInstance();
 		vision = vision.getInstance();
 
-
 		// initalize controllers
 		Control.init();
 

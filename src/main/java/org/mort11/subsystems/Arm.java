@@ -25,6 +25,7 @@ public class Arm extends SubsystemBase {
 	private Arm() {
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
 
+		// TODO limit exist??
 		driveNeo.setSoftLimit(SoftLimitDirection.kReverse, TOP_LIMIT);
 		driveNeo.setSoftLimit(SoftLimitDirection.kForward, BOTTOM_LIMIT);
 
@@ -76,10 +77,10 @@ public class Arm extends SubsystemBase {
 	}
 
 	private void setPosition(double setpoint) {
-		double output = (feedforward.calculate(0)
-				+ armController.calculate(getPosition(), setpoint))
+		double output = (feedforward.calculate(0) + armController.calculate(getPosition(), setpoint))
 				* (100 * Math.abs(Math.sin(getPosition() * (1 / 7)) + 0.01));
-		// double output = 1 * sin(getPositionDegrees()) + armController.calculate(getPosition(), setpoint);
+		// double output = 0.1 * sin(getPositionDegrees()) +
+		// armController.calculate(getPosition(), setpoint);
 		driveNeo.setVoltage(output);
 
 		// SmartDashboard.putNumber("arm output", output);
@@ -104,7 +105,7 @@ public class Arm extends SubsystemBase {
 		SmartDashboard.putNumber("arm degrees", getPositionDegrees());
 		SmartDashboard.putNumber("arm setpoint", setpoint);
 
-		setPosition(setpoint);
+		// setPosition(setpoint); // TODO: uncomment
 	}
 
 	/**

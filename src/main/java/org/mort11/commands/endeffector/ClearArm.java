@@ -16,14 +16,15 @@ public class ClearArm extends CommandBase {
 		this.elevatorSetpoint = elevatorSetpoint;
 		arm = Arm.getInstance();
 		elevator = Elevator.getInstance();
-		addRequirements(arm); //this command must NOT move the elevator
+		addRequirements(arm); // this command must NOT move the elevator
 	}
 
 	@Override
 	public void initialize() {
 		if (elevatorSetpoint < 1 && elevator.getPosition() < 1) {
 			skipClear = true;
-		} else if (elevatorSetpoint > (Constants.Elevator.SHELF_POSITION - 1) && elevator.getPosition() > (Constants.Elevator.SHELF_POSITION - 1)) {
+		} else if (elevatorSetpoint > (Constants.Elevator.SHELF_POSITION - 1)
+				&& elevator.getPosition() > (Constants.Elevator.SHELF_POSITION - 1)) {
 			skipClear = true;
 		} else {
 			skipClear = false;

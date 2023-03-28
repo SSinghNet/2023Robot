@@ -116,32 +116,28 @@ public class Drivetrain extends SubsystemBase {
 		ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
 
 		frontLeftModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Front Left Module",
-				BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
+				.withLayout(tab.getLayout("Front Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(0, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
 				// .withDriveMotor(MotorType.NEO, FRONT_LEFT_DRIVE)
 				// .withSteerMotor(MotorType.NEO, FRONT_LEFT_STEER)
 				.withDriveMotor(MotorType.FALCON, FRONT_LEFT_DRIVE).withSteerMotor(MotorType.FALCON, FRONT_LEFT_STEER)
 				.withSteerEncoderPort(FRONT_LEFT_STEER_ENCODER).withSteerOffset(FRONT_LEFT_STEER_OFFSET).build();
 		frontRightModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Front Right Module",
-				BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
+				.withLayout(tab.getLayout("Front Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(2, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
 				// .withDriveMotor(MotorType.NEO, FRONT_RIGHT_DRIVE)
 				// .withSteerMotor(MotorType.NEO, FRONT_RIGHT_STEER)
 				.withDriveMotor(MotorType.FALCON, FRONT_RIGHT_DRIVE).withSteerMotor(MotorType.FALCON, FRONT_RIGHT_STEER)
 				.withSteerEncoderPort(FRONT_RIGHT_STEER_ENCODER).withSteerOffset(FRONT_RIGHT_STEER_OFFSET).build();
 		backLeftModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Back Left Module",
-				BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
+				.withLayout(tab.getLayout("Back Left Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(4, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
 				// .withDriveMotor(MotorType.NEO, BACK_LEFT_DRIVE)
 				// .withSteerMotor(MotorType.NEO, BACK_LEFT_STEER)
 				.withDriveMotor(MotorType.FALCON, BACK_LEFT_DRIVE).withSteerMotor(MotorType.FALCON, BACK_LEFT_STEER)
 				.withSteerEncoderPort(BACK_LEFT_STEER_ENCODER).withSteerOffset(BACK_LEFT_STEER_OFFSET).build();
 		backRightModule = new MkSwerveModuleBuilder()
-				.withLayout(tab.getLayout("Back Right Module",
-				BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
+				.withLayout(tab.getLayout("Back Right Module", BuiltInLayouts.kList).withSize(2, 4).withPosition(6, 0))
 				.withGearRatio(SdsModuleConfigurations.MK4I_L2)
 				// .withDriveMotor(MotorType.NEO, BACK_RIGHT_DRIVE)
 				// .withSteerMotor(MotorType.NEO, BACK_RIGHT_STEER)
@@ -205,14 +201,16 @@ public class Drivetrain extends SubsystemBase {
 
 	/**
 	 * Resets pose with x, y, and theta values
-	 * @param x (meters)
-	 * @param y (meters)
-	 * @param theta (degrees)
+	 *
+	 * @param x
+	 *            (meters)
+	 * @param y
+	 *            (meters)
+	 * @param theta
+	 *            (degrees)
 	 */
-	public void resetPose(double x, double y, double theta){
-		resetPose(
-			new Pose2d(x, y, new Rotation2d(Math.toRadians(theta)))
-		);
+	public void resetPose(double x, double y, double theta) {
+		resetPose(new Pose2d(x, y, new Rotation2d(Math.toRadians(theta))));
 	}
 
 	/**

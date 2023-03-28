@@ -19,7 +19,9 @@ public class MoveToPos extends CommandBase {
 
 	/**
 	 * Moves to position relative to the current position
-	 * @param transform2d transformation to make to the current pose
+	 *
+	 * @param transform2d
+	 *            transformation to make to the current pose
 	 */
 	public MoveToPos(Transform2d transform2d) {
 		drivetrain = Drivetrain.getInstance();
@@ -31,24 +33,22 @@ public class MoveToPos extends CommandBase {
 
 	/**
 	 * Moves to position relative to the current position
-	 * @param x translation in the x direction (meters)
-	 * @param y translation in the y direction (meters)
-	 * @param theta rotation (degrees)
+	 *
+	 * @param x
+	 *            translation in the x direction (meters)
+	 * @param y
+	 *            translation in the y direction (meters)
+	 * @param theta
+	 *            rotation (degrees)
 	 */
 	public MoveToPos(double x, double y, double theta) {
-		this(
-			new Transform2d(
-				new Translation2d(x, y),
-				new Rotation2d(Math.toRadians(theta))
-			)
-		);
+		this(new Transform2d(new Translation2d(x, y), new Rotation2d(Math.toRadians(theta))));
 	}
 
 	@Override
 	public void initialize() {
-		newPose = new Pose2d(
-				drivetrain.getPose().getX() + transform2d.getX(),
-						drivetrain.getPose().getY() + transform2d.getY(),
+		newPose = new Pose2d(drivetrain.getPose().getX() + transform2d.getX(),
+				drivetrain.getPose().getY() + transform2d.getY(),
 				(drivetrain.getPose().getRotation().plus(transform2d.getRotation())));
 
 		System.out.println("old" + drivetrain.getPose().getX());
@@ -88,7 +88,7 @@ public class MoveToPos extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		//TODO: not ending; check
+		// TODO: not ending; check
 		return drivetrain.getOdomXController().atSetpoint() && drivetrain.getOdomYController().atSetpoint()
 				&& drivetrain.getOdomOmegaController().atSetpoint();
 	}

@@ -84,9 +84,9 @@ public final class Constants {
 		public final static int ELEVATOR_FOLLOWER = 8;
 		public final static double ELEVATOR_SPEED = .5;
 
-		public final static double KP = 0.43; // 0.275
+		public final static double KP = 1.5; // 2.1
 		public final static double KI = 0;
-		public final static double KD = 0.035;
+		public final static double KD = 0.05;
 
 		public final static double KS = -0.017718;
 		public final static double KV = 4.1738;
@@ -99,6 +99,7 @@ public final class Constants {
 		public final static double SHELF_POSITION = 50;
 		public final static double MIDDLE_NODE_POSITION = 54;
 		public final static double UPPER_NODE_POSITION = 87;
+		public final static double CARRIAGE_UP = 32.0;
 
 		public final static float TOP_LIMIT = 90.0f;
 		public final static float BOTTOM_LIMIT = 0.3f;
@@ -118,7 +119,7 @@ public final class Constants {
 		public final static double KA = 8.5554;
 
 		public final static double FLOOR_POSITION = -32;
-		public final static double SCORING_POSITION = 3;
+		public final static double SCORING_POSITION = 2.5;
 		public final static double REST_POSITION = -6; // -4.5
 		public final static double CLAMP_POSITION = -4.5;
 
