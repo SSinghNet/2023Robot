@@ -41,16 +41,22 @@ public class Auto {
 	private static Drivetrain drivetrain;
 
 	private static SendableChooser<Command> autoChooser;
+	private static SendableChooser<Boolean> isBlue;
 
 	public static void init() {
 
 		drivetrain = Drivetrain.getInstance();
 
 		autoChooser = new SendableChooser<Command>();
+		isBlue = new SendableChooser<Boolean>();
 		addAutoOptions();
 
 		// put the auto chooser onto SmartDashboard
 		SmartDashboard.putData(autoChooser);
+		isBlue.addOption("Blue", true);
+		isBlue.addOption("Red", false);
+
+		SmartDashboard.putData("isBlue", isBlue);
 	}
 
 	public static void addAutoOptions() {

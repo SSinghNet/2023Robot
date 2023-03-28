@@ -15,6 +15,7 @@ import org.mort11.util.Constants;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -28,7 +29,7 @@ public class PlaceConeGrabConeCharge extends SequentialCommandGroup {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
 
-		int isBlue = DriverStation.getAlliance() == DriverStation.Alliance.Blue ? 1 : -1;
+		int isBlue = SmartDashboard.getBoolean("isBlue", true)  ? 1 : -1;
 
 		addCommands(
 			new InstantCommand(() -> drivetrain.resetPose(0, 0, 0)),
