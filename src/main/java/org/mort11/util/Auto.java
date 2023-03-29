@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.mort11.commands.auto.PlaceConeGrabConeCharge;
 import org.mort11.commands.auto.PlaceConeGrabConeCommunity;
+import org.mort11.commands.auto.Test;
 import org.mort11.commands.drivetrain.Balance;
 import org.mort11.commands.drivetrain.TimedDrive;
 import org.mort11.commands.endeffector.Rest;
@@ -89,6 +90,7 @@ public class Auto {
 
 		autoChooser.addOption("Upper Cone, Grab Cone, Go to Community", new PlaceConeGrabConeCommunity());
 		autoChooser.addOption("Upper Cone, Grab Cone, Engage", new PlaceConeGrabConeCharge());
+		autoChooser.addOption("Test", new Test());
 
 	}
 

@@ -62,20 +62,20 @@ public final class Constants {
 		public final static double ATOMEGA_KD = 0;
 		public final static double ATOMEGA_TOLERANCE = 0.01;
 
-		public final static double ODOMX_KP = 0.85;
+		public final static double ODOMX_KP = 3;
 		public final static double ODOMX_KI = 0;
 		public final static double ODOMX_KD = 0;
-		public final static double ODOMX_TOLERANCE = 0.23;
+		public final static double ODOMX_TOLERANCE = 0.05;
 
-		public final static double ODOMY_KP = 0.85;
+		public final static double ODOMY_KP = 3;
 		public final static double ODOMY_KI = 0.0;
 		public final static double ODOMY_KD = 0;
-		public final static double ODOMY_TOLERANCE = 0.23;
+		public final static double ODOMY_TOLERANCE = 0.05;
 
 		public final static double ODOMOMEGA_KP = 0.1;
 		public final static double ODOMOMEGA_KI = 0;
 		public final static double ODOMOMEGA_KD = 0.01;
-		public final static double ODOMOMEGA_TOLERANCE = 3;
+		public final static double ODOMOMEGA_TOLERANCE = 1;
 
 	}
 
@@ -228,7 +228,7 @@ public final class Constants {
 				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
 		public static final double MAX_VELOCITY_AUTO = 4;
-		public static final double MAX_ACCELERATION_AUTO = 3;
+		public static final double MAX_ACCELERATION_AUTO = 4;
 	}
 
 }

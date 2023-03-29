@@ -20,45 +20,23 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class PlaceConeGrabConeCommunity extends SequentialCommandGroup {
+public class Test extends SequentialCommandGroup {
 	private Drivetrain drivetrain;
 
-	public PlaceConeGrabConeCommunity() {
+	public Test() {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
 
 		int isBlue = SmartDashboard.getBoolean("isBlue", true) ? 1 : -1;
 
 		addCommands(
-				new InstantCommand(() -> drivetrain.resetPose(0, 0, 0)),
-				SetArmAndElevator.upperNode(),
-				new SetClawPiston(true),
+                new InstantCommand(() -> drivetrain.resetPose(0, 0, 0)),
+                new WaitCommand(2),
+				new MoveToPos(0, isBlue * Units.inchesToMeters(43), 0),
+				new MoveToPos(Units.inchesToMeters(200), 0, 0),
+				new MoveToPos(Units.inchesToMeters(6), 0,0),
 				new WaitCommand(0.5),
-				new ParallelDeadlineGroup(
-						new SequentialCommandGroup(
-								new MoveToPos(0, isBlue * Units.inchesToMeters(43), 0),
-								new MoveToPos(Units.inchesToMeters(200), 0, 0),
-								new MoveToPos(Units.inchesToMeters(6), 0,0)
-						),
-						new SequentialCommandGroup(
-								new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION),
-								new SetClawPiston(false),
-								SetArmAndElevator.rest(),
-								new SetClawPiston(true),
-								SetArmAndElevator.floor(),
-								new TimedIntake(5, true,true)
-						)
-				),
-				new TimedIntake(0.5, true, true),
-				new SetClawPiston(false),
-				new WaitCommand(0.2),
-
-				new ParallelCommandGroup(
-						new TimedIntake(2, true, true),
-						new InstantCommand(() -> Wrist.getInstance().setSetpoint(Constants.Wrist.RIGHT_POSITION)),
-						new SetArm(Constants.Arm.REST_POSITION),
-						new MoveToPos(Units.inchesToMeters(-190), isBlue * 0.5,0)
-				),
+				new MoveToPos(Units.inchesToMeters(-190), isBlue * 0.5,0),
 				new MoveToAprilTag(6).withTimeout(1.5)
 		);
 

@@ -15,6 +15,7 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -24,10 +25,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Drivetrain.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
+
+import org.mort11.util.Constants.RobotSpecs;
 
 public class Drivetrain extends SubsystemBase {
 	private static Drivetrain drivetrain;
@@ -52,9 +56,13 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController aprilTagYController;
 	private PIDController aprilTagOmegaController;
 
-	private PIDController odomXController;
-	private PIDController odomYController;
+	// private PIDController odomXController;
+	// private PIDController odomYController;
 	private PIDController odomOmegaController;
+
+	private ProfiledPIDController odomXController;
+	private ProfiledPIDController odomYController;
+	// private ProfiledPIDController odomOmegaController;
 
 	private Field2d field;
 
@@ -97,12 +105,22 @@ public class Drivetrain extends SubsystemBase {
 		aprilTagOmegaController = new PIDController(ATOMEGA_KP, ATOMEGA_KI, ATOMEGA_KD);
 		aprilTagOmegaController.setTolerance(ATOMEGA_TOLERANCE);
 
-		odomXController = new PIDController(ODOMX_KP, ODOMX_KI, ODOMX_KD);
-		odomXController.setTolerance(ODOMX_TOLERANCE);
-		odomYController = new PIDController(ODOMY_KP, ODOMY_KI, ODOMY_KD);
-		odomYController.setTolerance(ODOMY_TOLERANCE);
+		// odomXController = new PIDController(ODOMX_KP, ODOMX_KI, ODOMX_KD);
+		// odomXController.setTolerance(ODOMX_TOLERANCE);
+		// odomYController = new PIDController(ODOMY_KP, ODOMY_KI, ODOMY_KD);
+		// odomYController.setTolerance(ODOMY_TOLERANCE);
 		odomOmegaController = new PIDController(ODOMOMEGA_KP, ODOMOMEGA_KI, ODOMOMEGA_KD);
 		odomOmegaController.setTolerance(ODOMOMEGA_TOLERANCE);
+
+		odomXController = new ProfiledPIDController(ODOMX_KP, ODOMX_KI, ODOMX_KD,
+				new Constraints(RobotSpecs.MAX_VELOCITY_AUTO, RobotSpecs.MAX_ACCELERATION_AUTO));
+		odomXController.setTolerance(ODOMX_TOLERANCE);
+		odomYController = new ProfiledPIDController(ODOMY_KP, ODOMY_KI, ODOMY_KD,
+				new Constraints(RobotSpecs.MAX_VELOCITY_AUTO, RobotSpecs.MAX_ACCELERATION_AUTO));
+		odomYController.setTolerance(ODOMY_TOLERANCE);
+		// odomOmegaController = new ProfiledPIDController(ODOMOMEGA_KP, ODOMOMEGA_KI, ODOMOMEGA_KD,
+		// 		new Constraints(RobotSpecs.MAX_VELOCITY_AUTO, RobotSpecs.MAX_ACCELERATION_AUTO));
+		// odomOmegaController.setTolerance(ODOMOMEGA_TOLERANCE);
 
 		field = new Field2d();
 		Shuffleboard.getTab("test2").add("fieldTHING", field).withWidget(BuiltInWidgets.kField);
@@ -265,11 +283,11 @@ public class Drivetrain extends SubsystemBase {
 		return aprilTagOmegaController;
 	}
 
-	public PIDController getOdomXController() {
+	public ProfiledPIDController getOdomXController() {
 		return odomXController;
 	}
 
-	public PIDController getOdomYController() {
+	public ProfiledPIDController getOdomYController() {
 		return odomYController;
 	}
 

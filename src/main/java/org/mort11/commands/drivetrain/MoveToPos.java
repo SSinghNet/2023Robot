@@ -51,16 +51,8 @@ public class MoveToPos extends CommandBase {
 				drivetrain.getPose().getY() + transform2d.getY(),
 				(drivetrain.getPose().getRotation().plus(transform2d.getRotation())));
 
-		System.out.println("old" + drivetrain.getPose().getX());
-		System.out.println("old" + drivetrain.getPose().getY());
-		System.out.println("old" + drivetrain.getPose().getRotation().getDegrees());
-
-		System.out.println("new" + newPose.getX());
-		System.out.println("new" + newPose.getY());
-		System.out.println("new" + newPose.getRotation().getDegrees());
-
-		drivetrain.getOdomXController().reset();
-		drivetrain.getOdomYController().reset();
+		drivetrain.getOdomXController().reset(drivetrain.getPose().getX());
+		drivetrain.getOdomYController().reset(drivetrain.getPose().getY());
 		drivetrain.getOdomOmegaController().reset();
 
 	}
@@ -89,9 +81,11 @@ public class MoveToPos extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		// TODO: not ending; check
-		return drivetrain.getOdomXController().atSetpoint() && drivetrain.getOdomYController().atSetpoint()
+		return drivetrain.getOdomXController().atGoal() && drivetrain.getOdomYController().atGoal()
 				&& drivetrain.getOdomOmegaController().atSetpoint();
+		// return false;
 	}
+
 
 	@Override
 	public void end(boolean interrupted) {

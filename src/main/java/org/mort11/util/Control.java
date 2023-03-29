@@ -3,7 +3,7 @@ package org.mort11.util;
 import static org.mort11.util.Constants.ControlPorts.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
 
-import org.mort11.commands.auto.PlaceConeGrabConeCommunity;
+import org.mort11.commands.auto.Test;
 import org.mort11.commands.drivetrain.*;
 import org.mort11.commands.endeffector.*;
 import org.mort11.subsystems.Claw;
@@ -83,7 +83,9 @@ public class Control {
 		joystick.button(6).whileTrue(
 				new SequentialCommandGroup(new MoveToPos(0, Units.inchesToMeters(-31), 0), new MoveToPos(-0.5, 0, 0)));
 
-		// joystick.button(7).whileTrue(new PlaceConeGrabCube());
+		joystick.button(7).whileTrue(new MoveToPos(3, 0, 0));
+		joystick.button(8).whileTrue(new MoveToPos(0, 3, 0));
+		joystick.button(9).whileTrue(new MoveToPos(1, 1, 90));
 
 		joystick.povRight().whileTrue(new RotateToAngle(-90, false));
 		joystick.povUp().whileTrue(new RotateToAngle(0, false));
