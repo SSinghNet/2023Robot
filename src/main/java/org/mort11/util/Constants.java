@@ -107,7 +107,8 @@ public final class Constants {
 	}
 
 	public final static class Arm {
-		public final static int DRIVE = 27;
+		public final static int DRIVE_MASTER = 27;
+		public final static int DRIVE_FOLLOWER = 28;
 
 		public final static double KP = 0.26; // 0.2
 		public final static double KI = 0.44;
@@ -118,6 +119,7 @@ public final class Constants {
 		public final static double KV = 3.178;
 		public final static double KA = 8.5554;
 
+		//TODO: refind all
 		public final static double FLOOR_POSITION = -32;
 		public final static double SCORING_POSITION = 2.5;
 		public final static double REST_POSITION = -6; // -4.5

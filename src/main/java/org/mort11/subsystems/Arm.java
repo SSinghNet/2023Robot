@@ -1,5 +1,10 @@
 package org.mort11.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FollowerType;
+import com.ctre.phoenix.motorcontrol.InvertType;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -11,10 +16,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Arm.*;
 
+import org.mort11.util.Constants.RobotSpecs;
+
 public class Arm extends SubsystemBase {
 	private static Arm arm;
 
-	private CANSparkMax driveNeo;
+	// private CANSparkMax driveNeo;
+	private TalonFX driveFalconMaster;
+	private TalonFX driveFalconFollower;
 
 	private PIDController armController;
 	private SimpleMotorFeedforward feedforward;
@@ -23,13 +32,19 @@ public class Arm extends SubsystemBase {
 	private double setpoint;
 
 	private Arm() {
-		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
+		driveFalconMaster = new TalonFX(DRIVE_MASTER);
+		driveFalconFollower = new TalonFX(DRIVE_FOLLOWER);
 
-		// TODO limit exist??
-		driveNeo.setSoftLimit(SoftLimitDirection.kReverse, TOP_LIMIT);
-		driveNeo.setSoftLimit(SoftLimitDirection.kForward, BOTTOM_LIMIT);
+		driveFalconMaster.setNeutralMode(NeutralMode.Brake);
+		driveFalconFollower.setNeutralMode(NeutralMode.Brake);
 
-		driveNeo.burnFlash();
+		driveFalconMaster.configForwardSoftLimitEnable(true);
+		driveFalconMaster.configForwardSoftLimitThreshold(TOP_LIMIT);
+		driveFalconMaster.configReverseSoftLimitEnable(true);
+		driveFalconMaster.configReverseSoftLimitThreshold(BOTTOM_LIMIT);
+
+		driveFalconFollower.follow(driveFalconMaster);
+		driveFalconFollower.setInverted(InvertType.OpposeMaster); //TODO: most likely
 
 		armController = new PIDController(KP, KI, KD);
 		armController.setTolerance(TOLERANCE);
@@ -43,8 +58,8 @@ public class Arm extends SubsystemBase {
 		return armController;
 	}
 
-	public CANSparkMax getNeoMotor() {
-		return driveNeo;
+	public TalonFX getDriveFalconMaster() {
+		return driveFalconMaster;
 	}
 
 	/**
@@ -68,30 +83,30 @@ public class Arm extends SubsystemBase {
 	}
 
 	public boolean nearSetpoint() {
-		return Math.abs(driveNeo.getEncoder().getPosition() - setpoint) < 3;
+		return Math.abs(getPosition() - setpoint) < 3;
 	}
 
 	/** @return whether arm is clear so it is safe to move elevator */
 	public boolean isClear() {
-		return driveNeo.getEncoder().getPosition() < TOP_CLEAR && driveNeo.getEncoder().getPosition() > BOTTOM_CLEAR;
+		return getPosition() < TOP_CLEAR && getPosition() > BOTTOM_CLEAR;
 	}
 
 	private void setPosition(double setpoint) {
 		double output = (feedforward.calculate(0) + armController.calculate(getPosition(), setpoint))
-				* (100 * Math.abs(Math.sin(getPosition() * (1 / 7)) + 0.01));
+				* (100 * Math.abs(Math.sin(getPosition() * (1 / 7)) + 0.01)) / RobotSpecs.MAX_VOLTAGE;
 		// double output = 0.1 * sin(getPositionDegrees()) +
 		// armController.calculate(getPosition(), setpoint);
-		driveNeo.setVoltage(output);
+		driveFalconMaster.set(ControlMode.PercentOutput, output);
 
-		// SmartDashboard.putNumber("arm output", output);
+		SmartDashboard.putNumber("arm output", output);
 	}
 
 	private void setSpeed(double speed) {
-		driveNeo.set(speed);
+		driveFalconMaster.set(ControlMode.PercentOutput, speed);
 	}
 
 	public double getPosition() {
-		return driveNeo.getEncoder().getPosition();
+		return driveFalconMaster.getSelectedSensorPosition();
 	}
 
 	public double getPositionDegrees() {
@@ -102,10 +117,10 @@ public class Arm extends SubsystemBase {
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("Built-In Arm Encoder", getPosition());
-		SmartDashboard.putNumber("arm degrees", getPositionDegrees());
+		// SmartDashboard.putNumber("arm degrees", getPositionDegrees());
 		SmartDashboard.putNumber("arm setpoint", setpoint);
 
-		// setPosition(setpoint); // TODO: uncomment
+		setPosition(setpoint);
 	}
 
 	/**
