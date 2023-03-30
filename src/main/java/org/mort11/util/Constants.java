@@ -164,8 +164,8 @@ public final class Constants {
 
 		public final static double DRIVE_SPEED = 0.5; // TODO: set
 
-		public final static double FLIP_IN_POS = 0; // TODO: set
-		public final static double FLIP_OUT_POS = 10; // TODO: set
+		public final static float FLIP_IN_POS = 0.0f; // TODO: set
+		public final static float FLIP_OUT_POS = 10.0f; // TODO: set
 
 		// TODO: run ff
 		public final static double FLIP_KS = 0;

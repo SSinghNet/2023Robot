@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -19,7 +20,7 @@ import org.mort11.util.Constants.RobotSpecs;
 public class Floortake extends SubsystemBase {
 	private static Floortake floortake;
 
-	private TalonFX flipFalcon;
+	private CANSparkMax flipNeo;
 	private CANSparkMax driveNeo;
 
 	private boolean flipIn;
@@ -28,17 +29,19 @@ public class Floortake extends SubsystemBase {
 	private PIDController flipController;
 
 	private Floortake() {
-		flipFalcon = new TalonFX(FLIP);
+		flipNeo = new CANSparkMax(FLIP, MotorType.kBrushless);
 		driveNeo = new CANSparkMax(DRIVE, MotorType.kBrushless);
 
 		flipFeedforward = new SimpleMotorFeedforward(FLIP_KS, FLIP_KV, FLIP_KA);
 		flipController = new PIDController(FLIP_KP, FLIP_KI, FLIP_KD);
 
-		flipFalcon.setNeutralMode(NeutralMode.Brake);
-		flipFalcon.configForwardSoftLimitThreshold(FLIP_OUT_POS);
-		flipFalcon.configReverseSoftLimitThreshold(FLIP_IN_POS);
-		flipFalcon.configForwardSoftLimitEnable(true);
-		flipFalcon.configReverseSoftLimitEnable(true);
+		flipNeo.restoreFactoryDefaults();
+		flipNeo.setIdleMode(IdleMode.kBrake);
+		flipNeo.enableSoftLimit(SoftLimitDirection.kForward, true);
+		flipNeo.setSoftLimit(SoftLimitDirection.kForward, FLIP_IN_POS);
+		flipNeo.enableSoftLimit(SoftLimitDirection.kReverse, true);
+		flipNeo.setSoftLimit(SoftLimitDirection.kReverse, FLIP_OUT_POS);
+		flipNeo.burnFlash();
 
 		driveNeo.restoreFactoryDefaults();
 		driveNeo.setIdleMode(IdleMode.kCoast);
@@ -57,10 +60,9 @@ public class Floortake extends SubsystemBase {
 
 	private void setFlip() {
 		double output = (flipFeedforward.calculate(0)
-				+ flipController.calculate(flipFalcon.getSelectedSensorPosition(), flipIn ? FLIP_IN_POS : FLIP_OUT_POS))
-				/ RobotSpecs.MAX_VOLTAGE; // Divide by Max Voltage to get a value between [-1, 1]
+				+ flipController.calculate(flipNeo.getEncoder().getPosition(), flipIn ? FLIP_IN_POS : FLIP_OUT_POS));
 
-		flipFalcon.set(ControlMode.PercentOutput, output);
+		flipNeo.setVoltage(output);
 	}
 
 	public void setDrive(boolean in) {
@@ -69,7 +71,7 @@ public class Floortake extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		SmartDashboard.putNumber("flip encoder", flipFalcon.getSelectedSensorPosition());
+		SmartDashboard.putNumber("flip encoder", flipNeo.getEncoder().getPosition());
 		setFlip();
 	}
 
