@@ -27,11 +27,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class PlaceCubeGrabCone extends SequentialCommandGroup {
 	private Drivetrain drivetrain;
 
-	public PlaceCubeGrabCone() {
+	public PlaceCubeGrabCone(boolean isBluee) {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
 
-        int isBlue =  Auto.getIsBlue() ? 1 : -1;
+        int isBlue =  isBluee ? 1 : -1;
         // int isBlue = 1;
 
 		addCommands(
