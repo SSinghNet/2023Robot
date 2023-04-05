@@ -1,6 +1,7 @@
 package org.mort11.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -28,6 +29,10 @@ public class Wrist extends SubsystemBase {
 		// SRXEncoder = new PWM(ENCODER);
 		wristController = new PIDController(KP, KI, KD);
 
+		driveNeo.getPIDController().setP(KP);
+		driveNeo.getPIDController().setI(KI);
+		driveNeo.getPIDController().setD(KD);
+
 		SmartDashboard.putNumber("wristOffset", 0);
 	}
 
@@ -41,7 +46,9 @@ public class Wrist extends SubsystemBase {
 	}
 
 	private void setPosition(double setpoint) {
-		driveNeo.setVoltage(wristController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
+		// driveNeo.setVoltage(wristController.calculate(driveNeo.getEncoder().getPosition(), setpoint));
+
+		driveNeo.getPIDController().setReference(setpoint, ControlType.kPosition);
 	}
 
 	public void setSpeed(double speed) {
@@ -49,7 +56,8 @@ public class Wrist extends SubsystemBase {
 	}
 
 	public boolean atSetpoint() {
-		return wristController.atSetpoint();
+		// return wristController.atSetpoint();
+		return true;
 	}
 
 	public boolean nearSetpoint() {
