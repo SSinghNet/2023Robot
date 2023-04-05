@@ -180,9 +180,9 @@ public final class Constants {
 		public final static double FLIP_KA = 7.094;
 
 		// TODO: tune pid
-		public final static double FLIP_KP = 0.3;
+		public final static double FLIP_KP = 0.03; //0.3
 		public final static double FLIP_KI = 0;
-		public final static double FLIP_KD = 0;
+		public final static double FLIP_KD = 0.003; //0
 	}
 
 	public final static class Vision {
