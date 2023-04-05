@@ -4,7 +4,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -51,6 +50,10 @@ public class Wrist extends SubsystemBase {
 
 	public boolean atSetpoint() {
 		return wristController.atSetpoint();
+	}
+
+	public boolean nearSetpoint() {
+		return Math.abs(driveNeo.getEncoder().getPosition() - setpoint) < 5;
 	}
 
 	@Override

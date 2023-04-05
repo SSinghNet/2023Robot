@@ -1,4 +1,4 @@
-package org.mort11.commands.endeffector;
+package org.mort11.commands.endeffector.armelevator;
 
 import org.mort11.subsystems.Elevator;
 import org.mort11.util.Constants;
@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class SetArmAndElevator extends SequentialCommandGroup {
 	public SetArmAndElevator(double armSetpoint, double elevatorSetpoint) {
-		addCommands(new ClearArm(elevatorSetpoint), new SetElevator(elevatorSetpoint), new SetArm(armSetpoint));
+		addCommands(new SetArm(Constants.Arm.REST_POSITION), new SetElevator(elevatorSetpoint), new SetArm(armSetpoint));
 	}
 
 	public final static SetArmAndElevator floor() {

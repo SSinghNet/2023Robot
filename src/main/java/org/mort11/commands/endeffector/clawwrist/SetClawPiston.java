@@ -1,4 +1,4 @@
-package org.mort11.commands.endeffector;
+package org.mort11.commands.endeffector.clawwrist;
 
 import org.mort11.subsystems.Claw;
 

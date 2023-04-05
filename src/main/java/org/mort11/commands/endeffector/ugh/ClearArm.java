@@ -1,4 +1,4 @@
-package org.mort11.commands.endeffector;
+package org.mort11.commands.endeffector.ugh;
 
 import org.mort11.subsystems.Arm;
 import org.mort11.subsystems.Elevator;
@@ -31,7 +31,8 @@ public class ClearArm extends CommandBase {
 		}
 
 		if (!skipClear) {
-			arm.setSetpoint(Constants.Arm.TOP_CLEAR - 4.5);
+			// arm.setSetpoint(Constants.Arm.TOP_CLEAR - 4.5);
+			arm.setSetpoint(Constants.Arm.REST_POSITION);
 		}
 	}
 

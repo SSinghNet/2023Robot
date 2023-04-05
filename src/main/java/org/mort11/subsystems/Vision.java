@@ -48,26 +48,45 @@ public class Vision extends SubsystemBase {
 	}
 
 	public double getCamTranX() {
+		if (getCamTran().length < 1) {
+			return 0;
+		}
+
 		return (double) getCamTran()[0];
 	}
 
 	public double getCamTranY() {
+		if (getCamTran().length < 1) {
+			return 0;
+		}
 		return (double) getCamTran()[1];
 	}
 
 	public double getCamTranZ() {
+		if (getCamTran().length < 1) {
+			return 0;
+		}
 		return (double) getCamTran()[2];
 	}
 
 	public double getCamTranPitch() {
+		if (getCamTran().length < 1) {
+			return 0;
+		}
 		return (double) getCamTran()[3];
 	}
 
 	public double getCamTranYaw() {
+		if (getCamTran().length < 1) {
+			return 0;
+		}
 		return (double) getCamTran()[4];
 	}
 
 	public double getCamTranRoll() {
+		if (getCamTran().length < 1) {
+			return 0;
+		}
 		return (double) getCamTran()[5];
 	}
 

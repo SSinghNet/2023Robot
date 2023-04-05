@@ -14,6 +14,7 @@ import com.swervedrivespecialties.swervelib.MotorType;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 
+import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
@@ -31,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static org.mort11.util.Constants.Drivetrain.*;
 import static org.mort11.util.Constants.RobotSpecs.*;
 
+import org.mort11.util.Constants;
 import org.mort11.util.Constants.RobotSpecs;
 
 public class Drivetrain extends SubsystemBase {
@@ -51,6 +53,9 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController rotateToAngleController;
 	private PIDController balanceControllerX;
 	private PIDController balanceControllerY;
+
+	private BangBangController bangBangForwardController;
+	private BangBangController bangBangReverseController;
 
 	private PIDController aprilTagXController;
 	private PIDController aprilTagYController;
@@ -98,6 +103,11 @@ public class Drivetrain extends SubsystemBase {
 		balanceControllerY = new PIDController(BALANCE_KP, BALANCE_KI, BALANCE_KD);
 		balanceControllerY.setTolerance(BALANCE_TOLERANCE);
 
+		bangBangForwardController = new BangBangController();
+		bangBangReverseController = new BangBangController();
+		bangBangForwardController.setSetpoint(0);
+		bangBangReverseController.setSetpoint(0);
+
 		aprilTagXController = new PIDController(ATX_KP, ATX_KI, ATX_KD);
 		aprilTagXController.setTolerance(ATX_TOLERANCE);
 		aprilTagYController = new PIDController(ATY_KP, ATY_KI, ATY_KD);
@@ -111,6 +121,7 @@ public class Drivetrain extends SubsystemBase {
 		// odomYController.setTolerance(ODOMY_TOLERANCE);
 		odomOmegaController = new PIDController(ODOMOMEGA_KP, ODOMOMEGA_KI, ODOMOMEGA_KD);
 		odomOmegaController.setTolerance(ODOMOMEGA_TOLERANCE);
+		odomOmegaController.enableContinuousInput(-180, 180);
 
 		odomXController = new ProfiledPIDController(ODOMX_KP, ODOMX_KI, ODOMX_KD,
 				new Constraints(RobotSpecs.MAX_VELOCITY_AUTO, RobotSpecs.MAX_ACCELERATION_AUTO));
@@ -291,8 +302,22 @@ public class Drivetrain extends SubsystemBase {
 		return odomYController;
 	}
 
+	public void resetOdomControllerConstraints() {
+		odomXController.setConstraints(new Constraints(RobotSpecs.MAX_VELOCITY_AUTO, RobotSpecs.MAX_ACCELERATION_AUTO));
+		odomYController.setConstraints(new Constraints(RobotSpecs.MAX_VELOCITY_AUTO, RobotSpecs.MAX_ACCELERATION_AUTO));
+	}
+
+	public static Constraints defaultOdomConstraints() {
+		return new Constraints(RobotSpecs.MAX_VELOCITY_AUTO, RobotSpecs.MAX_ACCELERATION_AUTO);
+	}
+
 	public PIDController getOdomOmegaController() {
 		return odomOmegaController;
+	}
+
+	public double bangBangOutput(double measurement) {
+		return (0.2 * bangBangForwardController.calculate(measurement) == 0 ? 0 : 1) + 
+			(-0.1 * bangBangReverseController.calculate(-measurement));
 	}
 
 	@Override

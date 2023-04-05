@@ -7,10 +7,12 @@ package org.mort11;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
+import org.mort11.commands.endeffector.floortake.Stow;
 import org.mort11.subsystems.Arm;
 import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Elevator;
+import org.mort11.subsystems.Floortake;
 import org.mort11.subsystems.Pneumatic;
 import org.mort11.subsystems.Vision;
 import org.mort11.subsystems.Wrist;
@@ -22,6 +24,7 @@ public class RobotContainer {
 	private Claw claw;
 	private Drivetrain drivetrain;
 	private Elevator elevator;
+	private Floortake floortake;
 	private Pneumatic pneumatic;
 	private Wrist wrist;
 	private Vision vision;
@@ -32,9 +35,10 @@ public class RobotContainer {
 		claw = Claw.getInstance();
 		drivetrain = Drivetrain.getInstance();
 		elevator = Elevator.getInstance();
+		floortake = Floortake.getInstance();
 		pneumatic = Pneumatic.getInstance();
 		wrist = Wrist.getInstance();
-		vision = vision.getInstance();
+		vision = Vision.getInstance();
 
 		// initalize controllers
 		Control.init();
@@ -45,7 +49,9 @@ public class RobotContainer {
 		// create autonomous commands and chooser
 		Auto.init();
 
-		// Shuffleboard.getTab("test3").add(claw);
+		Shuffleboard.getTab("test3").add(arm);
+		Shuffleboard.getTab("test3").add(elevator);
+		Shuffleboard.getTab("test").add(floortake);
 	}
 
 	/**

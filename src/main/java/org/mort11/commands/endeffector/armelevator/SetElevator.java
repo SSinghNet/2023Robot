@@ -1,4 +1,4 @@
-package org.mort11.commands.endeffector;
+package org.mort11.commands.endeffector.armelevator;
 
 import org.mort11.subsystems.Elevator;
 
@@ -20,12 +20,10 @@ public class SetElevator extends CommandBase {
 	}
 
 	@Override
-	public void execute() {
-	}
+	public void execute() {}
 
 	@Override
-	public void end(boolean interrupted) {
-	}
+	public void end(boolean interrupted) {}
 
 	@Override
 	public boolean isFinished() {

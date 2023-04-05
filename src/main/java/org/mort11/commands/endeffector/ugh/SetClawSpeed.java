@@ -1,8 +1,7 @@
-package org.mort11.commands.endeffector;
+package org.mort11.commands.endeffector.ugh;
 
 import org.mort11.subsystems.Claw;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 public class SetClawSpeed extends InstantCommand {

@@ -1,6 +1,7 @@
 package org.mort11.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -30,6 +31,14 @@ public class Claw extends SubsystemBase {
 		intakeNeoMaster = new CANSparkMax(DRIVE_MASTER, MotorType.kBrushless);
 		intakeNeoFollower = new CANSparkMax(DRIVE_FOLLOWER, MotorType.kBrushless);
 
+		intakeNeoMaster.restoreFactoryDefaults();
+		intakeNeoMaster.setIdleMode(IdleMode.kCoast);
+		intakeNeoMaster.burnFlash();
+		
+		intakeNeoFollower.restoreFactoryDefaults();
+		intakeNeoFollower.setIdleMode(IdleMode.kCoast);
+		intakeNeoFollower.burnFlash();
+
 		// intakeNeoFollower.follow(intakeNeoMaster, false);
 
 		irSensor = new DigitalInput(IR_SENSOR);
@@ -40,7 +49,7 @@ public class Claw extends SubsystemBase {
 	}
 
 	public void setSpeed(double speed) {
-		intakeNeoMaster.set(speed);
+		intakeNeoMaster.set(-speed);
 		intakeNeoFollower.set(speed);
 		// System.out.println(speed);
 	}

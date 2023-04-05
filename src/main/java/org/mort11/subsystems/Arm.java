@@ -10,8 +10,11 @@ import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Arm.*;
@@ -25,7 +28,8 @@ public class Arm extends SubsystemBase {
 	private TalonFX driveFalconMaster;
 	private TalonFX driveFalconFollower;
 
-	private PIDController armController;
+	// private PIDController armController;
+	private ProfiledPIDController armController;
 	private SimpleMotorFeedforward feedforward;
 
 	/** target arm position in encoder units */
@@ -38,23 +42,25 @@ public class Arm extends SubsystemBase {
 		driveFalconMaster.setNeutralMode(NeutralMode.Brake);
 		driveFalconFollower.setNeutralMode(NeutralMode.Brake);
 
-		driveFalconMaster.configForwardSoftLimitEnable(true);
-		driveFalconMaster.configForwardSoftLimitThreshold(TOP_LIMIT);
-		driveFalconMaster.configReverseSoftLimitEnable(true);
-		driveFalconMaster.configReverseSoftLimitThreshold(BOTTOM_LIMIT);
+		driveFalconMaster.configForwardSoftLimitEnable(false); //TODO: enable
+		// driveFalconMaster.configForwardSoftLimitThreshold(TOP_LIMIT);
+		driveFalconMaster.configReverseSoftLimitEnable(false);
+		// driveFalconMaster.configReverseSoftLimitThreshold(BOTTOM_LIMIT); //TODO: enable
 
 		driveFalconFollower.follow(driveFalconMaster);
 		driveFalconFollower.setInverted(InvertType.OpposeMaster); //TODO: most likely
 
-		armController = new PIDController(KP, KI, KD);
-		armController.setTolerance(TOLERANCE);
+		// armController = new PIDController(KP, KI, KD);
+		// armController.setTolerance(TOLERANCE);
+
+		armController = new ProfiledPIDController(KP, KI, KD, new Constraints(500000, 250000));
 
 		feedforward = new SimpleMotorFeedforward(KS, KV, KA);
 
 		setpoint = REST_POSITION;
 	}
 
-	public PIDController getArmController() {
+	public ProfiledPIDController getArmController() {
 		return armController;
 	}
 
@@ -83,17 +89,18 @@ public class Arm extends SubsystemBase {
 	}
 
 	public boolean nearSetpoint() {
-		return Math.abs(getPosition() - setpoint) < 3;
+		return Math.abs(getPosition() - setpoint) < 1300;
 	}
 
 	/** @return whether arm is clear so it is safe to move elevator */
 	public boolean isClear() {
-		return getPosition() < TOP_CLEAR && getPosition() > BOTTOM_CLEAR;
+		// return getPosition() < TOP_CLEAR && getPosition() > BOTTOM_CLEAR;
+		return true;
 	}
 
 	private void setPosition(double setpoint) {
 		double output = (feedforward.calculate(0) + armController.calculate(getPosition(), setpoint))
-				* (100 * Math.abs(Math.sin(getPosition() * (1 / 7)) + 0.01)) / RobotSpecs.MAX_VOLTAGE;
+				/ RobotSpecs.MAX_VOLTAGE;
 		// double output = 0.1 * sin(getPositionDegrees()) +
 		// armController.calculate(getPosition(), setpoint);
 		driveFalconMaster.set(ControlMode.PercentOutput, output);
@@ -101,7 +108,7 @@ public class Arm extends SubsystemBase {
 		SmartDashboard.putNumber("arm output", output);
 	}
 
-	private void setSpeed(double speed) {
+	public void setSpeed(double speed) {
 		driveFalconMaster.set(ControlMode.PercentOutput, speed);
 	}
 

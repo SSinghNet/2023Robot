@@ -1,11 +1,14 @@
 package org.mort11.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMax.SoftLimitDirection;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ElevatorFeedforward;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -21,7 +24,7 @@ public class Elevator extends SubsystemBase {
 	/** {@link https://www.revrobotics.com/rev-31-1462/} */
 	// private DigitalInput limitSwitch;
 
-	private PIDController positionController;
+	private ProfiledPIDController positionController;
 	private ElevatorFeedforward feedforward;
 
 	/** target elevator position in encoder units */
@@ -30,16 +33,25 @@ public class Elevator extends SubsystemBase {
 	private Elevator() {
 		driveNeoMaster = new CANSparkMax(ELEVATOR_MASTER, MotorType.kBrushless);
 		driveNeoFollower = new CANSparkMax(ELEVATOR_FOLLOWER, MotorType.kBrushless);
-		driveNeoFollower.follow(driveNeoMaster, true);
 
-		driveNeoMaster.setSoftLimit(SoftLimitDirection.kReverse, TOP_LIMIT);
+		driveNeoMaster.restoreFactoryDefaults();
+		driveNeoFollower.restoreFactoryDefaults();
+
+		driveNeoMaster.setIdleMode(IdleMode.kBrake);
+		driveNeoFollower.setIdleMode(IdleMode.kBrake);
+
 		driveNeoMaster.setSoftLimit(SoftLimitDirection.kForward, BOTTOM_LIMIT);
+		driveNeoMaster.enableSoftLimit(SoftLimitDirection.kForward, false); //TODO:enable
+		driveNeoMaster.setSoftLimit(SoftLimitDirection.kReverse, TOP_LIMIT);
+		driveNeoMaster.enableSoftLimit(SoftLimitDirection.kForward, false); //TODO: enable
 
 		driveNeoMaster.setSmartCurrentLimit(20);
 
+		driveNeoFollower.follow(driveNeoMaster, true);
+
 		driveNeoMaster.burnFlash();
 
-		positionController = new PIDController(KP, KI, KD);
+		positionController = new ProfiledPIDController(KP, KI, KD, new Constraints(MAX_VELOCITY, MAX_ACCELERATION));
 		feedforward = new ElevatorFeedforward(KS, KG, KV, KA);
 
 		setpoint = BOTTOM_LIMIT;

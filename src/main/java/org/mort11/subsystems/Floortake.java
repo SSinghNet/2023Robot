@@ -37,17 +37,17 @@ public class Floortake extends SubsystemBase {
 
 		flipNeo.restoreFactoryDefaults();
 		flipNeo.setIdleMode(IdleMode.kBrake);
-		flipNeo.enableSoftLimit(SoftLimitDirection.kForward, true);
-		flipNeo.setSoftLimit(SoftLimitDirection.kForward, FLIP_IN_POS);
-		flipNeo.enableSoftLimit(SoftLimitDirection.kReverse, true);
-		flipNeo.setSoftLimit(SoftLimitDirection.kReverse, FLIP_OUT_POS);
+		flipNeo.enableSoftLimit(SoftLimitDirection.kForward, false); //TODO: enable
+		// flipNeo.setSoftLimit(SoftLimitDirection.kForward, FLIP_IN_POS);
+		flipNeo.enableSoftLimit(SoftLimitDirection.kReverse, false);
+		// flipNeo.setSoftLimit(SoftLimitDirection.kReverse, FLIP_OUT_POS); //TODO: enable
 		flipNeo.burnFlash();
 
 		driveNeo.restoreFactoryDefaults();
 		driveNeo.setIdleMode(IdleMode.kCoast);
 		driveNeo.burnFlash();
 
-		setFlipState(true);
+		// setFlipState(true);
 	}
 
 	public void toggleFlip() {
@@ -65,13 +65,22 @@ public class Floortake extends SubsystemBase {
 		flipNeo.setVoltage(output);
 	}
 
-	public void setDrive(boolean in) {
-		driveNeo.set(DRIVE_SPEED * (in ? -1 : 1)); // TODO: check polarity
+	public void setFlipSpeed(double speed) {
+		flipNeo.set(speed);
+	}
+
+	// public void setDrive(boolean in) {
+	// 	setDrive((in ? 0.257 : -1)); // TODO: check polarity
+	// }
+
+	public void setDrive(double speed) {
+		driveNeo.set(speed);
 	}
 
 	@Override
 	public void periodic() {
 		SmartDashboard.putNumber("flip encoder", flipNeo.getEncoder().getPosition());
+		SmartDashboard.putNumber("flip setpoint",flipController.getSetpoint());
 		setFlip();
 	}
 

@@ -3,19 +3,18 @@ package org.mort11.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.mort11.commands.auto.PlaceConeGrabConeCharge;
-import org.mort11.commands.auto.PlaceConeGrabConeCommunity;
+import org.mort11.commands.auto.PlaceCubeGrabCone;
 import org.mort11.commands.auto.Test;
 import org.mort11.commands.drivetrain.Balance;
 import org.mort11.commands.drivetrain.TimedDrive;
-import org.mort11.commands.endeffector.Rest;
 import org.mort11.commands.endeffector.ScoreCone;
-import org.mort11.commands.endeffector.SetArm;
-import org.mort11.commands.endeffector.SetArmAndElevator;
-import org.mort11.commands.endeffector.SetClawPiston;
-import org.mort11.commands.endeffector.SetElevator;
-import org.mort11.commands.endeffector.TimedIntake;
-import org.mort11.commands.endeffector.UpperNode;
+import org.mort11.commands.endeffector.armelevator.SetArm;
+import org.mort11.commands.endeffector.armelevator.SetArmAndElevator;
+import org.mort11.commands.endeffector.armelevator.SetElevator;
+import org.mort11.commands.endeffector.clawwrist.SetClawPiston;
+import org.mort11.commands.endeffector.clawwrist.TimedIntake;
+import org.mort11.commands.endeffector.ugh.Rest;
+import org.mort11.commands.endeffector.ugh.UpperNode;
 import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.util.Constants.Arm;
@@ -54,7 +53,7 @@ public class Auto {
 
 		// put the auto chooser onto SmartDashboard
 		SmartDashboard.putData(autoChooser);
-		isBlue.addOption("Blue", true);
+		isBlue.setDefaultOption("Blue", true);
 		isBlue.addOption("Red", false);
 
 		SmartDashboard.putData("isBlue", isBlue);
@@ -88,10 +87,15 @@ public class Auto {
 		// TimedDrive(2.5, -1, 0, 0),
 		// new Balance()));
 
-		autoChooser.addOption("Upper Cone, Grab Cone, Go to Community", new PlaceConeGrabConeCommunity());
-		autoChooser.addOption("Upper Cone, Grab Cone, Engage", new PlaceConeGrabConeCharge());
+		// autoChooser.addOption("Upper Cone, Grab Cone, Go to Community", new PlaceConeGrabConeCommunity());
+		autoChooser.addOption("Upper Cube, Grab Cone, Go to Community", new PlaceCubeGrabCone());
+		// autoChooser.addOption("Upper Cone, Grab Cone, Engage", new PlaceConeGrabConeCharge());
 		autoChooser.addOption("Test", new Test());
 
+	}
+
+	public static Boolean getIsBlue() {
+		return isBlue.getSelected() != null ? isBlue.getSelected() : true;
 	}
 
 	/**
