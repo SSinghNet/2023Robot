@@ -27,11 +27,11 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class PlaceCubeGrabCone extends SequentialCommandGroup {
 	private Drivetrain drivetrain;
 
-	public PlaceCubeGrabCone() {
+	public PlaceCubeGrabCone(boolean isBluee) {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
 
-        int isBlue =  Auto.getIsBlue() ? 1 : -1;
+        int isBlue =  isBluee ? 1 : -1;
         // int isBlue = 1;
 
 		addCommands(
@@ -73,7 +73,7 @@ public class PlaceCubeGrabCone extends SequentialCommandGroup {
                 ),
                 new ParallelCommandGroup(
                     new SequentialCommandGroup(
-                        new MoveToAprilTag(6).withTimeout(2),
+                        new MoveToAprilTag(isBluee ? 6 : 3).withTimeout(2),
                         new MoveToPos(0, isBlue * Units.inchesToMeters(-26), 0)
                     ),                        
                     new SequentialCommandGroup(

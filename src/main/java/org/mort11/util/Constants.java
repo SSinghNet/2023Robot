@@ -232,7 +232,7 @@ public final class Constants {
 
 		public static final double MAX_VELOCITY_METERS_PER_SECOND = (6380.0 / 60.0
 				* SdsModuleConfigurations.MK4I_L2.getDriveReduction()
-				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI) * 0.99;
+				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI) * 0.90;
 		public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
 				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 

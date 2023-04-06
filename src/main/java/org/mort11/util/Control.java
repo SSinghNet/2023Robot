@@ -178,8 +178,8 @@ public class Control {
 
 		// takes the throttle value and takes it from [-1, 1] to [0.3, 1], and
 		// multiplies it by the value
-		// return value * Math.pow(throttleValue * -0.4 + 0.6, 2); before with [0.2, 1]
-		return value * Math.pow(throttleValue * -0.35 + 0.65, 2);
+		return value * (throttleValue * -0.4 + 0.6); // before with [0.2, 1]
+		// return value * Math.pow(throttleValue * -0.35 + 0.65, 2);
 	}
 
 	public static double getJoystickX() {

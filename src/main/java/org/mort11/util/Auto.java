@@ -88,7 +88,8 @@ public class Auto {
 		// new Balance()));
 
 		// autoChooser.addOption("Upper Cone, Grab Cone, Go to Community", new PlaceConeGrabConeCommunity());
-		autoChooser.addOption("Upper Cube, Grab Cone, Go to Community", new PlaceCubeGrabCone());
+		autoChooser.addOption("Upper Cube, Grab Cone, Go to Community (BLUE)", new PlaceCubeGrabCone(true));
+		autoChooser.addOption("Upper Cube, Grab Cone, Go to Community (RED)", new PlaceCubeGrabCone(false));
 		// autoChooser.addOption("Upper Cone, Grab Cone, Engage", new PlaceConeGrabConeCharge());
 		autoChooser.addOption("Test", new Test());
 
