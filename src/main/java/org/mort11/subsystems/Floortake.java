@@ -56,6 +56,7 @@ public class Floortake extends SubsystemBase {
 
 	public void setFlipState(boolean in) {
 		flipIn = in;
+		System.out.println("setting flip " + (in ? "in" : "out"));
 	}
 
 	private void setFlip() {

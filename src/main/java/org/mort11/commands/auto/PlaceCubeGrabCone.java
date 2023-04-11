@@ -77,7 +77,7 @@ public class PlaceCubeGrabCone extends SequentialCommandGroup {
                         new MoveToPos(0, isBlue * Units.inchesToMeters(-26), 0)
                     ),                        
                     new SequentialCommandGroup(
-                        new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION - 2),
+                        new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION),
                         new SetWrist(Constants.Wrist.RIGHT_POSITION)
                     )
                 ),

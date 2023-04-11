@@ -110,7 +110,7 @@ public final class Constants {
 	}
 
 	public final static class Arm {
-		public final static int DRIVE_MASTER = 27;
+		public final static int DRIVE_MASTER = 27; //left from ground side
 		public final static int DRIVE_FOLLOWER = 28;
 
 		public final static double KP = 0.000575;
@@ -127,7 +127,7 @@ public final class Constants {
 		public final static float TOP_LIMIT = -9000f;
 
 		public final static double FLOOR_POSITION = 60000;
-		public final static double SCORING_POSITION = -6000;
+		public final static double SCORING_POSITION = -9000; // -6000
 		public final static double REST_POSITION = 10000;
 		public final static double CLAMP_POSITION = 7700;
 

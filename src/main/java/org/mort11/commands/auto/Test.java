@@ -40,10 +40,15 @@ public class Test extends SequentialCommandGroup {
 		// );
 
 		addCommands(
-			new ScoreCone(),
-			new ParallelCommandGroup(
-				SetArmAndElevator.rest(),
-				new MoveToPos(Units.inchesToMeters(180), 0, 0, 1.75, 1).withTimeout(7)
+			new ParallelDeadlineGroup(
+				new SequentialCommandGroup(
+					new ScoreCone(),
+					new ParallelCommandGroup(
+						SetArmAndElevator.rest(),
+						new MoveToPos(Units.inchesToMeters(180), 0, 0, 1.75, 1).withTimeout(7)
+					)
+				),
+				new Stow()
 			),
 			new ParallelDeadlineGroup(
 				new SequentialCommandGroup(
