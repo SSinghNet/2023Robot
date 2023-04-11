@@ -46,7 +46,7 @@ public class Control {
 	private static Floortake floortake;
 
 	/**
-	 * Initialize controlers
+	 * Initialize controllers
 	 */
 	public static void init() {
 		joystick = new CommandJoystick(JOYSTICK);
