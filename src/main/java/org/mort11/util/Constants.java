@@ -122,7 +122,6 @@ public final class Constants {
 		public final static double KV = 0.24083;
 		public final static double KA = 5.2067;
 
-		//TODO: refind all
 		public final static float BOTTOM_LIMIT = 66500f;
 		public final static float TOP_LIMIT = -9000f;
 
@@ -131,9 +130,7 @@ public final class Constants {
 		public final static double REST_POSITION = 10000;
 		public final static double CLAMP_POSITION = 7700;
 
-		// public final static double TOP_CLEAR = -6;
-		// public final static double BOTTOM_CLEAR = -19;
-		//TODO elevator 20 when we can drop arm
+		//TODO: elevator 20 when we can drop arm
 	}
 
 	public final static class Claw {
@@ -164,11 +161,11 @@ public final class Constants {
 	}
 
 	public final static class Floortake {
-		public final static int DRIVE = 51; // TODO: set
-		public final static int FLIP = 50; // TODO: set
+		public final static int DRIVE = 51;
+		public final static int FLIP = 50;
 
 		public final static double PASSIVE_SPEED = 0.1;
-		public final static double INTAKE_SPEED = 0.257; // TODO: set
+		public final static double INTAKE_SPEED = 0.257;
 		public final static double SPIT_SPEED = -1;
 
 		public final static float FLIP_IN_POS = 0.0f; 

@@ -1,12 +1,8 @@
 package org.mort11;
 
-import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
-import org.mort11.util.Auto;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -21,12 +17,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// Instantiate our RobotContainer. This will perform all our button bindings,
-		// and put our
-		// autonomous chooser on the dashboard.
 		robotContainer = new RobotContainer();
-
-		// CameraServer.startAutomaticCapture();
 	}
 
 	/**
@@ -40,15 +31,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotPeriodic() {
-		// Runs the Scheduler. This is responsible for polling buttons, adding
-		// newly-scheduled
-		// commands, running already-scheduled commands, removing finished or
-		// interrupted commands,
-		// and running subsystem periodic() methods. This must be called from the
-		// robot's periodic
-		// block in order for anything in the Command-based framework to work.
 		CommandScheduler.getInstance().run();
-
 	}
 
 	/** This function is called once each time the robot enters Disabled mode. */
@@ -68,7 +51,6 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		autonomousCommand = robotContainer.getAutonomousCommand();
 
-		// schedule the autonomous command
 		if (autonomousCommand != null) {
 			autonomousCommand.schedule();
 		}
@@ -83,10 +65,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void teleopInit() {
-		// This makes sure that the autonomous stops running when
-		// teleop starts running. If you want the autonomous to
-		// continue until interrupted by another command, remove
-		// this line or comment it out.
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
@@ -99,8 +77,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testInit() {
-		Drivetrain.getInstance().getNavX().calibrate();
-		Claw.getInstance().setPiston(false);
 	}
 
 	/** This function is called periodically during test mode. */

@@ -3,36 +3,30 @@ package org.mort11.commands.auto;
 import org.mort11.commands.drivetrain.MoveToAprilTag;
 import org.mort11.commands.drivetrain.MoveToPos;
 import org.mort11.commands.drivetrain.TimedDrive;
-import org.mort11.commands.endeffector.ScoreCone;
 import org.mort11.commands.endeffector.armelevator.SetArm;
 import org.mort11.commands.endeffector.armelevator.SetArmAndElevator;
-import org.mort11.commands.endeffector.clawwrist.Clawtake;
 import org.mort11.commands.endeffector.clawwrist.SetClawPiston;
 import org.mort11.commands.endeffector.clawwrist.SetWrist;
 import org.mort11.commands.endeffector.clawwrist.TimedIntake;
 import org.mort11.subsystems.Drivetrain;
 import org.mort11.subsystems.Wrist;
-import org.mort11.util.Auto;
 import org.mort11.util.Constants;
 
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class PlaceCubeGrabCone extends SequentialCommandGroup {
-	private Drivetrain drivetrain;
+public class CubeHighConeHigh extends SequentialCommandGroup {
+    private Drivetrain drivetrain;
 
-	public PlaceCubeGrabCone(boolean isBluee) {
+	public CubeHighConeHigh(boolean isBluee) {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
 
         int isBlue =  isBluee ? 1 : -1;
-        // int isBlue = 1;
 
 		addCommands(
                 new InstantCommand(() -> drivetrain.resetPose(0, 0, 0)),
@@ -44,7 +38,7 @@ public class PlaceCubeGrabCone extends SequentialCommandGroup {
                 new TimedIntake(0.2, false, false),
                 new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION - 2),
                 new SetClawPiston(false),
-                SetArmAndElevator.rest(),
+                SetArmAndElevator.rest(), //TODO: try parallel
 				new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
                                 new MoveToPos(0, isBlue * Units.inchesToMeters(10),0).withTimeout(1),

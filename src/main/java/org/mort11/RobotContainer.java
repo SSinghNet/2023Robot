@@ -7,7 +7,6 @@ package org.mort11;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import org.mort11.commands.endeffector.floortake.Stow;
 import org.mort11.subsystems.Arm;
 import org.mort11.subsystems.Claw;
 import org.mort11.subsystems.Drivetrain;
@@ -40,18 +39,16 @@ public class RobotContainer {
 		wrist = Wrist.getInstance();
 		vision = Vision.getInstance();
 
-		// initalize controllers
 		Control.init();
+		Control.configure();
 
-		// configure controls
-		Control.configureBindings();
-
-		// create autonomous commands and chooser
 		Auto.init();
 
-		Shuffleboard.getTab("test3").add(arm);
-		Shuffleboard.getTab("test3").add(elevator);
-		Shuffleboard.getTab("test").add(floortake);
+		// Shuffleboard.getTab("subsytems").add(arm);
+		// Shuffleboard.getTab("subsytems").add(claw);
+		// Shuffleboard.getTab("subsytems").add(elevator);
+		// Shuffleboard.getTab("subsytems").add(floortake);
+		// Shuffleboard.getTab("subsytems").add(wrist);
 	}
 
 	/**

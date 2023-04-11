@@ -1,22 +1,19 @@
-package org.mort11.commands.endeffector.ugh;
+package org.mort11.commands.endeffector.clawwrist;
 
 import org.mort11.subsystems.Claw;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
-public class SetClawSpeed extends InstantCommand {
+public class ToggleClawPiston extends InstantCommand {
 	private Claw claw;
-	private boolean in;
 
-	public SetClawSpeed(boolean in) {
-		this.in = in;
+	public ToggleClawPiston() {
 		claw = Claw.getInstance();
 		addRequirements(claw);
 	}
 
 	@Override
 	public void initialize() {
-		claw.setSpeed(in);
+		claw.togglePiston();
 	}
-
 }

@@ -22,7 +22,6 @@ public class Pneumatic extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-
 	}
 
 	public static Pneumatic getInstance() {

@@ -1,20 +1,14 @@
 package org.mort11.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FollowerType;
 import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.SoftLimitDirection;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.ProfiledPIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static org.mort11.util.Constants.Arm.*;
@@ -24,11 +18,9 @@ import org.mort11.util.Constants.RobotSpecs;
 public class Arm extends SubsystemBase {
 	private static Arm arm;
 
-	// private CANSparkMax driveNeo;
 	private TalonFX driveFalconMaster;
 	private TalonFX driveFalconFollower;
 
-	// private PIDController armController;
 	private ProfiledPIDController armController;
 	private SimpleMotorFeedforward feedforward;
 

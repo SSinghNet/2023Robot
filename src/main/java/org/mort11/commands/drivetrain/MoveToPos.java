@@ -8,7 +8,6 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -91,10 +90,8 @@ public class MoveToPos extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-		// TODO: not ending; check
 		return drivetrain.getOdomXController().atGoal() && drivetrain.getOdomYController().atGoal()
 				&& drivetrain.getOdomOmegaController().atSetpoint();
-		// return false;
 	}
 
 

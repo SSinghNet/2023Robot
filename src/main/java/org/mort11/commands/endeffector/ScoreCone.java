@@ -9,9 +9,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class ScoreCone extends SequentialCommandGroup {
 	public ScoreCone() {
-		addCommands(new SetArmAndElevator(Constants.Arm.SCORING_POSITION, Constants.Elevator.UPPER_NODE_POSITION - 2), new SetClawPiston(true), new WaitCommand(0.5),
+		addCommands(
+				new SetArmAndElevator(Constants.Arm.SCORING_POSITION,
+				Constants.Elevator.UPPER_NODE_POSITION - 2),
+				new SetClawPiston(true),
+				new WaitCommand(0.5),
 				new SetClawPiston(false)
-		// , new Rest()
+				// , new Rest()
 		);
 	}
 }
