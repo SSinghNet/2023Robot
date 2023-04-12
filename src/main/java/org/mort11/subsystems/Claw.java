@@ -20,23 +20,23 @@ public class Claw extends SubsystemBase {
 	private static Claw claw;
 
 	private CANSparkMax intakeNeoMaster;
-	private CANSparkMax intakeNeoFollower;
+	// private CANSparkMax intakeNeoFollower;
 
 	private DigitalInput irSensor;
 
 	private Solenoid piston;
 
 	private Claw() {
-		intakeNeoMaster = new CANSparkMax(DRIVE_MASTER, MotorType.kBrushless);
-		intakeNeoFollower = new CANSparkMax(DRIVE_FOLLOWER, MotorType.kBrushless);
+		intakeNeoMaster = new CANSparkMax(DRIVE, MotorType.kBrushless);
+		// intakeNeoFollower = new CANSparkMax(DRIVE_FOLLOWER, MotorType.kBrushless);
 
 		intakeNeoMaster.restoreFactoryDefaults();
 		intakeNeoMaster.setIdleMode(IdleMode.kCoast);
 		intakeNeoMaster.burnFlash();
 		
-		intakeNeoFollower.restoreFactoryDefaults();
-		intakeNeoFollower.setIdleMode(IdleMode.kCoast);
-		intakeNeoFollower.burnFlash();
+		// intakeNeoFollower.restoreFactoryDefaults();
+		// intakeNeoFollower.setIdleMode(IdleMode.kCoast);
+		// intakeNeoFollower.burnFlash();
 
 		// intakeNeoFollower.follow(intakeNeoMaster, false);
 
@@ -48,8 +48,8 @@ public class Claw extends SubsystemBase {
 	}
 
 	public void setSpeed(double speed) {
-		intakeNeoMaster.set(-speed);
-		intakeNeoFollower.set(speed);
+		intakeNeoMaster.set(speed); // TODO: check polarity
+		// intakeNeoFollower.set(speed);
 		// System.out.println(speed);
 	}
 

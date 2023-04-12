@@ -134,8 +134,8 @@ public final class Constants {
 	}
 
 	public final static class Claw {
-		public final static int DRIVE_MASTER = 35;
-		public final static int DRIVE_FOLLOWER = 34;
+		public final static int DRIVE = 35; //either 34 or 35
+		// public final static int DRIVE_FOLLOWER = 34;
 
 		public final static int IR_SENSOR = 0;
 
@@ -155,7 +155,7 @@ public final class Constants {
 		public final static double KD = 0.008;
 
 		public final static double DOWN_POSITION = 31;
-		public final static double RIGHT_POSITION = -65;
+		public final static double RIGHT_POSITION = 65;
 		public final static double UP_POSITION = DOWN_POSITION;
 		public final static double LEFT_POSITION = 0;
 	}
