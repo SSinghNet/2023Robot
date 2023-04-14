@@ -2,6 +2,7 @@ package org.mort11.commands.auto;
 
 import org.mort11.commands.drivetrain.Balance;
 import org.mort11.commands.drivetrain.MoveToPos;
+import org.mort11.commands.drivetrain.TimedDrive;
 import org.mort11.commands.endeffector.ScoreCone;
 import org.mort11.commands.endeffector.armelevator.SetArmAndElevator;
 import org.mort11.commands.endeffector.clawwrist.SetClawPiston;
@@ -16,10 +17,10 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class ConeHighCubeFloorEngage extends SequentialCommandGroup {
+public class ConeHighCubeFloorScoreCube extends SequentialCommandGroup {
 	private Drivetrain drivetrain;
 
-	public ConeHighCubeFloorEngage() {
+	public ConeHighCubeFloorScoreCube() {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
 
@@ -38,19 +39,21 @@ public class ConeHighCubeFloorEngage extends SequentialCommandGroup {
 			),
 			new ParallelDeadlineGroup(
 				new SequentialCommandGroup(
-					new MoveToPos(Units.inchesToMeters(50), 0, 180, 1.75, 1).withTimeout(2),
-					new WaitCommand(0.2)
+					new MoveToPos(Units.inchesToMeters(40), 0, -160, 3, 2).withTimeout(2),
+					new MoveToPos(Units.inchesToMeters(10), 0, -20).withTimeout(1.5)
+					// new WaitCommand(0.35)
 				),
 				new FloorIntake()
 			),
 			new ParallelDeadlineGroup(
 				new SequentialCommandGroup(
-					new MoveToPos(-3.6,0,180, 1.75, 2)
+					new MoveToPos(-4,0,180, 3, 2)
+					// new MoveToPos(-0.6, 0, 90).withTimeout(1.5)
 				),
 				new Stow()
 			),
 			new ParallelDeadlineGroup(
-				new Balance(),
+				new TimedDrive(3, -0.5, 0, 0),
 				new Spit()
 			)
 		);

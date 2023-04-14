@@ -1,7 +1,10 @@
 package org.mort11.util;
 
 import org.mort11.commands.auto.CubeHighConeHigh;
+import org.mort11.commands.auto.TestL;
+import org.mort11.commands.auto.CubeHighConeHighBetter;
 import org.mort11.commands.auto.ConeHighCubeFloorEngage;
+import org.mort11.commands.auto.ConeHighCubeFloorScoreCube;
 import org.mort11.commands.drivetrain.Balance;
 import org.mort11.commands.drivetrain.TimedDrive;
 import org.mort11.commands.endeffector.ScoreCone;
@@ -53,6 +56,10 @@ public class Auto {
 		autoChooser.addOption("CLEAN Upper cube, Upper cone (BLUE)", new CubeHighConeHigh(true));
 		autoChooser.addOption("CLEAN Upper cube, Upper cone (RED)", new CubeHighConeHigh(false));
 		autoChooser.addOption("CENTER Upper cone, Floor cube, Engage", new ConeHighCubeFloorEngage());
+		autoChooser.addOption("BUMP Upper Cone, Ground Cube", new ConeHighCubeFloorScoreCube());
+		// autoChooser.addOption("test L", new TestL(true));
+		autoChooser.addOption("test R (blue)", new CubeHighConeHighBetter(true));
+		autoChooser.addOption("test R (red)", new CubeHighConeHighBetter(false));
 
 	}
 

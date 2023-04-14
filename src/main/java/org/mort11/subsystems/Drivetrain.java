@@ -59,6 +59,9 @@ public class Drivetrain extends SubsystemBase {
 	private PIDController aprilTagYController;
 	private PIDController aprilTagOmegaController;
 
+	private PIDController tapeXController;
+	private PIDController tapeYController;
+
 	// private PIDController odomXController;
 	// private PIDController odomYController;
 	private PIDController odomOmegaController;
@@ -112,6 +115,14 @@ public class Drivetrain extends SubsystemBase {
 		aprilTagYController.setTolerance(ATY_TOLERANCE);
 		aprilTagOmegaController = new PIDController(ATOMEGA_KP, ATOMEGA_KI, ATOMEGA_KD);
 		aprilTagOmegaController.setTolerance(ATOMEGA_TOLERANCE);
+
+		tapeXController = new PIDController(TAPEX_KP, TAPEX_KI, TAPEX_KD);
+		tapeXController.setTolerance(TAPEXTOLERANCE);
+		tapeXController.setSetpoint(10);
+
+		tapeYController = new PIDController(TAPEY_KP, TAPEY_KI, TAPEY_KD);
+		tapeYController.setTolerance(TAPEY_TOLERANCE);
+		tapeYController.setSetpoint(1);
 
 		// odomXController = new PIDController(ODOMX_KP, ODOMX_KI, ODOMX_KD);
 		// odomXController.setTolerance(ODOMX_TOLERANCE);
@@ -298,6 +309,14 @@ public class Drivetrain extends SubsystemBase {
 
 	public ProfiledPIDController getOdomYController() {
 		return odomYController;
+	}
+
+	public PIDController getTapeXController() {
+		return tapeXController;
+	}
+	
+	public PIDController getTapeYController() {
+		return tapeYController;
 	}
 
 	public void resetOdomControllerConstraints() {

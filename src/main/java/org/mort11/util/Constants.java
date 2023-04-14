@@ -72,6 +72,16 @@ public final class Constants {
 		public final static double ODOMY_KD = 0;
 		public final static double ODOMY_TOLERANCE = 0.1;
 
+		public final static double TAPEX_KP = 0.1;
+		public final static double TAPEX_KI = 0.0;
+		public final static double TAPEX_KD = 0.01;
+		public final static double TAPEXTOLERANCE = 0.6;
+
+		public final static double TAPEY_KP = 0.1;
+		public final static double TAPEY_KI = 0.0;
+		public final static double TAPEY_KD = 0.01;
+		public final static double TAPEY_TOLERANCE = 0.6;
+
 		public final static double ODOMOMEGA_KP = 0.1;
 		public final static double ODOMOMEGA_KI = 0;
 		public final static double ODOMOMEGA_KD = 0.01;
@@ -113,7 +123,7 @@ public final class Constants {
 		public final static int DRIVE_MASTER = 27; //left from ground side
 		public final static int DRIVE_FOLLOWER = 28;
 
-		public final static double KP = 0.000575;
+		public final static double KP = 0.000575; // 0.000575
 		public final static double KI = 0.0;
 		public final static double KD = 0.0;
 		public final static double TOLERANCE = 0.5;
@@ -125,7 +135,7 @@ public final class Constants {
 		public final static float BOTTOM_LIMIT = 66500f;
 		public final static float TOP_LIMIT = -9000f;
 
-		public final static double FLOOR_POSITION = 60000;
+		public final static double FLOOR_POSITION = 55000;
 		public final static double SCORING_POSITION = -9000; // -6000
 		public final static double REST_POSITION = 10000;
 		public final static double CLAMP_POSITION = 7700;
@@ -164,9 +174,9 @@ public final class Constants {
 		public final static int DRIVE = 51;
 		public final static int FLIP = 50;
 
-		public final static double PASSIVE_SPEED = 0.1;
-		public final static double INTAKE_SPEED = 0.257;
-		public final static double SPIT_SPEED = -1;
+		public final static double PASSIVE_SPEED = -0.1;
+		public final static double INTAKE_SPEED = -0.3;  //-0.257
+		public final static double SPIT_SPEED = 1;
 
 		public final static float FLIP_IN_POS = 0.0f; 
 		public final static float FLIP_OUT_POS = 20.0f;
@@ -184,7 +194,7 @@ public final class Constants {
 
 	public final static class Vision {
 		public static enum Pipeline {
-			DEFAULT(0), APRIL_TAG(1);
+			DEFAULT(0), APRIL_TAG(1), TAPE(9);
 
 			int id;
 

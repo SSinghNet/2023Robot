@@ -62,7 +62,7 @@ public class Claw extends SubsystemBase {
 	}
 
 	public void setPiston(boolean value) {
-		piston.set(value);
+		piston.set(!value);
 	}
 
 	public void togglePiston() {

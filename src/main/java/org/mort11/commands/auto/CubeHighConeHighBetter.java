@@ -2,14 +2,17 @@ package org.mort11.commands.auto;
 
 import org.mort11.commands.drivetrain.MoveToAprilTag;
 import org.mort11.commands.drivetrain.MoveToPos;
+import org.mort11.commands.drivetrain.MoveToTape;
+import org.mort11.commands.drivetrain.RotateToAngle;
 import org.mort11.commands.drivetrain.TimedDrive;
 import org.mort11.commands.endeffector.armelevator.SetArm;
 import org.mort11.commands.endeffector.armelevator.SetArmAndElevator;
+import org.mort11.commands.endeffector.armelevator.SetElevator;
 import org.mort11.commands.endeffector.clawwrist.SetClawPiston;
 import org.mort11.commands.endeffector.clawwrist.SetWrist;
 import org.mort11.commands.endeffector.clawwrist.TimedIntake;
+import org.mort11.commands.endeffector.clawwrist.TimedIntake2;
 import org.mort11.subsystems.Drivetrain;
-import org.mort11.subsystems.Wrist;
 import org.mort11.util.Constants;
 
 import edu.wpi.first.math.util.Units;
@@ -19,10 +22,10 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class CubeHighConeHigh extends SequentialCommandGroup {
+public class CubeHighConeHighBetter extends SequentialCommandGroup {
     private Drivetrain drivetrain;
 
-	public CubeHighConeHigh(boolean isBluee) {
+	public CubeHighConeHighBetter(boolean isBluee) {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
 
@@ -35,13 +38,13 @@ public class CubeHighConeHigh extends SequentialCommandGroup {
                     new TimedIntake(3, false, true)
                 ),
                 new SetClawPiston(true),
-                new TimedIntake(0.2, false, false),
-                new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION - 2),
+                new TimedIntake2(0.2, 0.1),
+                new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION - 8),
                 new SetClawPiston(false),
                 SetArmAndElevator.rest(), //TODO: try parallel
 				new ParallelDeadlineGroup(
                         new SequentialCommandGroup(
-                                new MoveToPos(0, isBlue * Units.inchesToMeters(10),0).withTimeout(1),
+                                new MoveToPos(0, isBlue * Units.inchesToMeters(12),0).withTimeout(1),
 								new MoveToPos(Units.inchesToMeters(185), 0, 0).withTimeout(3.3),
 								new MoveToPos(Units.inchesToMeters(5), 0,0).withTimeout(0.5)
 						),
@@ -52,38 +55,38 @@ public class CubeHighConeHigh extends SequentialCommandGroup {
 						)
                 ),
                 new SetClawPiston(false),
-                new WaitCommand(0.2),
                 new TimedIntake(0.5, true, true), //TODO maybe decrease
-                new WaitCommand(0.2),
                 new ParallelDeadlineGroup(
                     new ParallelCommandGroup(
                         SetArmAndElevator.rest(),
                         new SequentialCommandGroup(
-                            new WaitCommand(0.5),
-                            new MoveToPos(Units.inchesToMeters(-180), 0, 0).withTimeout(3.75)
+                            new WaitCommand(0.2),
+                            new MoveToPos(Units.inchesToMeters(-180), 0, 0).withTimeout(3.1)
                         )
                     ),
                     new TimedIntake(6, false, true)
                 ),
                 new ParallelCommandGroup(
                     new SequentialCommandGroup(
-                        new MoveToAprilTag(isBluee ? 6 : 3).withTimeout(1.5),
-                        new MoveToPos(0, isBlue * Units.inchesToMeters(-24), 0).withTimeout(0.75)
-                    ),                        
+                        new MoveToPos(0, isBlue * Units.inchesToMeters(-24), 0).withTimeout(0.75),
+                        // new RotateToAngle(0, false).withTimeout(1),
+                        new MoveToTape().withTimeout(2),
+                        new WaitCommand(0.4)
+                    ),
                     new SequentialCommandGroup(
-                        new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION - 2),
+                        new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION + 2),
                         new SetWrist(Constants.Wrist.RIGHT_POSITION)
                     )
                 ),
                 new ParallelCommandGroup(
-                    new SetArm(Constants.Arm.SCORING_POSITION),
+                    new SetArmAndElevator(Constants.Arm.SCORING_POSITION, Constants.Elevator.UPPER_NODE_POSITION - 4),
                     new TimedDrive(1, -0.3, 0, 0)
                 ),
                 new SetClawPiston(true),
                 new TimedIntake(0.2, false, false),
                 new SetArm(Constants.Arm.REST_POSITION),
                 new SetClawPiston(false),
-                new InstantCommand(() -> Wrist.getInstance().setSetpoint(Constants.Wrist.LEFT_POSITION)),
+                new SetWrist(Constants.Wrist.LEFT_POSITION),
                 SetArmAndElevator.rest()
 		);
 

@@ -85,7 +85,7 @@ public class Control {
 		// 8
 		));
 
-		// joystick.button(7).whileTrue(new BalanceBang());
+		joystick.button(7).whileTrue(new MoveToTape());
 
 		// joystick.button(6).whileTrue(new SequentialCommandGroup(
 		// 		new MoveToPos(0, Units.inchesToMeters(-31), 0), new MoveToPos(-0.5, 0, 0)));

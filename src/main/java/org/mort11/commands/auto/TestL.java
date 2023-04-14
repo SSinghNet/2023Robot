@@ -2,6 +2,7 @@ package org.mort11.commands.auto;
 
 import org.mort11.commands.drivetrain.MoveToAprilTag;
 import org.mort11.commands.drivetrain.MoveToPos;
+import org.mort11.commands.drivetrain.MoveToTape;
 import org.mort11.commands.drivetrain.TimedDrive;
 import org.mort11.commands.endeffector.armelevator.SetArm;
 import org.mort11.commands.endeffector.armelevator.SetArmAndElevator;
@@ -19,10 +20,10 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class CubeHighConeHigh extends SequentialCommandGroup {
+public class TestL extends SequentialCommandGroup {
     private Drivetrain drivetrain;
 
-	public CubeHighConeHigh(boolean isBluee) {
+	public TestL(boolean isBluee) {
 		drivetrain = Drivetrain.getInstance();
 		addRequirements(drivetrain);
 
@@ -67,23 +68,19 @@ public class CubeHighConeHigh extends SequentialCommandGroup {
                 ),
                 new ParallelCommandGroup(
                     new SequentialCommandGroup(
-                        new MoveToAprilTag(isBluee ? 6 : 3).withTimeout(1.5),
-                        new MoveToPos(0, isBlue * Units.inchesToMeters(-24), 0).withTimeout(0.75)
-                    ),                        
+                        new MoveToTape().withTimeout(1)
+                    ),
                     new SequentialCommandGroup(
-                        new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION - 2),
+                        new SetArmAndElevator(Constants.Arm.REST_POSITION, Constants.Elevator.UPPER_NODE_POSITION - 4),
                         new SetWrist(Constants.Wrist.RIGHT_POSITION)
                     )
                 ),
-                new ParallelCommandGroup(
-                    new SetArm(Constants.Arm.SCORING_POSITION),
-                    new TimedDrive(1, -0.3, 0, 0)
-                ),
+                new SetArm(Constants.Arm.SCORING_POSITION),
                 new SetClawPiston(true),
-                new TimedIntake(0.2, false, false),
+                new TimedIntake(0.5, false, false),
                 new SetArm(Constants.Arm.REST_POSITION),
                 new SetClawPiston(false),
-                new InstantCommand(() -> Wrist.getInstance().setSetpoint(Constants.Wrist.LEFT_POSITION)),
+                new SetWrist(Constants.Wrist.LEFT_POSITION),
                 SetArmAndElevator.rest()
 		);
 

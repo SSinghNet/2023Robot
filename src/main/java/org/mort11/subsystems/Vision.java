@@ -47,6 +47,14 @@ public class Vision extends SubsystemBase {
 		return llTable.getEntry("targetpose_robotspace").getNumberArray(new Number[0]);
 	}
 
+	public double getX() {
+		return llTable.getEntry("tx").getDouble(0);
+	}
+
+	public double getY() {
+		return llTable.getEntry("ty").getDouble(0); 
+	}
+
 	public double getCamTranX() {
 		if (getCamTran().length < 1) {
 			return 0;
