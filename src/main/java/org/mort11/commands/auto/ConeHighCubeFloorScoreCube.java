@@ -40,14 +40,14 @@ public class ConeHighCubeFloorScoreCube extends SequentialCommandGroup {
 			new ParallelDeadlineGroup(
 				new SequentialCommandGroup(
 					new MoveToPos(Units.inchesToMeters(40), 0, -160, 3, 2).withTimeout(2),
-					new MoveToPos(Units.inchesToMeters(10), 0, -20).withTimeout(1.5)
+					new MoveToPos(Units.inchesToMeters(10), 0, 0).withTimeout(1.5)
 					// new WaitCommand(0.35)
 				),
 				new FloorIntake()
 			),
 			new ParallelDeadlineGroup(
 				new SequentialCommandGroup(
-					new MoveToPos(-4,0,180, 3, 2)
+					new MoveToPos(-4,0,160, 3, 2)
 					// new MoveToPos(-0.6, 0, 90).withTimeout(1.5)
 				),
 				new Stow()

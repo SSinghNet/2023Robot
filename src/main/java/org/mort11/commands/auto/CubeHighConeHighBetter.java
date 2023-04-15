@@ -68,9 +68,9 @@ public class CubeHighConeHighBetter extends SequentialCommandGroup {
                 ),
                 new ParallelCommandGroup(
                     new SequentialCommandGroup(
-                        new MoveToPos(0, isBlue * Units.inchesToMeters(-24), 0).withTimeout(0.75),
+                        new MoveToPos(0, isBlue * Units.inchesToMeters(-28), 0).withTimeout(0.75), // -24
                         // new RotateToAngle(0, false).withTimeout(1),
-                        new MoveToTape().withTimeout(2),
+                        new MoveToTape().withTimeout(2.3),
                         new WaitCommand(0.4)
                     ),
                     new SequentialCommandGroup(

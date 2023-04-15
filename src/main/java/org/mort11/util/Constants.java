@@ -72,15 +72,15 @@ public final class Constants {
 		public final static double ODOMY_KD = 0;
 		public final static double ODOMY_TOLERANCE = 0.1;
 
-		public final static double TAPEX_KP = 0.1;
-		public final static double TAPEX_KI = 0.0;
-		public final static double TAPEX_KD = 0.01;
-		public final static double TAPEXTOLERANCE = 0.6;
+		public final static double TAPEX_KP = 0.12;
+		public final static double TAPEX_KI = 0.01;
+		public final static double TAPEX_KD = 0.00;
+		public final static double TAPEXTOLERANCE = 1;
 
-		public final static double TAPEY_KP = 0.1;
-		public final static double TAPEY_KI = 0.0;
-		public final static double TAPEY_KD = 0.01;
-		public final static double TAPEY_TOLERANCE = 0.6;
+		public final static double TAPEY_KP = 0.12;
+		public final static double TAPEY_KI = 0.01;
+		public final static double TAPEY_KD = 0.00;
+		public final static double TAPEY_TOLERANCE = 1;
 
 		public final static double ODOMOMEGA_KP = 0.1;
 		public final static double ODOMOMEGA_KI = 0;
@@ -239,11 +239,11 @@ public final class Constants {
 
 		public static final double MAX_VELOCITY_METERS_PER_SECOND = (6380.0 / 60.0
 				* SdsModuleConfigurations.MK4I_L2.getDriveReduction()
-				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI) * 0.90;
+				* SdsModuleConfigurations.MK4I_L2.getWheelDiameter() * Math.PI) * 0.99;
 		public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND
 				/ Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
-		public static final double MAX_VELOCITY_AUTO = 4;
+		public static final double MAX_VELOCITY_AUTO = 4.3;
 		public static final double MAX_ACCELERATION_AUTO = 4;
 	}
 

@@ -72,8 +72,8 @@ public class Control {
 
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
 
-		joystick.button(2).whileTrue(new SequentialCommandGroup(
-				new MoveToPos(0, Units.inchesToMeters(30), 0), new MoveToPos(-0.5, 0, 0)));
+		// joystick.button(2).whileTrue(new SequentialCommandGroup(
+		// 		new MoveToPos(0, Units.inchesToMeters(30), 0), new MoveToPos(-0.5, 0, 0)));
 
 		joystick.button(5).whileTrue(new MoveToAprilTag(DriverStation.getAlliance() == Alliance.Blue ? 6 : 3
 		// 6
@@ -85,7 +85,7 @@ public class Control {
 		// 8
 		));
 
-		joystick.button(7).whileTrue(new MoveToTape());
+		joystick.button(2).whileTrue(new MoveToTape());
 
 		// joystick.button(6).whileTrue(new SequentialCommandGroup(
 		// 		new MoveToPos(0, Units.inchesToMeters(-31), 0), new MoveToPos(-0.5, 0, 0)));
@@ -140,11 +140,11 @@ public class Control {
 		xboxController.povLeft().onTrue(new SetWrist(Constants.Wrist.LEFT_POSITION));
 		xboxController.povDown().onTrue(new SetWrist(Constants.Wrist.DOWN_POSITION));
 
-		xboxController.axisLessThan(4, -0.5).whileTrue(new MoveArm(100));
-		xboxController.axisGreaterThan(4, 0.5).whileTrue(new MoveArm(-100));
+		xboxController.axisLessThan(4, -0.5).whileTrue(new MoveArm(200));
+		xboxController.axisGreaterThan(4, 0.5).whileTrue(new MoveArm(-200));
 
-		xboxController.axisLessThan(5, -0.5).whileTrue(new MoveElevator(0.1));
-		xboxController.axisGreaterThan(5, 0.5).whileTrue(new MoveElevator(-0.1));
+		xboxController.axisLessThan(5, -0.5).whileTrue(new MoveElevator(0.2));
+		xboxController.axisGreaterThan(5, 0.5).whileTrue(new MoveElevator(-0.2));
 	}
 
 	/**
