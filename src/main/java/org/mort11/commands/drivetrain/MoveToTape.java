@@ -38,9 +38,9 @@ public class MoveToTape extends CommandBase {
 
 	@Override
 	public boolean isFinished() {
-        return 
-        // !vision.hasTarget() ||
-        (drivetrain.getTapeXController().atSetpoint() && drivetrain.getTapeYController().atSetpoint());
+		return false;
+        // // !vision.hasTarget() ||
+        // (drivetrain.getTapeXController().atSetpoint() && drivetrain.getTapeYController().atSetpoint());
 	}
 
 	@Override

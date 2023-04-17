@@ -72,15 +72,15 @@ public final class Constants {
 		public final static double ODOMY_KD = 0;
 		public final static double ODOMY_TOLERANCE = 0.1;
 
-		public final static double TAPEX_KP = 0.12;
+		public final static double TAPEX_KP = 0.1;
 		public final static double TAPEX_KI = 0.01;
 		public final static double TAPEX_KD = 0.00;
-		public final static double TAPEXTOLERANCE = 1;
+		public final static double TAPEXTOLERANCE = 0.5;
 
-		public final static double TAPEY_KP = 0.12;
+		public final static double TAPEY_KP = 0.1;
 		public final static double TAPEY_KI = 0.01;
 		public final static double TAPEY_KD = 0.00;
-		public final static double TAPEY_TOLERANCE = 1;
+		public final static double TAPEY_TOLERANCE = 0.5;
 
 		public final static double ODOMOMEGA_KP = 0.1;
 		public final static double ODOMOMEGA_KI = 0;
