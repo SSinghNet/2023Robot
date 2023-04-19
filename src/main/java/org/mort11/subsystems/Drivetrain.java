@@ -138,8 +138,10 @@ public class Drivetrain extends SubsystemBase {
 		odomYController = new ProfiledPIDController(ODOMY_KP, ODOMY_KI, ODOMY_KD,
 				new Constraints(RobotSpecs.MAX_VELOCITY_AUTO, RobotSpecs.MAX_ACCELERATION_AUTO));
 		odomYController.setTolerance(ODOMY_TOLERANCE);
-		// odomOmegaController = new ProfiledPIDController(ODOMOMEGA_KP, ODOMOMEGA_KI, ODOMOMEGA_KD,
-		// 		new Constraints(RobotSpecs.MAX_VELOCITY_AUTO, RobotSpecs.MAX_ACCELERATION_AUTO));
+		// odomOmegaController = new ProfiledPIDController(ODOMOMEGA_KP, ODOMOMEGA_KI,
+		// ODOMOMEGA_KD,
+		// new Constraints(RobotSpecs.MAX_VELOCITY_AUTO,
+		// RobotSpecs.MAX_ACCELERATION_AUTO));
 		// odomOmegaController.setTolerance(ODOMOMEGA_TOLERANCE);
 
 		field = new Field2d();
@@ -314,7 +316,7 @@ public class Drivetrain extends SubsystemBase {
 	public PIDController getTapeXController() {
 		return tapeXController;
 	}
-	
+
 	public PIDController getTapeYController() {
 		return tapeYController;
 	}
@@ -333,8 +335,8 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	public double bangBangOutput(double measurement) {
-		return (0.2 * bangBangForwardController.calculate(measurement) == 0 ? 0 : 1) + 
-			(-0.1 * bangBangReverseController.calculate(-measurement));
+		return (0.2 * bangBangForwardController.calculate(measurement) == 0 ? 0 : 1)
+				+ (-0.1 * bangBangReverseController.calculate(-measurement));
 	}
 
 	@Override

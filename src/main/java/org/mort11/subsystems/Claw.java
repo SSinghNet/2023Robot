@@ -33,7 +33,7 @@ public class Claw extends SubsystemBase {
 		intakeNeoMaster.restoreFactoryDefaults();
 		intakeNeoMaster.setIdleMode(IdleMode.kCoast);
 		intakeNeoMaster.burnFlash();
-		
+
 		// intakeNeoFollower.restoreFactoryDefaults();
 		// intakeNeoFollower.setIdleMode(IdleMode.kCoast);
 		// intakeNeoFollower.burnFlash();

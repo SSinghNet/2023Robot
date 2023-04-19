@@ -43,11 +43,13 @@ public class MoveToPos extends CommandBase {
 	 *            rotation (degrees)
 	 */
 	public MoveToPos(double x, double y, double theta) {
-		this(new Transform2d(new Translation2d(x, y), new Rotation2d(Math.toRadians(theta))), Drivetrain.defaultOdomConstraints());
+		this(new Transform2d(new Translation2d(x, y), new Rotation2d(Math.toRadians(theta))),
+				Drivetrain.defaultOdomConstraints());
 	}
-	
-	 public MoveToPos(double x, double y, double theta, double driveVelocity, double driveAcceleration) {
-		this(new Transform2d(new Translation2d(x, y), new Rotation2d(Math.toRadians(theta))), new Constraints(driveVelocity, driveAcceleration));
+
+	public MoveToPos(double x, double y, double theta, double driveVelocity, double driveAcceleration) {
+		this(new Transform2d(new Translation2d(x, y), new Rotation2d(Math.toRadians(theta))),
+				new Constraints(driveVelocity, driveAcceleration));
 	}
 
 	@Override
@@ -93,7 +95,6 @@ public class MoveToPos extends CommandBase {
 		return drivetrain.getOdomXController().atGoal() && drivetrain.getOdomYController().atGoal()
 				&& drivetrain.getOdomOmegaController().atSetpoint();
 	}
-
 
 	@Override
 	public void end(boolean interrupted) {

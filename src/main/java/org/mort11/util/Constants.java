@@ -109,7 +109,7 @@ public final class Constants {
 		// public final static int LIMIT_SWITCH = 4;
 
 		public final static double FLOOR_POSITION = 0.2;
-		public final static double SHELF_POSITION = 56; //59
+		public final static double SHELF_POSITION = 56; // 59
 		public final static double MIDDLE_NODE_POSITION = 55;
 		public final static double UPPER_NODE_POSITION = 85;
 		public final static double CARRIAGE_UP = 32.0;
@@ -120,7 +120,7 @@ public final class Constants {
 	}
 
 	public final static class Arm {
-		public final static int DRIVE_MASTER = 27; //left from ground side
+		public final static int DRIVE_MASTER = 27; // left from ground side
 		public final static int DRIVE_FOLLOWER = 28;
 
 		public final static double KP = 0.000575; // 0.000575
@@ -140,11 +140,11 @@ public final class Constants {
 		public final static double REST_POSITION = 10000;
 		public final static double CLAMP_POSITION = 7700;
 
-		//TODO: elevator 20 when we can drop arm
+		// TODO: elevator 20 when we can drop arm
 	}
 
 	public final static class Claw {
-		public final static int DRIVE = 35; //either 34 or 35
+		public final static int DRIVE = 35; // either 34 or 35
 		// public final static int DRIVE_FOLLOWER = 34;
 
 		public final static int IR_SENSOR = 0;
@@ -156,7 +156,7 @@ public final class Constants {
 	}
 
 	public final static class Wrist {
-		//TODO 3157
+		// TODO 3157
 		public final static int DRIVE = 36;
 		public final static int ENCODER = 9;
 
@@ -175,10 +175,10 @@ public final class Constants {
 		public final static int FLIP = 50;
 
 		public final static double PASSIVE_SPEED = -0.1;
-		public final static double INTAKE_SPEED = -0.3;  //-0.257
+		public final static double INTAKE_SPEED = -0.3; // -0.257
 		public final static double SPIT_SPEED = 1;
 
-		public final static float FLIP_IN_POS = 0.0f; 
+		public final static float FLIP_IN_POS = 0.0f;
 		public final static float FLIP_OUT_POS = 20.0f;
 
 		// TODO: run ff

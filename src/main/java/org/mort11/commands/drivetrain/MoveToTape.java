@@ -27,11 +27,10 @@ public class MoveToTape extends CommandBase {
 	}
 
 	@Override
-    public void execute() {
-        double x = 
-				-drivetrain.getTapeYController().calculate(vision.getY(), 10);
-        double y = -drivetrain.getTapeXController().calculate(vision.getX(), 1);
-        double omega = 0;
+	public void execute() {
+		double x = -drivetrain.getTapeYController().calculate(vision.getY(), 10);
+		double y = -drivetrain.getTapeXController().calculate(vision.getX(), 1);
+		double omega = 0;
 
 		drivetrain.drive(new ChassisSpeeds(x, y, omega));
 	}
@@ -39,8 +38,9 @@ public class MoveToTape extends CommandBase {
 	@Override
 	public boolean isFinished() {
 		return false;
-        // // !vision.hasTarget() ||
-        // (drivetrain.getTapeXController().atSetpoint() && drivetrain.getTapeYController().atSetpoint());
+		// // !vision.hasTarget() ||
+		// (drivetrain.getTapeXController().atSetpoint() &&
+		// drivetrain.getTapeYController().atSetpoint());
 	}
 
 	@Override

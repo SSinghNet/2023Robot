@@ -8,6 +8,7 @@ import org.mort11.commands.endeffector.armelevator.MoveArm;
 import org.mort11.commands.endeffector.armelevator.MoveElevator;
 import org.mort11.commands.endeffector.armelevator.SetArmAndElevator;
 import org.mort11.commands.endeffector.clawwrist.Clawtake;
+import org.mort11.commands.endeffector.clawwrist.ClawtakeDefault;
 import org.mort11.commands.endeffector.clawwrist.SetWrist;
 import org.mort11.commands.endeffector.clawwrist.ToggleClawPiston;
 import org.mort11.commands.endeffector.floortake.FloorIntake;
@@ -69,11 +70,12 @@ public class Control {
 		drivetrain.setDefaultCommand(
 				new Drive(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true));
 		floortake.setDefaultCommand(new Stow());
+		claw.setDefaultCommand(new ClawtakeDefault());
 
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
 
 		// joystick.button(2).whileTrue(new SequentialCommandGroup(
-		// 		new MoveToPos(0, Units.inchesToMeters(30), 0), new MoveToPos(-0.5, 0, 0)));
+		// new MoveToPos(0, Units.inchesToMeters(30), 0), new MoveToPos(-0.5, 0, 0)));
 
 		joystick.button(5).whileTrue(new MoveToAprilTag(DriverStation.getAlliance() == Alliance.Blue ? 6 : 3
 		// 6
@@ -88,7 +90,7 @@ public class Control {
 		joystick.button(2).whileTrue(new MoveToTape());
 
 		// joystick.button(6).whileTrue(new SequentialCommandGroup(
-		// 		new MoveToPos(0, Units.inchesToMeters(-31), 0), new MoveToPos(-0.5, 0, 0)));
+		// new MoveToPos(0, Units.inchesToMeters(-31), 0), new MoveToPos(-0.5, 0, 0)));
 
 		joystick.button(9).whileTrue(new MoveToPos(0, 0, 180));
 
@@ -97,8 +99,7 @@ public class Control {
 		joystick.povLeft().whileTrue(new RotateToAngle(90, false));
 		joystick.povDown().whileTrue(new RotateToAngle(180, false));
 
-
-		//ee
+		// ee
 		xboxController.a().onTrue(SetArmAndElevator.floor());
 		xboxController.b().onTrue(SetArmAndElevator.rest());
 		xboxController.x().onTrue(SetArmAndElevator.middleNode());
@@ -107,19 +108,20 @@ public class Control {
 		xboxController.back().onTrue(SetArmAndElevator.zero());
 		// xboxController.axisGreaterThan(3, 0.5).onTrue(SetArmAndElevator.clamp());
 
-		xboxController.leftBumper().toggleOnTrue(Commands.startEnd(
-				() -> SmartDashboard.putBoolean("FastSpeed", false),
-				() -> SmartDashboard.putBoolean("FastSpeed", true)
-		));
-		
+		xboxController.leftBumper().toggleOnTrue(Commands.startEnd(() -> SmartDashboard.putBoolean("FastSpeed", false),
+				() -> SmartDashboard.putBoolean("FastSpeed", true)));
+
 		// xboxController.leftBumper()
-		// 		.onTrue(new InstantCommand(() -> xboxController.getHID().setRumble(RumbleType.kBothRumble, 1)));
+		// .onTrue(new InstantCommand(() ->
+		// xboxController.getHID().setRumble(RumbleType.kBothRumble, 1)));
 		// xboxController.leftBumper()
-		// 		.onFalse(new InstantCommand(() -> xboxController.getHID().setRumble(RumbleType.kBothRumble, 0)));
+		// .onFalse(new InstantCommand(() ->
+		// xboxController.getHID().setRumble(RumbleType.kBothRumble, 0)));
 		xboxController.leftBumper().onTrue(setRumble(1));
 		xboxController.leftBumper().onFalse(setRumble(0));
 
-		// xboxController.rightBumper().onTrue(new InstantCommand(claw::togglePiston, claw));
+		// xboxController.rightBumper().onTrue(new InstantCommand(claw::togglePiston,
+		// claw));
 		xboxController.rightBumper().onTrue(new ToggleClawPiston());
 
 		xboxController.axisLessThan(1, -0.5).whileTrue(new Clawtake(true));
@@ -128,12 +130,17 @@ public class Control {
 		xboxController.leftTrigger().whileTrue(new FloorIntake());
 		xboxController.rightTrigger().whileTrue(new Spit());
 		// xboxController.rightTrigger(0.66).whileTrue(new Bump());
-		// xboxController.rightTrigger(0.33).and(xboxController.rightTrigger(0.66).negate()).whileTrue(new Spit());
+		// xboxController.rightTrigger(0.33).and(xboxController.rightTrigger(0.66).negate()).whileTrue(new
+		// Spit());
 
-		// xboxController.povRight().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.RIGHT_POSITION)));
-		// xboxController.povUp().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.UP_POSITION)));
-		// xboxController.povLeft().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.LEFT_POSITION)));
-		// xboxController.povDown().onTrue(new InstantCommand(() -> wrist.setSetpoint(Constants.Wrist.DOWN_POSITION)));
+		// xboxController.povRight().onTrue(new InstantCommand(() ->
+		// wrist.setSetpoint(Constants.Wrist.RIGHT_POSITION)));
+		// xboxController.povUp().onTrue(new InstantCommand(() ->
+		// wrist.setSetpoint(Constants.Wrist.UP_POSITION)));
+		// xboxController.povLeft().onTrue(new InstantCommand(() ->
+		// wrist.setSetpoint(Constants.Wrist.LEFT_POSITION)));
+		// xboxController.povDown().onTrue(new InstantCommand(() ->
+		// wrist.setSetpoint(Constants.Wrist.DOWN_POSITION)));
 
 		xboxController.povRight().onTrue(new SetWrist(Constants.Wrist.RIGHT_POSITION));
 		xboxController.povUp().onTrue(new SetWrist(Constants.Wrist.UP_POSITION));

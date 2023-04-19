@@ -24,38 +24,16 @@ public class ConeHighCubeFloorEngage extends SequentialCommandGroup {
 		addRequirements(drivetrain);
 
 		addCommands(
-			new ParallelDeadlineGroup(
-				new SequentialCommandGroup(
-					new SetClawPiston(false),
-					new WaitCommand(0.2),
-					new ScoreCone(),
-					new ParallelCommandGroup(
-						SetArmAndElevator.rest(),
-						new MoveToPos(Units.inchesToMeters(180), 0, 0, 1.75, 1).withTimeout(7)
-					)
-				),
-				new Stow()
-			),
-			new ParallelDeadlineGroup(
-				new SequentialCommandGroup(
-					new MoveToPos(Units.inchesToMeters(50), 0, 180, 1.75, 1).withTimeout(2),
-					new WaitCommand(0.2)
-				),
-				new FloorIntake()
-			),
-			new ParallelDeadlineGroup(
-				new SequentialCommandGroup(
-					new MoveToPos(-3.6,0,180, 1.75, 2)
-				),
-				new Stow()
-			),
-			new ParallelDeadlineGroup(
-				new Balance(),
-				new Spit()
-			)
-		);
-
-		
+				new ParallelDeadlineGroup(
+						new SequentialCommandGroup(new SetClawPiston(false), new WaitCommand(0.2), new ScoreCone(),
+								new ParallelCommandGroup(SetArmAndElevator.rest(),
+										new MoveToPos(Units.inchesToMeters(180), 0, 0, 1.75, 1).withTimeout(7))),
+						new Stow()),
+				new ParallelDeadlineGroup(new SequentialCommandGroup(
+						new MoveToPos(Units.inchesToMeters(50), 0, 180, 1.75, 1).withTimeout(2), new WaitCommand(0.2)),
+						new FloorIntake()),
+				new ParallelDeadlineGroup(new SequentialCommandGroup(new MoveToPos(-3.6, 0, 180, 1.75, 2)), new Stow()),
+				new ParallelDeadlineGroup(new Balance(), new Spit()));
 
 	}
 }

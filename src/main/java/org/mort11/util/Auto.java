@@ -44,11 +44,12 @@ public class Auto {
 
 		autoChooser.addOption("Upper Cone", new SequentialCommandGroup(new ScoreCone(), SetArmAndElevator.rest()));
 
-		autoChooser.addOption("Upper Cone, Engage",
-				new SequentialCommandGroup(new ScoreCone(), SetArmAndElevator.rest(), new TimedDrive(2.7, 0.9, 0, 0), new Balance()));
+		autoChooser.addOption("Upper Cone, Engage", new SequentialCommandGroup(new ScoreCone(),
+				SetArmAndElevator.rest(), new TimedDrive(2.7, 0.9, 0, 0), new Balance()));
 
 		autoChooser.addOption("Upper Cone, Taxi, Engage",
-				new SequentialCommandGroup(new ScoreCone(), SetArmAndElevator.rest(), new TimedDrive(3, 1.7, 0, 0), new WaitCommand(0.1), new TimedDrive(2, -1.8, 0, 0), new Balance()));
+				new SequentialCommandGroup(new ScoreCone(), SetArmAndElevator.rest(), new TimedDrive(3, 1.7, 0, 0),
+						new WaitCommand(0.1), new TimedDrive(2, -1.8, 0, 0), new Balance()));
 
 		autoChooser.addOption("Upper Cone, Taxi",
 				new SequentialCommandGroup(new ScoreCone(), SetArmAndElevator.rest(), new TimedDrive(3, 1.5, 0, 0)));

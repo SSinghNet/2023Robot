@@ -52,7 +52,7 @@ public class Vision extends SubsystemBase {
 	}
 
 	public double getY() {
-		return llTable.getEntry("ty").getDouble(0); 
+		return llTable.getEntry("ty").getDouble(0);
 	}
 
 	public double getCamTranX() {

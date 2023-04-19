@@ -39,9 +39,9 @@ public class Elevator extends SubsystemBase {
 		driveNeoFollower.setIdleMode(IdleMode.kBrake);
 
 		driveNeoMaster.setSoftLimit(SoftLimitDirection.kForward, BOTTOM_LIMIT);
-		driveNeoMaster.enableSoftLimit(SoftLimitDirection.kForward, false); //TODO:enable
+		driveNeoMaster.enableSoftLimit(SoftLimitDirection.kForward, false); // TODO:enable
 		driveNeoMaster.setSoftLimit(SoftLimitDirection.kReverse, TOP_LIMIT);
-		driveNeoMaster.enableSoftLimit(SoftLimitDirection.kForward, false); //TODO: enable
+		driveNeoMaster.enableSoftLimit(SoftLimitDirection.kForward, false); // TODO: enable
 
 		driveNeoMaster.setSmartCurrentLimit(20);
 

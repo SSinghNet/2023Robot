@@ -6,33 +6,33 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class BalanceBang extends CommandBase {
-    private Drivetrain drivetrain;
+	private Drivetrain drivetrain;
 
-    private int count;
+	private int count;
 
 	public BalanceBang() {
 		drivetrain = Drivetrain.getInstance();
 
-        addRequirements(drivetrain);
-        
-        count = 0;
+		addRequirements(drivetrain);
+
+		count = 0;
 	}
 
 	@Override
 	public void initialize() {
-        count = 0;
+		count = 0;
 	}
 
 	@Override
 	public void execute() {
-        double output = -drivetrain.bangBangOutput(drivetrain.getRoll());
-        if(output == 0){
-            count++;
-        } else {
-            count = 0;
-        }
+		double output = -drivetrain.bangBangOutput(drivetrain.getRoll());
+		if (output == 0) {
+			count++;
+		} else {
+			count = 0;
+		}
 
-        System.out.println(output);
+		System.out.println(output);
 
 		drivetrain.drive(new ChassisSpeeds(output, 0, 0));
 	}

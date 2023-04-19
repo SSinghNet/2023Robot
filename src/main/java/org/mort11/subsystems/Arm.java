@@ -34,13 +34,14 @@ public class Arm extends SubsystemBase {
 		driveFalconMaster.setNeutralMode(NeutralMode.Brake);
 		driveFalconFollower.setNeutralMode(NeutralMode.Brake);
 
-		driveFalconMaster.configForwardSoftLimitEnable(false); //TODO: enable
+		driveFalconMaster.configForwardSoftLimitEnable(false); // TODO: enable
 		// driveFalconMaster.configForwardSoftLimitThreshold(TOP_LIMIT);
 		driveFalconMaster.configReverseSoftLimitEnable(false);
-		// driveFalconMaster.configReverseSoftLimitThreshold(BOTTOM_LIMIT); //TODO: enable
+		// driveFalconMaster.configReverseSoftLimitThreshold(BOTTOM_LIMIT); //TODO:
+		// enable
 
 		driveFalconFollower.follow(driveFalconMaster);
-		driveFalconFollower.setInverted(InvertType.OpposeMaster); //TODO: most likely
+		driveFalconFollower.setInverted(InvertType.OpposeMaster); // TODO: most likely
 
 		// armController = new PIDController(KP, KI, KD);
 		// armController.setTolerance(TOLERANCE);
