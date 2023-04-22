@@ -7,9 +7,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ClawtakeDefault extends CommandBase {
 	private Claw claw;
-
+	
 	public ClawtakeDefault() {
 		claw = Claw.getInstance();
+
+		addRequirements(claw);
 	}
 
 	@Override
@@ -20,7 +22,7 @@ public class ClawtakeDefault extends CommandBase {
 	@Override
 	public void execute() {
 		// if (claw.getPiston() == true) {
-			claw.setSpeed(-Constants.Claw.CUBE_SPEED);
+		claw.setSpeed(-Constants.Claw.CUBE_SPEED);
 		// }
 	}
 

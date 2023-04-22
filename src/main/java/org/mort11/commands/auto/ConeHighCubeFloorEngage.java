@@ -32,7 +32,7 @@ public class ConeHighCubeFloorEngage extends SequentialCommandGroup {
 				new ParallelDeadlineGroup(new SequentialCommandGroup(
 						new MoveToPos(Units.inchesToMeters(50), 0, 180, 1.75, 1).withTimeout(2), new WaitCommand(0.2)),
 						new FloorIntake()),
-				new ParallelDeadlineGroup(new SequentialCommandGroup(new MoveToPos(-3.6, 0, 180, 1.75, 2)), new Stow()),
+				new ParallelDeadlineGroup(new SequentialCommandGroup(new MoveToPos(-4, 0, 180, 2, 2)), new Stow()), //1.75, -3.7
 				new ParallelDeadlineGroup(new Balance(), new Spit()));
 
 	}

@@ -39,9 +39,9 @@ public final class Constants {
 		public final static double ROTATE_TO_ANGLE_KD = 0.01;
 		public final static double ROTATE_TO_ANGLE_TOLERANCE = 1;
 
-		public final static double BALANCE_KP = 0.025; // 0.033
-		public final static double BALANCE_KI = 0.0; // 0.0002
-		public final static double BALANCE_KD = 0.005; // 0.008
+		public final static double BALANCE_KP = 0.029; // 0.025
+		public final static double BALANCE_KI = 0.0; // 0.0000
+		public final static double BALANCE_KD = 0.005; // 0.000
 		public final static double BALANCE_TOLERANCE = 0.25;
 
 		// TODO: tune pid
@@ -178,7 +178,7 @@ public final class Constants {
 		public final static double INTAKE_SPEED = -0.3; // -0.257
 		public final static double SPIT_SPEED = 1;
 
-		public final static float FLIP_IN_POS = 0.0f;
+		public final static float FLIP_IN_POS = -1.0f; //changed from 0.0 bc slop
 		public final static float FLIP_OUT_POS = 20.0f;
 
 		// TODO: run ff

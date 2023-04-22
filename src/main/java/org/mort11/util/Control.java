@@ -70,7 +70,7 @@ public class Control {
 		drivetrain.setDefaultCommand(
 				new Drive(Control::getJoystickY, Control::getJoystickX, Control::getJoystickTwist, true));
 		floortake.setDefaultCommand(new Stow());
-		claw.setDefaultCommand(new ClawtakeDefault());
+		// claw.setDefaultCommand(new ClawtakeDefault());
 
 		joystick.button(1).onTrue(new InstantCommand(drivetrain::zeroGyroscope));
 
