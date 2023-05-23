@@ -19,7 +19,7 @@ public class Arm extends SubsystemBase {
 	private static Arm arm;
 
 	private TalonFX driveFalconMaster;
-	private TalonFX driveFalconFollower;
+	// private TalonFX driveFalconFollower;
 
 	private ProfiledPIDController armController;
 	private SimpleMotorFeedforward feedforward;
@@ -29,10 +29,10 @@ public class Arm extends SubsystemBase {
 
 	private Arm() {
 		driveFalconMaster = new TalonFX(DRIVE_MASTER);
-		driveFalconFollower = new TalonFX(DRIVE_FOLLOWER);
+		// driveFalconFollower = new TalonFX(DRIVE_FOLLOWER);
 
 		driveFalconMaster.setNeutralMode(NeutralMode.Brake);
-		driveFalconFollower.setNeutralMode(NeutralMode.Brake);
+		// driveFalconFollower.setNeutralMode(NeutralMode.Brake);
 
 		driveFalconMaster.configForwardSoftLimitEnable(false); // TODO: enable
 		// driveFalconMaster.configForwardSoftLimitThreshold(TOP_LIMIT);
@@ -40,8 +40,8 @@ public class Arm extends SubsystemBase {
 		// driveFalconMaster.configReverseSoftLimitThreshold(BOTTOM_LIMIT); //TODO:
 		// enable
 
-		driveFalconFollower.follow(driveFalconMaster);
-		driveFalconFollower.setInverted(InvertType.OpposeMaster); // TODO: most likely
+		// driveFalconFollower.follow(driveFalconMaster);
+		// driveFalconFollower.setInverted(InvertType.OpposeMaster); // TODO: most likely
 
 		// armController = new PIDController(KP, KI, KD);
 		// armController.setTolerance(TOLERANCE);
@@ -92,8 +92,8 @@ public class Arm extends SubsystemBase {
 	}
 
 	private void setPosition(double setpoint) {
-		double output = (feedforward.calculate(0) + armController.calculate(getPosition(), setpoint))
-				/ RobotSpecs.MAX_VOLTAGE;
+		double output = ((feedforward.calculate(0) + armController.calculate(getPosition(), setpoint))
+				/ RobotSpecs.MAX_VOLTAGE) * -1; //INVERTED
 		// double output = 0.1 * sin(getPositionDegrees()) +
 		// armController.calculate(getPosition(), setpoint);
 		driveFalconMaster.set(ControlMode.PercentOutput, output);
