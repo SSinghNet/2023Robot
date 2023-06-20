@@ -178,7 +178,7 @@ public final class Constants {
 		public final static double INTAKE_SPEED = -0.3; // -0.257
 		public final static double SPIT_SPEED = 1;
 
-		public final static float FLIP_IN_POS = -1.0f; //changed from 0.0 bc slop
+		public final static float FLIP_IN_POS = -1.0f; // changed from 0.0 bc slop
 		public final static float FLIP_OUT_POS = 20.0f;
 
 		// TODO: run ff

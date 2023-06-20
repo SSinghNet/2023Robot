@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class ClawtakeDefault extends CommandBase {
 	private Claw claw;
-	
+
 	public ClawtakeDefault() {
 		claw = Claw.getInstance();
 

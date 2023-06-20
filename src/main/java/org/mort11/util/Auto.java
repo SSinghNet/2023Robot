@@ -43,17 +43,20 @@ public class Auto {
 
 		autoChooser.addOption("Taxi", new TimedDrive(3, 1.5, 0, 0));
 
-		autoChooser.addOption("Upper Cone", new SequentialCommandGroup(new SetClawPiston(false), new WaitCommand(0.2),new ScoreCone(), SetArmAndElevator.rest()));
+		autoChooser.addOption("Upper Cone", new SequentialCommandGroup(new SetClawPiston(false), new WaitCommand(0.2),
+				new ScoreCone(), SetArmAndElevator.rest()));
 
-		autoChooser.addOption("Upper Cone, Engage", new SequentialCommandGroup(new SetClawPiston(false), new WaitCommand(0.2),new ScoreCone(),
-				SetArmAndElevator.rest(), new TimedDrive(2.7, 0.9, 0, 0), new Balance()));
+		autoChooser.addOption("Upper Cone, Engage",
+				new SequentialCommandGroup(new SetClawPiston(false), new WaitCommand(0.2), new ScoreCone(),
+						SetArmAndElevator.rest(), new TimedDrive(2.7, 0.9, 0, 0), new Balance()));
 
 		autoChooser.addOption("Upper Cone, Taxi, Engage",
-				new SequentialCommandGroup(new SetClawPiston(false), new WaitCommand(0.2),new ScoreCone(), SetArmAndElevator.rest(), new TimedDrive(3, 1.7, 0, 0),
-						new WaitCommand(0.1), new TimedDrive(2, -1.8, 0, 0), new Balance()));
+				new SequentialCommandGroup(new SetClawPiston(false), new WaitCommand(0.2), new ScoreCone(),
+						SetArmAndElevator.rest(), new TimedDrive(3, 1.7, 0, 0), new WaitCommand(0.1),
+						new TimedDrive(2, -1.8, 0, 0), new Balance()));
 
-		autoChooser.addOption("Upper Cone, Taxi",
-				new SequentialCommandGroup(new SetClawPiston(false), new WaitCommand(0.2),new ScoreCone(), SetArmAndElevator.rest(), new TimedDrive(3, 1.5, 0, 0)));
+		autoChooser.addOption("Upper Cone, Taxi", new SequentialCommandGroup(new SetClawPiston(false),
+				new WaitCommand(0.2), new ScoreCone(), SetArmAndElevator.rest(), new TimedDrive(3, 1.5, 0, 0)));
 
 		autoChooser.addOption("CLEAN Upper cube, Upper cone (BLUE)", new CubeHighConeHigh(true));
 		autoChooser.addOption("CLEAN Upper cube, Upper cone (RED)", new CubeHighConeHigh(false));

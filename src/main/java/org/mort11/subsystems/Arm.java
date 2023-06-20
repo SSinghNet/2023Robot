@@ -41,7 +41,8 @@ public class Arm extends SubsystemBase {
 		// enable
 
 		// driveFalconFollower.follow(driveFalconMaster);
-		// driveFalconFollower.setInverted(InvertType.OpposeMaster); // TODO: most likely
+		// driveFalconFollower.setInverted(InvertType.OpposeMaster); // TODO: most
+		// likely
 
 		// armController = new PIDController(KP, KI, KD);
 		// armController.setTolerance(TOLERANCE);
@@ -92,8 +93,13 @@ public class Arm extends SubsystemBase {
 	}
 
 	private void setPosition(double setpoint) {
-		double output = ((feedforward.calculate(0) + armController.calculate(getPosition(), setpoint))
-				/ RobotSpecs.MAX_VOLTAGE) * -1; //INVERTED
+		double output = ((feedforward.calculate(0) + armController.calculate(getPosition(), -setpoint))
+				/ RobotSpecs.MAX_VOLTAGE); // INVERTED
+		if (output >= 1){
+			output = 0.1;
+		} else if (output <= -1) {
+			output = -0.1;
+		}
 		// double output = 0.1 * sin(getPositionDegrees()) +
 		// armController.calculate(getPosition(), setpoint);
 		driveFalconMaster.set(ControlMode.PercentOutput, output);
