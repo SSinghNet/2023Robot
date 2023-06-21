@@ -46,7 +46,7 @@ public class CubeHighConeHighBetter extends SequentialCommandGroup {
 				new SetClawPiston(false), new TimedIntake(0.5, true, true), // TODO maybe decrease
 				new ParallelDeadlineGroup(new ParallelCommandGroup(
 						// SetArmAndElevator.rest(),
-						new SequentialCommandGroup(new SetArm(Constants.Arm.FLOOR_POSITION - 15000),
+						new SequentialCommandGroup(new SetArm(Constants.Arm.FLOOR_POSITION - 10000),
 								new SetElevator(24), new WaitCommand(0.2), new SetArm(Constants.Arm.REST_POSITION)),
 						new SequentialCommandGroup(new WaitCommand(0.2),
 								new MoveToPos(Units.inchesToMeters(-180), 0, 0).withTimeout(2.5))),
